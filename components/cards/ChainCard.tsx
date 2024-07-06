@@ -23,7 +23,7 @@ const ChainCard = ({ chainName, chainId, activeChainId, setOpen }: Props) => {
   //     CHAIN_LOGOS.filter((item) => item.chainId === chainId)[0].imageUrl
   //   );
 
-  console.log("Ze STATUS", status);
+  // console.log("Ze STATUS", status);
 
   useEffect(() => {
     if (status === "success" || status === "error") setOpen(false);

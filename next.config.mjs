@@ -4,16 +4,22 @@ const nextConfig = {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: "https",
-  //       hostname: "raw.githubusercontent.com",
-  //       port: "",
-  //       pathname: "/uniswap/**",
-  //     },
-  //   ],
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        // pathname: "/uniswap/**",
+      },
+      {
+        protocol: "https",
+        hostname: "static.alchemyapi.io",
+        port: "",
+        // pathname: "/uniswap/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

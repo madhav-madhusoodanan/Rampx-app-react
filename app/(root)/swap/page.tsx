@@ -9,11 +9,12 @@ import {
 } from "@/components/ui/tooltip";
 // import SwapTokenSelectorModal from "@/components/modals/SwapTokenSelectorModal";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
+import SwapCardTwo from "@/components/cards/SwapCardTwo";
 
 const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="mt-10 w-full px-6 md:px-10 max-w-[550px]">
+      <div className="mt-10 w-full px-6 md:px-10 max-w-[530px]">
         <div className="flex justify-between items-center pb-3  mt-7">
           <TooltipProvider>
             <Tooltip>
@@ -43,7 +44,7 @@ const Page = () => {
                       width={20}
                       height={20}
                     />
-                    <span>0.5%</span>
+                    <span className="font-mono text-sm">0.5%</span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className="border-none rounded-xl bg-black mb-1 py-2 px-4 text-xs">
@@ -73,6 +74,8 @@ const Page = () => {
 
         <SwapCard />
       </div>
+
+      {/* <SwapCardTwo /> */}
 
       <SwapTokenSelectorModalWrapper />
     </div>

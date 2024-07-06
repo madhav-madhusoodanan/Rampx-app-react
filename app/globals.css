@@ -55,3 +55,50 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Hide arrows in WebKit browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.swap-input-container {
+  width: 450px;
+  height: 150px;
+  position: relative;
+  clip-path: polygon(
+    7.5% 0%,
+    92.5% 0%,
+    /* top side */ 100% 15%,
+    /* top right corner */ 100% 85%,
+    /* right side */ 92.5% 100%,
+    7.5% 100%,
+    /* bottom side */ 0% 85%,
+    /* bottom left corner */ 0% 15% /* left side */
+  );
+  border-radius: 37.5px;
+  box-sizing: border-box;
+}
+
+.swap-btn-container {
+  width: 450px;
+  height: 55px;
+  position: relative;
+  clip-path: polygon(
+    7.5% 0%,
+    92.5% 0%,
+    /* top side */ 100% 15%,
+    /* top right corner */ 100% 85%,
+    /* right side */ 92.5% 100%,
+    7.5% 100%,
+    /* bottom side */ 0% 85%,
+    /* bottom left corner */ 0% 15% /* left side */
+  );
+  /* border-radius: 37.5px; */
+}

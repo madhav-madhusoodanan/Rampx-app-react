@@ -18,10 +18,16 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        syne: ["var(--font-syne)"],
+      },
       colors: {
         a: {
           fluo: "#B3CF3D",
           green: "#D0F603",
+          pnlGreen: "#40b66b",
+          pnlRed: "#ff5f52",
           charcoal: "#191919",
           gray: "#7c7c7c",
         },
@@ -68,9 +74,6 @@ const config = {
       },
       backgroundImage: {
         ramp: "url(../public/assets/images/rampx-bg.png)",
-      },
-      fontFamily: {
-        inter: ["var(--font-inter)", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

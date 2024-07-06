@@ -14,6 +14,9 @@ export const FOOTER_ICONS: FooterIcon[] = [
   },
 ];
 
+export const ZERO_ADDRESS: string =
+  "0x0000000000000000000000000000000000000000";
+
 export const CHAIN_LOGOS = [
   {
     chainId: 1,
@@ -39,39 +42,257 @@ export const CHAIN_LOGOS = [
 
 export const MOCK_POPULAR_TOKENS = [
   {
-    token: "Ethereum",
-    symbol: "ETH",
-    imageUrl:
-      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    contractAddress: "0x0",
+    tokenName: "Ethereum",
+    tokenSymbol: "ETH",
+    tokenLogo: "/assets/icons/eth-logo.png",
   },
   {
-    token: "Dai",
-    symbol: "DAI",
-    imageUrl:
+    contractAddress: "0x0",
+    tokenName: "Dai",
+    tokenSymbol: "DAI",
+    tokenLogo:
       "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png",
   },
   {
-    token: "Usdc",
-    symbol: "USDC",
-    imageUrl:
+    contractAddress: "0x0",
+    tokenName: "Usdc",
+    tokenSymbol: "USDC",
+    tokenLogo:
       "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
   },
   {
-    token: "Usdt",
-    symbol: "USDT",
-    imageUrl:
+    contractAddress: "0x0",
+    tokenName: "Usdt",
+    tokenSymbol: "USDT",
+    tokenLogo:
       "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
   },
   {
-    token: "Wbtc",
-    symbol: "WBTC",
-    imageUrl:
+    contractAddress: "0x0",
+    tokenName: "Wbtc",
+    tokenSymbol: "WBTC",
+    tokenLogo:
       "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png",
   },
   {
-    token: "Wrapped Etheruem",
-    symbol: "WETH",
-    imageUrl:
+    contractAddress: "0x0",
+    tokenName: "Wrapped Etheruem",
+    tokenSymbol: "WETH",
+    tokenLogo:
       "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+  },
+];
+
+export const MOCK_TOKEN_EXPLORE_PAGE_STATS = [
+  {
+    contractAddress: "0x0",
+    tokenName: "Ethereum",
+    tokenSymbol: "ETH",
+    tokenLogo: "/assets/icons/eth-logo.png",
+    price: "2947.25",
+    hourPnl: {
+      isPositive: false,
+      value: "0.57",
+    },
+    dayPnl: {
+      isPositive: true,
+      value: "2.91",
+    },
+    fdv: "7.2B",
+    volume: "2B",
+    chartData: [
+      {
+        stats: 0.25,
+      },
+      {
+        stats: 1.37,
+      },
+      {
+        stats: 0.54,
+      },
+      {
+        stats: 2.3,
+      },
+      {
+        stats: 0.12,
+      },
+      {
+        stats: 0.05,
+      },
+      {
+        stats: 5,
+      },
+      {
+        stats: 2,
+      },
+    ],
+  },
+  {
+    contractAddress: "0x0",
+    tokenName: "Dai",
+    tokenSymbol: "DAI",
+    tokenLogo:
+      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png",
+    price: "1.00",
+    hourPnl: {
+      isPositive: true,
+      value: "0.00",
+    },
+    dayPnl: {
+      isPositive: true,
+      value: "0.00",
+    },
+    fdv: "753M",
+    volume: "1B",
+    chartData: [
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+    ],
+  },
+  {
+    contractAddress: "0x0",
+    tokenName: "Usdt",
+    tokenSymbol: "USDT",
+    tokenLogo:
+      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
+    price: "1.00",
+    hourPnl: {
+      isPositive: true,
+      value: "0.00",
+    },
+    dayPnl: {
+      isPositive: true,
+      value: "0.00",
+    },
+    fdv: "3.1B",
+    volume: "1B",
+    chartData: [
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+      {
+        stats: 0,
+      },
+    ],
+  },
+  {
+    contractAddress: "0x0",
+    tokenName: "Wbtc",
+    tokenSymbol: "WBTC",
+    tokenLogo:
+      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png",
+    price: "54673.32",
+    hourPnl: {
+      isPositive: false,
+      value: "0.22",
+    },
+    dayPnl: {
+      isPositive: false,
+      value: "1.21",
+    },
+    fdv: "36.9B",
+    volume: "500M",
+    chartData: [
+      {
+        stats: 7.75,
+      },
+      {
+        stats: 1.25,
+      },
+      {
+        stats: 0.95,
+      },
+      {
+        stats: 1.8,
+      },
+      {
+        stats: 0.6,
+      },
+      {
+        stats: 0.4,
+      },
+      {
+        stats: 3.2,
+      },
+      {
+        stats: 1.9,
+      },
+    ],
+  },
+];
+
+export const MOCK_CHART_DATA = [
+  {
+    revenue: 2.25,
+    // subscription: 240,
+  },
+  {
+    revenue: 1.37,
+    // subscription: 300,
+  },
+  {
+    revenue: 0.54,
+    // subscription: 200,
+  },
+  {
+    revenue: 2.3,
+    // subscription: 278,
+  },
+  {
+    revenue: 0.12,
+    // subscription: 189,
+  },
+  {
+    revenue: 0.05,
+    // subscription: 239,
+  },
+  {
+    revenue: 5,
+    // subscription: 278,
+  },
+  {
+    revenue: 2,
+    // subscription: 189,
   },
 ];

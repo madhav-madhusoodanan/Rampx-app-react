@@ -18,7 +18,7 @@ const ChainSelector = () => {
   const [open, setOpen] = useState(false);
   const { chains } = useSwitchChain();
   const currentChainId = useChainId();
-  console.log("chainID here :", currentChainId);
+  // console.log("chainID here :", currentChainId);
 
   return (
     <Popover open={open} onOpenChange={() => setOpen(!open)}>
@@ -47,7 +47,7 @@ const ChainSelector = () => {
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="border-[1px] border-gray-500 border-opacity-20 rounded-xl bg-a-charcoal flex flex-col  p-3"
+        className="border-[1px] border-gray-500 border-opacity-20 rounded-xl bg-a-charcoal flex flex-col  p-3 "
       >
         {chains.map((chain) => (
           <ChainCard

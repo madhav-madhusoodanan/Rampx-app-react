@@ -1,22 +1,36 @@
 import React from "react";
 import Image from "next/image";
+import { useSwapContext } from "@/context/Swap.context";
+import { Input } from "./ui/input";
 
 const SwapOutput = () => {
+  const { setIsTokenSelectorModalOpen } = useSwapContext();
   return (
-    <section className="flex flex-col gap-3 pb-10 pr-4">
-      <span className="text-sm pl-4">To receive</span>
+    <section className="flex flex-col gap-3 pb-4 ">
+      <div className="text-sm font-bold">To receive</div>
 
-      <div className="text-2xl flex justify-between items-center ">
-        <div className="rounded-full bg-a-charcoal w-[230px] h-[65px] flex px-12 items-center gap-6">
-          <Image
-            alt="USDC"
-            src="/assets/icons/seilogo.svg"
-            width={28}
-            height={28}
-          />
-          <span>SEI</span>
-        </div>
-        <span>0.00</span>
+      <div className="flex justify-between items-center rounded-xl bg-a-charcoal p-4 focus-within:shadow-[0_0_6px_rgba(179,207,61,1)] transition-all duration-300">
+        <button
+          // onClick={() => setIsTokenSelectorModalOpen(true)}
+          className="font-bold "
+        >
+          <div className="rounded-xl border border-gray-500 bg-a-charcoal h-[50px] flex px-4 items-center gap-4">
+            <Image
+              alt="USDC"
+              src="/assets/icons/usdclogo.png"
+              width={28}
+              height={28}
+            />
+            <span>USDC</span>
+          </div>
+        </button>
+
+        <Input
+          type="number"
+          placeholder="0.00"
+          className="text-end font-semibold placeholder:text-gray-500 text-xl"
+          onWheel={(e) => e.currentTarget.blur()}
+        />
       </div>
     </section>
   );

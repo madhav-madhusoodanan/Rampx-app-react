@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 
 import { headers } from "next/headers";
@@ -11,8 +11,14 @@ import { SwapProvider } from "@/context/Swap.context";
 
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
-  display: "swap",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-syne",
 });
 
 // TODO - Revisit this and consult with team with regards to metadata content
@@ -38,7 +44,7 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie"));
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${syne.variable}`}>
         <Web3ModalProvider initialState={initialState}>
           <SwapProvider>{children}</SwapProvider>
         </Web3ModalProvider>

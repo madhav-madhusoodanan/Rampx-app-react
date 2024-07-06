@@ -4,10 +4,10 @@ import FooterIcons from "@/components/shared/FooterIcons";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="min-h-screen flex flex-col bg-ramp bg-cover bg-center relative">
+    <main className="min-h-screen flex flex-col bg-a-charcoal relative font-syne">
       <Header />
 
-      <div className="mx-auto w-full max-w-5xl flex flex-col flex-1">
+      <div className="mx-auto w-full max-w-6xl flex flex-col px-4 flex-1">
         {children}
       </div>
 
