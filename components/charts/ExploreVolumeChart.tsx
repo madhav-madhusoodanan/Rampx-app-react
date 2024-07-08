@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { createChart, ColorType } from "lightweight-charts";
+import { createChart, ColorType, LineStyle } from "lightweight-charts";
 
 const initialData = [
   { time: "2018-12-22", value: 32.51 },
@@ -37,16 +37,13 @@ const initialData = [
   { time: "2019-01-22", value: 30.28 },
 ];
 
-const ExploreMainChart: React.FC = () => {
+const ExploreVolumeChart: React.FC = () => {
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const legendRef = useRef<HTMLDivElement | null>(null);
   const [chartLegend, setChartLegend] = useState<string | null>(null);
 
   const backgroundColor = "transparent";
-  const lineColor = "#2962FF";
   const textColor = "gray";
-  const areaTopColor = "rgba(41, 98, 255, 0.10)";
-  const areaBottomColor = "rgba(41, 98, 255, 0.10)";
 
   //   const initLoadData = `$${initialData[initialData.length - 1].value}`;
   //   const legendPrefix = "$";
@@ -69,9 +66,20 @@ const ExploreMainChart: React.FC = () => {
       },
       rightPriceScale: {
         scaleMargins: {
-          top: 0.3,
-          bottom: 0.25,
+          top: 0,
+          bottom: 0,
         },
+        visible: false, // makes the right priceScale disapear
+        autoScale: true,
+        borderVisible: false,
+      },
+      // grid: {
+      //   vertLines: { style: LineStyle.CustomDotGrid, color: "white" },
+      //   horzLines: { style: LineStyle.CustomDotGrid, color: "white" },
+      // },
+      grid: {
+        vertLines: { visible: false },
+        horzLines: { visible: false },
       },
       //   crosshair: {
       //     horzLine: {
@@ -79,39 +87,24 @@ const ExploreMainChart: React.FC = () => {
       //       labelVisible: false,
       //     },
       //   },
-      grid: {
-        vertLines: { visible: false },
-        horzLines: { visible: false },
-      },
       width: chartContainerRef.current.clientWidth,
-      height: 330,
+      //   height: 330,
+      //   TESTING SOME ADD ONs FROM EXAMPLE PLUGINS
+      handleScale: false,
+      handleScroll: false,
     });
 
-    const areaSeries = chart.addAreaSeries({
-      lineColor,
-      topColor: areaTopColor,
-      bottomColor: areaBottomColor,
-      lineWidth: 2,
-      crossHairMarkerVisible: false,
+    const areaSeries = chart.addHistogramSeries({
+      //   lineColor: "#B3CF3D",
+      //   topColor: "#D0F603",
+      //   bottomColor: "#D0F603",
+      //   lineWidth: 2,
+      //   crosshairMarkerVisible: false,
+      color: "red",
+      priceLineVisible: false,
     });
 
     areaSeries.setData(initialData);
-
-    // const legend = document.createElement("div");
-    // legend.style.position = "absolute";
-    // legend.style.left = "12px";
-    // legend.style.top = "12px";
-    // legend.style.zIndex = "1";
-    // legend.style.fontSize = "32px";
-    // // legend.style.fontFamily = "sans-serif";
-    // legend.style.lineHeight = "18px";
-    // legend.style.fontWeight = "700";
-    // legend.style.color = "white";
-    // legendRef.current.appendChild(legend);
-
-    // const firstRow = document.createElement("div");
-    // firstRow.innerHTML = legendPrefix;
-    // legend.appendChild(firstRow);
 
     chart.subscribeCrosshairMove((param) => {
       let priceFormatted = "";
@@ -140,22 +133,23 @@ const ExploreMainChart: React.FC = () => {
       window.removeEventListener("resize", handleResize);
       chart.remove();
     };
-  }, [backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]);
+  }, [backgroundColor, textColor]);
 
   return (
-    <div style={{ position: "relative" }}>
-      <div
-        ref={chartContainerRef}
-        style={{ width: "600px", height: "330px" }}
-      ></div>
-      <div
-        ref={legendRef}
-        className="font-syne lining-nums absolute top-[12px] left-[12px] font-semibold text-white text-[32px] z-10"
-      >
-        ${chartLegend || initialData[initialData.length - 1].value}
+    <div>
+      <div className="text-a-gray font-medium">RampX Volume</div>
+
+      <div className="relative">
+        <div ref={chartContainerRef} className="w-full h-[350px]"></div>
+        <div
+          ref={legendRef}
+          className="font-syne lining-nums absolute top-0 left-0 font-semibold text-white text-[36px] z-10 mb-20"
+        >
+          ${chartLegend || initialData[initialData.length - 1].value}M
+        </div>
       </div>
     </div>
   );
 };
 
-export default ExploreMainChart;
+export default ExploreVolumeChart;

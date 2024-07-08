@@ -92,7 +92,7 @@ export function useSwapContext() {
   const context = useContext(SwapContext);
 
   if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error("useSwapContext must be used within SwapProvider");
   }
 
   return context;

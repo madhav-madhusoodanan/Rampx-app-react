@@ -2,47 +2,39 @@ import React from "react";
 import {
   Table,
   TableBody,
-  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import ExploreTokenChart from "@/components/charts/ExploreTokenChart";
 
 import Image from "next/image";
-import {
-  MOCK_CHART_DATA,
-  MOCK_POPULAR_TOKENS,
-  MOCK_TOKEN_EXPLORE_PAGE_STATS,
-} from "@/constants";
+import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
 import { formatNumberWithCommas } from "@/lib/utils";
 
 import TokenMiniChart from "@/components/charts/TokenMiniChart";
-import ExploreMainChart from "@/components/charts/ExploreMainChart";
+import ExploreTvlChart from "@/components/charts/ExploreTvlChart";
+import ExploreVolumeChart from "@/components/charts/ExploreVolumeChart";
 
 // TODO - Figure out the sticky scroll for table header
 // TODO - Add truncate to fields that need it
 // TODO - Check syne numbers issue with font
 
-const initialData = [
-  { time: "2018-12-22", value: 32.51 },
-  { time: "2018-12-23", value: 31.11 },
-  { time: "2018-12-24", value: 27.02 },
-  { time: "2018-12-25", value: 27.32 },
-  { time: "2018-12-26", value: 25.17 },
-  { time: "2018-12-27", value: 28.89 },
-  { time: "2018-12-28", value: 25.46 },
-  { time: "2018-12-29", value: 23.92 },
-  { time: "2018-12-30", value: 22.68 },
-  { time: "2018-12-31", value: 22.67 },
-];
-
 const Page = () => {
   return (
     <div>
-      <div className="mt-20">
-        <ExploreMainChart data={initialData} />
+      <div className="mt-20 flex justiyfy-between gap-10 ">
+        {/* <ExploreTokenChart /> */}
+        <div className="w-full">
+          {" "}
+          <ExploreTvlChart />
+        </div>
+        <div className="w-full">
+          {" "}
+          <ExploreVolumeChart />
+        </div>
       </div>
       <div className=" w-full mt-10">
         <div className="flex gap-0 pb-3">

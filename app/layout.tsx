@@ -5,8 +5,9 @@ import "./globals.css";
 import { headers } from "next/headers";
 
 import { cookieToInitialState } from "wagmi";
-import { config } from "@/config/Web3.config";
-import Web3ModalProvider from "@/context/Web3.context";
+
+import { config } from "@/config";
+import Web3ModalProvider from "@/context";
 import { SwapProvider } from "@/context/Swap.context";
 
 const inter = Inter({

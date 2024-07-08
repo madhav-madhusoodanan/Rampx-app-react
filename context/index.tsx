@@ -1,7 +1,8 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { config, projectId } from "@/config/Web3.config";
+import { config, projectId } from "@/config";
+import { siweConfig } from "@/config/siwe";
 
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 
@@ -18,8 +19,9 @@ if (!projectId) throw new Error("Project ID is not defined");
 createWeb3Modal({
   wagmiConfig: config,
   projectId,
-  enableAnalytics: true, // Optional - defaults to your Cloud configuration
-  enableOnramp: false, // Optional - false as default
+  siweConfig,
+  // enableAnalytics: true, // Optional - defaults to your Cloud configuration
+  // enableOnramp: false, // Optional - false as default
 });
 
 export default function Web3ModalProvider({
