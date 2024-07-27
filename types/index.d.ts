@@ -4,6 +4,11 @@ export interface FooterIcon {
   label: string;
 }
 
+export interface NavLink {
+  label: string;
+  path: string;
+}
+
 export interface GetUserErc20TokensParams {
   address: `0x${string}` | undefined;
   contractAddress?: string[];

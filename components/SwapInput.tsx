@@ -9,13 +9,13 @@ import {
 } from "@/lib/utils";
 
 interface Props {
-  amountType: "input" | "output";
+  tokenType: "input" | "output";
 }
 
 // TODO - Add truncate on the token symbols being displayed
 // TODO - Check responsiveness issues with logos
 
-const SwapInput = ({ amountType }: Props) => {
+const SwapInput = ({ tokenType }: Props) => {
   const {
     setIsTokenSelectorModalOpen,
     inputToken,
@@ -27,7 +27,7 @@ const SwapInput = ({ amountType }: Props) => {
   } = useSwapContext();
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (amountType === "input") {
+    if (tokenType === "input") {
       setInputAmount(e.target.value);
     } else {
       setOutputAmount(e.target.value);
@@ -36,42 +36,33 @@ const SwapInput = ({ amountType }: Props) => {
 
   return (
     <section className="flex flex-col gap-3 ">
-      <div className="flex justify-between items-center">
-        <span className="text-sm font-medium font-syne">
-          {amountType === "input" ? "You are paying" : "To receive"}
-        </span>
+      <h4 className="text-xs font-medium uppercase">
+        {tokenType === "input" ? "You are paying" : "To receive"}
+      </h4>
 
-        {amountType === "input" && (
-          <div className="text-[12px]">
-            <span>Dextools</span>
-          </div>
-        )}
-      </div>
-
-      <div className="flex justify-between items-center rounded-xl bg-black px-4 h-[72px] focus-within:shadow-[0_0_6px_rgba(179,207,61,1)] transition-all duration-300">
+      <div
+        className="flex justify-between items-center border-[0.5px] border-opacity-50 border-a-fluo bg-[#232418]/50 px-2 
+      h-[64px] focus-within:border-opacity-100 focus-within:hover:shadow-none hover:shadow-[0_0_6px_rgba(179,207,61,1)] transition-all duration-300"
+        // design says bg-[#232418]
+      >
         <button
-          onClick={() => setIsTokenSelectorModalOpen(amountType)}
+          onClick={() => setIsTokenSelectorModalOpen(tokenType)}
           className="font-bold "
         >
-          {amountType === "input" ? (
-            // <div className="rounded-xl text-sm bg-a-charcoal h-10 px-4 flex justify-center items-center gap-4 w-[120px]">
-            //   <Image
-            //     alt={inputToken.tokenSymbol}
-            //     src={inputToken.tokenLogo}
-            //     width={28}
-            //     height={28}
-            //   />
-            //   <span>{inputToken.tokenSymbol}</span>
-            // </div>
-            <div>
+          {tokenType === "input" ? (
+            <div className="hover:shadow-[0_0_8px_rgba(179,207,61,1)] transition-all duration-300">
               {inputToken.smartContractAddress && inputToken.tokenSymbol ? (
-                <div className="rounded-xl text-sm bg-a-charcoal h-10 px-4 flex justify-center items-center gap-4 w-[120px]">
+                <div
+                  className="text-sm bg-[#3F412B] h-11 px-6 flex justify-center items-center gap-2 shadow-lg 
+                "
+                >
                   {inputToken.tokenLogo ? (
                     <Image
                       alt={inputToken.tokenSymbol}
                       src={inputToken.tokenLogo}
                       width={28}
                       height={28}
+                      className="rounded-full"
                     />
                   ) : (
                     <div className="h-[36px] w-[36px] rounded-full  bg-[#052105] flex justify-center items-center ">
@@ -80,18 +71,20 @@ const SwapInput = ({ amountType }: Props) => {
                       </span>
                     </div>
                   )}
-                  <span>{inputToken.tokenSymbol}</span>
+                  <span className="font-normal text-xl">
+                    {inputToken.tokenSymbol}
+                  </span>
                 </div>
               ) : (
-                <div className="rounded-xl text-sm bg-a-charcoal h-10 px-4 flex justify-center items-center gap-4 w-[120px]">
+                <div className="text-sm bg-[#3F412B] h-11 shadow-lg px-6 flex justify-center items-center gap-2 ">
                   <span>SELECT</span>
                 </div>
               )}
             </div>
           ) : (
-            <div>
+            <div className="hover:shadow-[0_0_8px_rgba(179,207,61,1)] transition-all duration-300">
               {outputToken.smartContractAddress && outputToken.tokenSymbol ? (
-                <div className="rounded-xl text-sm bg-a-charcoal h-10 px-4 flex justify-center items-center gap-4 w-[120px]">
+                <div className="text-sm bg-[#3F412B] h-11 px-6 flex justify-center items-center gap-2 shadow-lg">
                   {outputToken.tokenLogo ? (
                     <Image
                       alt={outputToken.tokenSymbol}
@@ -109,7 +102,7 @@ const SwapInput = ({ amountType }: Props) => {
                   <span>{outputToken.tokenSymbol}</span>
                 </div>
               ) : (
-                <div className="rounded-xl text-sm bg-a-charcoal h-10 px-4 flex justify-center items-center gap-4 w-[120px]">
+                <div className="text-sm bg-[#3F412B] h-11 shadow-lg px-6 flex justify-center items-center gap-2 ">
                   <span>SELECT</span>
                 </div>
               )}
@@ -120,13 +113,20 @@ const SwapInput = ({ amountType }: Props) => {
         <Input
           type="number"
           placeholder="0.00"
-          className="text-end font-semibold placeholder:text-white/25 text-xl min-w-[100px] truncate font-mono"
+          className="text-end font-semibold placeholder:text-white/25 text-xl min-w-[100px] truncate lining-nums "
           onWheel={(e) => e.currentTarget.blur()}
           onKeyDown={blockInvalidCharDecimalsAllowed}
-          value={amountType === "input" ? inputAmount : outputAmount}
+          value={tokenType === "input" ? inputAmount : outputAmount}
           onChange={handleAmountChange}
         />
       </div>
+
+      {tokenType === "input" && (
+        <div className="flex justify-between items-center text-xs px-3 ">
+          <p className="text-a-gray">Available</p>
+          <p className="text-white lining-nums">0.00 ETH</p>
+        </div>
+      )}
     </section>
   );
 };

@@ -4,12 +4,12 @@ import { Line, LineChart } from "recharts";
 
 // TODO - Replace any type once return value is more clear
 
-const TokenMiniChart = ({ data, isPositive }: any) => {
+const TokenMiniChart = ({ data, isPositive, height, width }: any) => {
   return (
     <>
       <LineChart
-        width={150}
-        height={60}
+        width={width}
+        height={height}
         data={data}
         margin={{ top: 10, right: 16, left: 16, bottom: 22 }}
       >

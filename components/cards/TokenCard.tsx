@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { shortenTokenSymbol } from "@/lib/utils";
+import { cn, shortenTokenSymbol } from "@/lib/utils";
 import { useSwapContext } from "@/context/Swap.context";
 
 interface Props {
@@ -42,9 +42,10 @@ const TokenCard = ({ token, isMyToken }: Props) => {
     <button
       type="button"
       onClick={handleSelectToken}
-      className={`bg-gray-300 bg-opacity-0 hover:bg-opacity-10 transition-all duration-150 cursor-pointer py-2 px-6 w-full ${
+      className={cn(
+        "bg-gray-300 bg-opacity-0 hover:bg-opacity-10 transition-all duration-150 cursor-pointer py-2 px-6 w-full",
         isMyToken && "flex items-center justify-between"
-      }`}
+      )}
     >
       <div className="flex items-center gap-6">
         {parsedTokenData.tokenLogo ? (

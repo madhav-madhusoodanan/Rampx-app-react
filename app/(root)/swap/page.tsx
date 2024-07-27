@@ -1,21 +1,13 @@
-import SwapCard from "@/components/cards/SwapCard";
-import Image from "next/image";
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-// import SwapTokenSelectorModal from "@/components/modals/SwapTokenSelectorModal";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
-import SwapCardTwo from "@/components/cards/SwapCardTwo";
+import SwapWidget from "@/components/SwapWidget";
+import SwapAndRampSwitch from "@/components/SwapAndRampSwitch";
+import SwapTokensInfoSection from "@/components/SwapTokensInfoSection";
 
 const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="mt-10 w-full px-6 md:px-10 max-w-[530px]">
-        <div className="flex justify-between items-center pb-3  mt-7">
+      <div className="py-8 w-full px-6 md:px-10 max-w-[530px]">
+        {/* <div className="flex justify-between items-center pb-3  mt-7">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -70,12 +62,16 @@ const Page = () => {
               </Tooltip>
             </TooltipProvider>
           </div>
-        </div>
+        </div> */}
 
-        <SwapCard />
+        {/* <SwapCard /> */}
+
+        <SwapAndRampSwitch />
+
+        <SwapWidget />
+
+        <SwapTokensInfoSection />
       </div>
-
-      {/* <SwapCardTwo /> */}
 
       <SwapTokenSelectorModalWrapper />
     </div>

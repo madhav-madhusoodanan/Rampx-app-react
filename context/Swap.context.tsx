@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { ZERO_ADDRESS, MOCK_POPULAR_TOKENS } from "@/constants";
+import { zeroAddress } from "viem";
+import { MOCK_POPULAR_TOKENS } from "@/constants";
 
 interface InputOrOutputToken {
   smartContractAddress: string;
@@ -22,16 +23,20 @@ interface SwapContextType {
   outputAmount: string;
   setOutputAmount: (outputAmount: string) => void;
   handleSwitchTokens: () => void;
+  isSwap: boolean;
+  setIsSwap: (isSwap: boolean) => void;
 }
 
 const SwapContext = createContext<SwapContextType | undefined>(undefined);
 
 export function SwapProvider({ children }: { children: React.ReactNode }) {
-  const [isTokenSelectorModalOpen, setIsTokenSelectorModalOpen] = useState("");
-  const [inputAmount, setInputAmount] = useState("");
-  const [outputAmount, setOutputAmount] = useState("");
+  const [isSwap, setIsSwap] = useState<boolean>(false);
+  const [inputAmount, setInputAmount] = useState<string>("");
+  const [outputAmount, setOutputAmount] = useState<string>("");
+  const [isTokenSelectorModalOpen, setIsTokenSelectorModalOpen] =
+    useState<string>("");
   const [inputToken, setInputToken] = useState<InputOrOutputToken>({
-    smartContractAddress: ZERO_ADDRESS,
+    smartContractAddress: zeroAddress,
     tokenName: "Ethereum",
     tokenSymbol: "ETH",
     tokenLogo: MOCK_POPULAR_TOKENS[0].tokenLogo,
@@ -81,6 +86,8 @@ export function SwapProvider({ children }: { children: React.ReactNode }) {
         outputAmount,
         setOutputAmount,
         handleSwitchTokens,
+        isSwap,
+        setIsSwap,
       }}
     >
       {children}

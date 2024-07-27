@@ -6,7 +6,6 @@ import {
   GetUserErc20TokensParams,
   TokenMetadata,
 } from "@/types";
-import exp from "constants";
 
 import { createPublicClient, http } from "viem";
 import { mainnet, base, blast } from "viem/chains";

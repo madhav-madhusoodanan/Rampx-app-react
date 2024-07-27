@@ -26,6 +26,13 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* ADDED @font-face to implement in web3modal */
+@font-face {
+  font-family: "SyneForWeb3Modal";
+  font-weight: 500;
+  src: url("/fonts/Syne-Medium.ttf") format("opentype");
+}
+
 /* Custom scrollbar styles for specific container */
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
@@ -68,37 +75,42 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.swap-input-container {
-  width: 450px;
-  height: 150px;
+.swap-container {
+  width: 99.8%;
+
   position: relative;
-  clip-path: polygon(
-    7.5% 0%,
-    92.5% 0%,
-    /* top side */ 100% 15%,
-    /* top right corner */ 100% 85%,
-    /* right side */ 92.5% 100%,
-    7.5% 100%,
-    /* bottom side */ 0% 85%,
-    /* bottom left corner */ 0% 15% /* left side */
-  );
-  border-radius: 37.5px;
-  box-sizing: border-box;
+  clip-path: polygon(0% 0%, 93% 0%, 100% 6%, 100% 100%, 8% 100%, 0% 93%, 0% 0%);
 }
 
-.swap-btn-container {
-  width: 450px;
-  height: 55px;
+.swap-border-container {
+  width: 100%;
+  clip-path: polygon(0% 0%, 93% 0%, 100% 6%, 100% 100%, 8% 100%, 0% 93%, 0% 0%);
+}
+
+.swap-tokens-info-container {
+  width: 99.8%;
+
   position: relative;
   clip-path: polygon(
-    7.5% 0%,
-    92.5% 0%,
-    /* top side */ 100% 15%,
-    /* top right corner */ 100% 85%,
-    /* right side */ 92.5% 100%,
-    7.5% 100%,
-    /* bottom side */ 0% 85%,
-    /* bottom left corner */ 0% 15% /* left side */
+    0% 0%,
+    93% 0%,
+    100% 15%,
+    100% 100%,
+    7% 100%,
+    0% 87%,
+    0% 0%
   );
-  /* border-radius: 37.5px; */
+}
+
+.swap-tokens-info-border-container {
+  width: 100%;
+  clip-path: polygon(
+    0% 0%,
+    93% 0%,
+    100% 15%,
+    100% 100%,
+    7% 100%,
+    0% 87%,
+    0% 0%
+  );
 }

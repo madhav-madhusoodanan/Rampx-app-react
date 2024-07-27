@@ -28,7 +28,7 @@ const config = {
           green: "#D0F603",
           pnlGreen: "#40b66b",
           pnlRed: "#ff5f52",
-          charcoal: "#191919",
+          charcoal: "#141414",
           gray: "#7c7c7c",
         },
         dark: {
@@ -38,6 +38,15 @@ const config = {
           400: "#212734",
           500: "#101012",
         },
+        textShadow: {
+          "a-fluo": "0 0 8px rgba(179, 207, 61, 1)",
+          none: "none", // Add this line
+        },
+        backgroundImage: {
+          ramp: "url(../public/assets/images/rampx-bg.png)",
+          code: "url(../public/assets/images/codebgstatic.png)",
+        },
+        // SHADCN Classes
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -72,9 +81,6 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      backgroundImage: {
-        ramp: "url(../public/assets/images/rampx-bg.png)",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -96,7 +102,19 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }: any) {
+      addUtilities({
+        ".text-shadow-a-fluo": {
+          textShadow: "0 0 8px rgba(179, 207, 61, 1)",
+        },
+        ".text-shadow-none": {
+          textShadow: "none", // Add this line
+        },
+      });
+    },
+  ],
 } satisfies Config;
 
 export default config;

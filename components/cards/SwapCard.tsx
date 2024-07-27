@@ -51,7 +51,7 @@ const SwapCard = () => {
       className=" bg-gradient-to-r from-[#191919]/50 to-[#000000]/20 rounded-2xl border-[1px] 
     border-gray-500 border-opacity-20 backdrop-blur-xl p-6"
     >
-      <SwapInput amountType="input" />
+      <SwapInput tokenType="input" />
 
       {/* Divisor */}
       <div className="flex items-center  my-2">
@@ -76,7 +76,7 @@ const SwapCard = () => {
       </div>
 
       {/* <SwapOutput /> */}
-      <SwapInput amountType="output" />
+      <SwapInput tokenType="output" />
 
       <button
         // onClick={getTokens}
