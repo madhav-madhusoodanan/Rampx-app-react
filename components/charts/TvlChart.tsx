@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/custom-charts/explore-main-chart";
+import { Skeleton } from "../ui/skeleton";
 
 const chartData = [
   { time: "2018-12-22", value: 3.51 },

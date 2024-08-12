@@ -1,6 +1,9 @@
 import { FooterIcon, NavLink } from "../types";
+import DiscordIcon from "@/components/custom-icons/DiscordIcon";
+import TelegramIcon from "@/components/custom-icons/TelegramIcon";
+import RedditIcon from "@/components/custom-icons/RedditIcon";
 
-// TODO - Replace with correct href links
+// TODO - Replace with correct footer href links
 export const FOOTER_ICONS: FooterIcon[] = [
   {
     imgURL: "/assets/icons/x.svg",
@@ -22,6 +25,22 @@ export const NAV_LINKS: NavLink[] = [
   {
     label: "explore",
     path: "/explore",
+  },
+];
+
+// TODO - Replace with correct social media href links
+export const SOCIAL_MEDIA_LINKS = [
+  {
+    icon: DiscordIcon,
+    link: "https://discord.com",
+  },
+  {
+    icon: RedditIcon,
+    link: "https://reddit.com",
+  },
+  {
+    icon: TelegramIcon,
+    link: "https://telegram.com",
   },
 ];
 

@@ -18,10 +18,18 @@ const SwapWidget = () => {
     <div>
       <div
         className="swap-border-container flex justify-center items-center
-        bg-gradient-to-r from-a-fluo from-0% via-[#232323] via-50% to-a-fluo to-100% py-[1px]"
-        // className="swap-border-container bg-gradient-to-r from-a-fluo from-30% via-[#232323] via-50% to-a-fluo to-100% mt-20 flex justify-center items-center "
-        // TAILWIND EXAMPLES FROM DOCS bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%
+       bg-a-fluo py-[1px] relative"
+        // className="swap-border-container flex justify-center items-center
+        // bg-gradient-to-r from-a-fluo from-0% via-[#232323] via-50% to-a-fluo to-100% py-[1px]"
+        // LAST WORKING className
       >
+        {/* 
+        FADED GRADIENT BORDER TOP + BOTTOM 
+        Increase/Decrease the opacity of the gradient to make it more/less visible 👇
+        */}
+        <div className="h-[3px] w-full absolute top-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" />
+        <div className="h-[1.5px] w-full absolute bottom-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" />
+
         <div className="bg-[#232323] swap-container p-8 ">
           <div className="flex justify-between items-center">
             <Button

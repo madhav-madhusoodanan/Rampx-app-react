@@ -67,7 +67,7 @@ const Header = () => {
                 className={
                   pathname.startsWith(path)
                     ? "text-a-fluo"
-                    : "text-white hover:text-a-fluo hover:text-shadow-a-fluo"
+                    : "text-white group-hover:text-a-fluo group-hover:text-shadow-a-fluo"
                 }
               >
                 {label}

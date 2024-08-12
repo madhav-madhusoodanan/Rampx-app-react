@@ -2,11 +2,12 @@ import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSele
 import SwapWidget from "@/components/SwapWidget";
 import SwapAndRampSwitch from "@/components/SwapAndRampSwitch";
 import SwapTokensInfoSection from "@/components/SwapTokensInfoSection";
+import XBoy from "@/components/XBoy";
 
 const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="py-8 w-full px-6 md:px-10 max-w-[530px]">
+      <div className="py-8 w-full px-6 md:px-10 max-w-[530px] ">
         {/* <div className="flex justify-between items-center pb-3  mt-7">
           <TooltipProvider>
             <Tooltip>
@@ -71,6 +72,8 @@ const Page = () => {
         <SwapWidget />
 
         <SwapTokensInfoSection />
+
+        {/* <XBoy /> */}
       </div>
 
       <SwapTokenSelectorModalWrapper />
