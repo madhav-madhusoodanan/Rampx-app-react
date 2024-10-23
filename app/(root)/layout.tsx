@@ -1,11 +1,23 @@
 import React from "react";
+import Image from "next/image";
+
 import Header from "@/components/shared/navigation/Header";
 import XBoy from "@/components/XBoy";
+import backgroundImage from "../../public/assets/images/codebgstatic.png";
 // import FooterIcons from "@/components/shared/FooterIcons";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="min-h-screen flex flex-col bg-a-charcoal relative font-syne">
+      <Image
+        src={backgroundImage}
+        width={0}
+        height={0}
+        alt="Cover Image"
+        className="object-fill opacity-10"
+        fill
+        unoptimized
+      />
       <Header />
 
       {/* <div className="absolute inset-0 h-full w-full bg-code bg-center bg-cover opacity-25 z-0 " />

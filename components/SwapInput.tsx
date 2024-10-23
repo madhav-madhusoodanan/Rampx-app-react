@@ -7,6 +7,8 @@ import {
   blockInvalidCharDecimalsAllowed,
   shortenTokenSymbol,
 } from "@/lib/utils";
+import { useDispatch } from "@/store";
+import { setIsTokenModalOpen } from "@/store/slices/app";
 
 interface Props {
   tokenType: "input" | "output";
@@ -34,6 +36,8 @@ const SwapInput = ({ tokenType, token }: Props) => {
       setOutputAmount(e.target.value);
     }
   };
+
+  const dispatch = useDispatch();
 
   return (
     <section className="flex flex-col gap-3 ">
@@ -72,7 +76,7 @@ const SwapInput = ({ tokenType, token }: Props) => {
           </div>
         )} */}
         <button
-          onClick={() => setIsTokenSelectorModalOpen(tokenType)}
+          onClick={() => dispatch(setIsTokenModalOpen(true))}
           className="font-bold "
         >
           {tokenType === "input" ? (
