@@ -9,6 +9,7 @@ import { cookieToInitialState } from "wagmi";
 import { config } from "@/config";
 import Web3ModalProvider from "@/context";
 import { SwapProvider } from "@/context/Swap.context";
+import StoreProvider from "@/context/store";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,9 +47,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${syne.variable}`}>
-        <Web3ModalProvider initialState={initialState}>
-          <SwapProvider>{children}</SwapProvider>
-        </Web3ModalProvider>
+        <StoreProvider>
+          <Web3ModalProvider initialState={initialState}>
+            <SwapProvider>{children}</SwapProvider>
+          </Web3ModalProvider>
+        </StoreProvider>
       </body>
     </html>
   );
