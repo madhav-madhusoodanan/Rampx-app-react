@@ -3,6 +3,10 @@ import DiscordIcon from "@/components/custom-icons/DiscordIcon";
 import TelegramIcon from "@/components/custom-icons/TelegramIcon";
 import RedditIcon from "@/components/custom-icons/RedditIcon";
 
+export const NATIVE_TOKEN_ADDRESS =
+  "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+
+export const TOKENLIST_EXPIRE_PERIOD = 24 * 60 * 60 * 1000;
 // TODO - Replace with correct footer href links
 export const FOOTER_ICONS: FooterIcon[] = [
   {

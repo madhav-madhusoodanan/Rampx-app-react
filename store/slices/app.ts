@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AppSlice = {
   walletAddress: "",
+  isTokenModalOpen: false,
 };
 
 const app = createSlice({
@@ -12,9 +13,12 @@ const app = createSlice({
     setWalletAddress(state, action: PayloadAction<string>) {
       state.walletAddress = action.payload;
     },
+    setIsTokenModalOpen(state, action: PayloadAction<boolean>) {
+      state.isTokenModalOpen = action.payload;
+    },
   },
 });
 
 export default app.reducer;
 
-export const { setWalletAddress } = app.actions;
+export const { setWalletAddress, setIsTokenModalOpen } = app.actions;

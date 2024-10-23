@@ -18,6 +18,18 @@ const nextConfig = {
         port: "",
         // pathname: "/uniswap/**",
       },
+      {
+        protocol: "https",
+        hostname: "static.debank.com",
+        port: "",
+        // pathname: "/uniswap/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*",
+        port: "",
+        // pathname: "/uniswap/**",
+      },
     ],
   },
 };

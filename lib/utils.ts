@@ -1,4 +1,7 @@
+import TokenCacheService from "@/classes/tokenCache";
+import { NATIVE_TOKEN_ADDRESS, TOKENLIST_EXPIRE_PERIOD } from "@/constants";
 import { ApiResponse, UniqueContract } from "@/types";
+import { TokenAPIResponse } from "@/types/tokens";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -55,6 +58,31 @@ export const formatNumberWithCommas = (numberString: string): string => {
   // Use toLocaleString to format the number with commas
   return number.toLocaleString();
 };
+
+export function replaceZeroAddress(
+  response: TokenAPIResponse
+): TokenAPIResponse {
+  Object.keys(response).forEach((chainId) => {
+    const tokens = response[chainId];
+    tokens.forEach((token) => {
+      if (token.address === "0x0000000000000000000000000000000000000000") {
+        token.address = NATIVE_TOKEN_ADDRESS;
+      }
+    });
+  });
+
+  return response;
+}
+
+export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
+  const currentTime = Date.now();
+  const tokensListIsEmpty = TokenCacheService.tokensList.length === 0;
+  return (
+    currentTime - lastTokensUpdated >= TOKENLIST_EXPIRE_PERIOD ||
+    tokensListIsEmpty
+  );
+};
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES

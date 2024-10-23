@@ -10,6 +10,7 @@ import { config } from "@/config";
 import Web3ModalProvider from "@/context";
 import { SwapProvider } from "@/context/Swap.context";
 import StoreProvider from "@/context/store";
+import Listeners from "@/components/listeners";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${syne.variable}`}>
         <StoreProvider>
           <Web3ModalProvider initialState={initialState}>
+            <Listeners />
             <SwapProvider>{children}</SwapProvider>
           </Web3ModalProvider>
         </StoreProvider>
