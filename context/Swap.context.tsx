@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { zeroAddress } from "viem";
 import { MOCK_POPULAR_TOKENS } from "@/constants";
 
-interface InputOrOutputToken {
+export interface InputOrOutputToken {
   smartContractAddress: string;
   tokenName: string;
   tokenSymbol: string;
