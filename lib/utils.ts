@@ -84,11 +84,75 @@ export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
   );
 };
 
+export const getWeekTimestamps = () => {
+  const now = new Date();
+  const endOfRange = new Date(now);
+  endOfRange.setDate(now.getDate());
+  endOfRange.setHours(23, 59, 59, 999);
+
+  const startOfRange = new Date(endOfRange);
+  startOfRange.setDate(endOfRange.getDate() - 6);
+  startOfRange.setHours(0, 0, 0, 0);
+  const fromTimestamp = Number((startOfRange.getTime() / 1000).toFixed(0));
+  const toTimestamp = Number((endOfRange.getTime() / 1000).toFixed(0));
+
+  return { fromTimestamp, toTimestamp };
+};
+
 export function validateDecimalPlaces(numStr: string, maxDecimals: number) {
   // Regular expression to check if the number has more than maxDecimals places
   const regex = new RegExp(`^\\d+(\\.\\d{0,${maxDecimals}})?$`);
   return regex.test(numStr);
 }
+
+export const formatTokenAmount = (num: number | undefined, digits = 2) => {
+  if (num === 0) return "0";
+  if (!num) return "-";
+  if (num < 0.001 && digits <= 3) {
+    return "<0.001";
+  }
+  if (num < 0.01 && digits <= 2) {
+    return "<0.01";
+  }
+
+  let formattedAmount = numbro(num)
+    .formatCurrency({
+      average: true,
+      mantissa: num >= 1000 ? 2 : digits,
+      abbreviations: {
+        million: "M",
+        billion: "B",
+      },
+    })
+    .replace("$", "");
+
+  formattedAmount = formattedAmount.replace(".00", "");
+  return formattedAmount;
+};
+
+export const formatDollarAmount = (
+  num: number | undefined | null,
+  digits = 2,
+  round = true
+) => {
+  if (num === 0) return "$0.00";
+  if (!num) return "-";
+  if (num < 0.001 && digits <= 3) {
+    return "<$0.001";
+  }
+  if (num < 0.01 && digits <= 2) {
+    return "<$0.01";
+  }
+
+  return numbro(num).formatCurrency({
+    average: round,
+    mantissa: num > 1000 ? 2 : digits,
+    abbreviations: {
+      million: "M",
+      billion: "B",
+    },
+  });
+};
 
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
