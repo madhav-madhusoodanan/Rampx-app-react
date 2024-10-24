@@ -4,7 +4,7 @@ import Image from "next/image";
 import Header from "@/components/shared/navigation/Header";
 import XBoy from "@/components/XBoy";
 import backgroundImage from "../../public/assets/images/codebgstatic.png";
-// import FooterIcons from "@/components/shared/FooterIcons";
+// import FooterIcons f../listenersonents/shared/FooterIcons";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -24,7 +24,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="absolute inset-0 h-full w-full bg-transparent backdrop-blur-[2px] z-0 " /> */}
 
       <div className="mx-auto w-full max-w-6xl px-4 flex-1">{children}</div>
-
       {/* <div className="w-full p-6 max-w-screen-2xl mx-auto">
         <FooterIcons />
       </div> */}
