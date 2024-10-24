@@ -26,6 +26,10 @@ export function shortenTokenSymbol(input: string): string {
   return input.slice(0, 3);
 }
 
+export const matchTokenAddress = (tokenA: string, tokenB: string) => {
+  return tokenA.toLowerCase() === tokenB.toLowerCase();
+};
+
 export const filterUniqueContracts = (data: ApiResponse): UniqueContract[] => {
   const uniqueContracts: { [key: string]: UniqueContract } = {};
 

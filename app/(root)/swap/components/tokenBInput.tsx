@@ -45,7 +45,7 @@ const TokenBInput = () => {
   return (
     <div className="mt-4">
       <SwapInput
-        heading="You are paying"
+        heading="You are Receiving"
         amount={amountB}
         token={tokenB}
         setAmount={handleAmountChange}
