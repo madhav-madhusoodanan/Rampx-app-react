@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import SwapTokenInfoCard from "./cards/SwapTokenInfoCard";
+import { useSelector } from "@/store";
 
 const SwapTokensInfoSection = () => {
+  const tokenA = useSelector((state) => state.swap.tokenA);
+  const tokenB = useSelector((state) => state.swap.tokenB);
   return (
     <div className="mt-6">
       <div className="swap-tokens-info-border-container flex justify-center items-center bg-a-fluo py-[1px] relative">
@@ -14,21 +19,19 @@ const SwapTokensInfoSection = () => {
 
         <div className="bg-[#232323] swap-tokens-info-container p-8 flex flex-col gap-4">
           <SwapTokenInfoCard
-            tokenLogo={"/assets/icons/usdc-logo.png"}
-            tokenName={"USD Coin"}
-            tokenSymbol={"USDC"}
-            tokenSmartContractAddress={
-              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-            }
+            tokenLogo={tokenA.logoURI}
+            tokenName={tokenA.name}
+            tokenSymbol={tokenA.symbol}
+            tokenSmartContractAddress={tokenA.address as `0x${string}`}
           />
-          <SwapTokenInfoCard
-            tokenLogo={"/assets/icons/blockchains/sei.svg"}
-            tokenName={"Ethereum"}
-            tokenSymbol={"ETH"}
-            tokenSmartContractAddress={
-              "0x000000000000000000000000000000000000000"
-            }
-          />
+          {tokenB && (
+            <SwapTokenInfoCard
+              tokenLogo={tokenB.logoURI}
+              tokenName={tokenB.name}
+              tokenSymbol={tokenB.symbol}
+              tokenSmartContractAddress={tokenB.address as `0x${string}`}
+            />
+          )}
         </div>
       </div>
     </div>

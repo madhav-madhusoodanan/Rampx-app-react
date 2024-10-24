@@ -28,7 +28,7 @@ const fetchPriceChartRange = async (
           symbol: "${address}:${chainId}"
           from: ${from}
           to: ${to}
-          resolution: "1D"
+          resolution: "720"
         ) {
           c
         }
