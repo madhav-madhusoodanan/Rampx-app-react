@@ -64,8 +64,6 @@ const SwapPage = () => {
           </div>
         </div> */}
 
-        {/* <SwapCard /> */}
-
         <SwapAndRampSwitch />
 
         <SwapWidget />
