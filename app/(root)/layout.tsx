@@ -14,7 +14,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         width={0}
         height={0}
         alt="Cover Image"
-        className="object-fill opacity-10"
+        className="object-fill opacity-10 z-0"
         fill
         unoptimized
       />
@@ -23,7 +23,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* <div className="absolute inset-0 h-full w-full bg-code bg-center bg-cover opacity-25 z-0 " />
       <div className="absolute inset-0 h-full w-full bg-transparent backdrop-blur-[2px] z-0 " /> */}
 
-      <div className="mx-auto w-full max-w-6xl px-4 flex-1">{children}</div>
+      <div className="mx-auto w-full max-w-6xl px-4 flex-1 relative">
+        {children}
+      </div>
 
       {/* <div className="w-full p-6 max-w-screen-2xl mx-auto">
         <FooterIcons />

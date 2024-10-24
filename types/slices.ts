@@ -26,3 +26,13 @@ export type SwapSlice = {
   isQouteDataLoading: boolean;
   tokenSelection: TokenSelection;
 };
+
+export enum ExploreTabs {
+  TOKENS = "tokens",
+  POOLS = "pools",
+  TRANSACTIONS = "transactions",
+}
+
+export type ExploreSlice = {
+  currentTab: ExploreTabs;
+};
