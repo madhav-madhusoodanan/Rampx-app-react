@@ -1,5 +1,5 @@
 import CachedService from "@/classes/cachedService";
-// import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { setIsQouteDataLoading, setQouteData } from "@/store/slices/swap";
 import { QouteApiParams, QouteApiResponse } from "@/types/actions";
 import { parseUnits } from "viem";
@@ -47,11 +47,11 @@ export async function getSwapQoute(params?: QouteApiParams) {
     const data = (await response.json()) as QouteApiResponse;
     store?.dispatch(setQouteData(data));
   } catch (error) {
-    // toast({
-    //   variant: "destructive",
-    //   title: "Error",
-    //   description: "Unable to fetch qoute",
-    // });
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description: "Unable to fetch qoute",
+    });
     console.log("fetchSwapQoute ERROR", error);
     store?.dispatch(setQouteData(undefined));
   }

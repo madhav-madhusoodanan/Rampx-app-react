@@ -11,6 +11,7 @@ import Web3ModalProvider from "@/context";
 import { SwapProvider } from "@/context/Swap.context";
 import StoreProvider from "@/context/store";
 import Listeners from "@/components/listeners";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
             <Listeners />
             <SwapProvider>{children}</SwapProvider>
           </Web3ModalProvider>
+          <Toaster />
         </StoreProvider>
       </body>
     </html>
