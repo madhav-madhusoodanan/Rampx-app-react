@@ -36,6 +36,7 @@ const TokenBInput = () => {
         ontokenClick={ontokenClick}
         isTokenBInput
         loading={isSwapPriceLoading}
+        editable={false}
       />
       <div className="flex justify-between items-center text-xs px-3 mt-2">
         <p className="text-a-gray">Available</p>
