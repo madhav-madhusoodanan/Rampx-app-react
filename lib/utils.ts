@@ -4,6 +4,7 @@ import { ApiResponse, UniqueContract } from "@/types";
 import { TokenAPIResponse } from "@/types/tokens";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import numbro from "numbro";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -206,3 +207,28 @@ export function validateDecimalPlaces(numStr: string, maxDecimals: number) {
 //     fetchMyTokens(address);
 //   }
 // }, [isTokenSelectorModalOpen, isConnected, address, currentChainId]);
+
+export const formatTokenAmount = (num: number | undefined, digits = 2) => {
+  if (num === 0) return "0";
+  if (!num) return "-";
+  if (num < 0.001 && digits <= 3) {
+    return "<0.001";
+  }
+  if (num < 0.01 && digits <= 2) {
+    return "<0.01";
+  }
+
+  let formattedAmount = numbro(num)
+    .formatCurrency({
+      average: true,
+      mantissa: num >= 1000 ? 2 : digits,
+      abbreviations: {
+        million: "M",
+        billion: "B",
+      },
+    })
+    .replace("$", "");
+
+  formattedAmount = formattedAmount.replace(".00", "");
+  return formattedAmount;
+};

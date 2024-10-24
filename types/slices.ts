@@ -5,6 +5,12 @@ import { TokenInfo } from "./tokens";
 export type LoadingsSlice = {
   txInProgress: boolean;
   tokensListLoading: boolean;
+  isBalanceLoading: boolean;
+};
+export type TokenBalances = Record<string, string>;
+export type NativeCurrency = {
+  symbol: string;
+  balance: string;
 };
 
 export type AppSlice = {
@@ -12,6 +18,8 @@ export type AppSlice = {
   isTokenModalOpen: boolean;
   chainId: number;
   successTxCount: number;
+  tokenBalances: TokenBalances;
+  nativeCurrency: NativeCurrency;
 };
 
 export type SwapSlice = {

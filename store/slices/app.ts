@@ -1,4 +1,4 @@
-import { AppSlice } from "@/types/slices";
+import { AppSlice, NativeCurrency, TokenBalances } from "@/types/slices";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AppSlice = {
@@ -6,6 +6,8 @@ const initialState: AppSlice = {
   isTokenModalOpen: false,
   chainId: 1,
   successTxCount: 0,
+  tokenBalances: {},
+  nativeCurrency: { symbol: "ETH", balance: "0" },
 };
 
 const app = createSlice({
@@ -24,6 +26,12 @@ const app = createSlice({
     incrementSuccessTxCount(state) {
       state.successTxCount = state.successTxCount + 1;
     },
+    setTokenBalances(state, action: PayloadAction<TokenBalances>) {
+      state.tokenBalances = action.payload;
+    },
+    setNativeBalance(state, action: PayloadAction<NativeCurrency>) {
+      state.nativeCurrency = action.payload;
+    },
   },
 });
 
@@ -34,4 +42,6 @@ export const {
   setIsTokenModalOpen,
   setChainId,
   incrementSuccessTxCount,
+  setTokenBalances,
+  setNativeBalance,
 } = app.actions;
