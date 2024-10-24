@@ -4,7 +4,6 @@ import { LoadingsSlice } from "@/types/slices";
 
 const initialState: LoadingsSlice = {
   txInProgress: false,
-  successCount: 0,
   tokensListLoading: false,
 };
 
@@ -15,9 +14,6 @@ const loadings = createSlice({
     setTxInProgress(state, action: PayloadAction<boolean>) {
       state.txInProgress = action.payload;
     },
-    incrementSuccessTxCount(state) {
-      state.successCount += 1;
-    },
     setTokensListLoading(state, action: PayloadAction<boolean>) {
       state.tokensListLoading = action.payload;
     },
@@ -26,8 +22,4 @@ const loadings = createSlice({
 
 export default loadings.reducer;
 
-export const {
-  setTxInProgress,
-  incrementSuccessTxCount,
-  setTokensListLoading,
-} = loadings.actions;
+export const { setTxInProgress, setTokensListLoading } = loadings.actions;

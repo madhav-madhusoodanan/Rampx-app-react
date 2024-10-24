@@ -4,6 +4,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: AppSlice = {
   walletAddress: "",
   isTokenModalOpen: false,
+  chainId: 1,
+  successTxCount: 0,
 };
 
 const app = createSlice({
@@ -16,9 +18,20 @@ const app = createSlice({
     setIsTokenModalOpen(state, action: PayloadAction<boolean>) {
       state.isTokenModalOpen = action.payload;
     },
+    setChainId(state, action: PayloadAction<number>) {
+      state.chainId = action.payload;
+    },
+    incrementSuccessTxCount(state) {
+      state.successTxCount = state.successTxCount + 1;
+    },
   },
 });
 
 export default app.reducer;
 
-export const { setWalletAddress, setIsTokenModalOpen } = app.actions;
+export const {
+  setWalletAddress,
+  setIsTokenModalOpen,
+  setChainId,
+  incrementSuccessTxCount,
+} = app.actions;

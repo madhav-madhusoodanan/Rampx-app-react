@@ -332,3 +332,17 @@ export const CHAIN_LOGOS = [
     imageUrl: "/assets/icons/blockchains/sei.svg",
   },
 ];
+
+export const SWAP_API_URL = "https://api.0x.org/swap/permit2";
+
+export const WETH_TOKEN_INFO = {
+  chainId: 1,
+  address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  name: "WETH",
+  symbol: "WETH",
+  decimals: 18,
+  logoURI:
+    "https://assets.coingecko.com/coins/images/2518/thumb/weth.png?1696503332",
+};
+
+export const AMOUNT_INPUT_REGEX = /^((\d+[.]?\d*)|(\.\d+))$/;

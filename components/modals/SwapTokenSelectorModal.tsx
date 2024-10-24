@@ -43,6 +43,14 @@ import { useDispatch, useSelector } from "@/store";
 import { setIsTokenModalOpen } from "@/store/slices/app";
 import TokenCacheService from "@/classes/tokenCache";
 import { TokenInfo } from "@/types/tokens";
+import { TokenSelection } from "@/types/enums";
+import {
+  exchangeTokens,
+  setIsSwapPriceLoading,
+  setTokenA,
+  setTokenB,
+} from "@/store/slices/swap";
+import { fetchSwapPrice } from "@/lib/actions/price.action";
 
 // TODO - Once colors determined replace arbitrary values with tailwind theme color variables
 
@@ -70,6 +78,10 @@ const SwapTokenSelectorModal = () => {
   const isTokenListLoading = useSelector(
     (state) => state.loadings.tokensListLoading
   );
+  const tokenSelection = useSelector((state) => state.swap.tokenSelection);
+  const tokenA = useSelector((state) => state.swap.tokenA);
+  const tokenB = useSelector((state) => state.swap.tokenB);
+  const amountA = useSelector((state) => state.swap.amountA);
 
   // const { isTokenSelectorModalOpen, setIsTokenSelectorModalOpen } =
   //   useSwapContext();
@@ -266,6 +278,34 @@ const SwapTokenSelectorModal = () => {
 
   // console.log("debounce bs", debouncedSearchTokenAddress.length);
 
+  const onSelectToken = (token: TokenInfo) => {
+    const currentToken = tokenSelection === TokenSelection.A ? tokenA : tokenB;
+
+    const otherToken = tokenSelection === TokenSelection.A ? tokenB : tokenA;
+
+    const setTokenAction =
+      tokenSelection === TokenSelection.A ? setTokenA : setTokenB;
+
+    // make sure user is not selecting the same token
+    if (
+      (currentToken?.address !== token.address &&
+        currentToken?.symbol !== token.symbol) ||
+      currentToken === undefined
+    ) {
+      // if user is exchanging tokens, exchange them
+      if (token.address === otherToken?.address) {
+        dispatch(exchangeTokens());
+      } else {
+        dispatch(setTokenAction(token));
+      }
+      if (amountA && +amountA !== 0) {
+        dispatch(setIsSwapPriceLoading(true));
+        fetchSwapPrice();
+      }
+    }
+    closeModal();
+  };
+
   const TokenRow = ({
     index,
     style,
@@ -279,7 +319,7 @@ const SwapTokenSelectorModal = () => {
       <div
         style={style}
         className="flex items-center p-2 hover:bg-zinc-800 cursor-pointer"
-        onClick={() => {}}
+        onClick={() => onSelectToken(token)}
       >
         <Image
           src={token.logoURI}
