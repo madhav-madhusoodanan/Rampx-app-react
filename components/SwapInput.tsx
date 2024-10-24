@@ -94,7 +94,9 @@ const SwapInput = ({
           <Input
             type="number"
             placeholder="0.00"
-            className="text-end font-semibold placeholder:text-white/25 text-xl min-w-[100px] truncate lining-nums "
+            className={"text-end font-semibold placeholder:text-white/25 text-xl min-w-[100px] truncate lining-nums ".concat(
+              isTokenBInput ? "pointer-events-none" : ""
+            )}
             onWheel={(e) => e.currentTarget.blur()}
             // onKeyDown={blockInvalidCharDecimalsAllowed}
             value={amount}

@@ -16,7 +16,6 @@ import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
 import { formatNumberWithCommas, cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-// import SwapCard from "@/components/cards/SwapCard";
 
 // TODO - add flex-row to the stats section
 // TODO - add custom loading.tsx file for this page (it's using the parent one)

@@ -7,6 +7,7 @@ export const NATIVE_TOKEN_ADDRESS =
   "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 
 export const TOKENLIST_EXPIRE_PERIOD = 24 * 60 * 60 * 1000;
+export const MAX_TIME_TOAST_VISIBLE = 5000;
 // TODO - Replace with correct footer href links
 export const FOOTER_ICONS: FooterIcon[] = [
   {
