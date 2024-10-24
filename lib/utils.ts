@@ -83,6 +83,12 @@ export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
   );
 };
 
+export function validateDecimalPlaces(numStr: string, maxDecimals: number) {
+  // Regular expression to check if the number has more than maxDecimals places
+  const regex = new RegExp(`^\\d+(\\.\\d{0,${maxDecimals}})?$`);
+  return regex.test(numStr);
+}
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES
