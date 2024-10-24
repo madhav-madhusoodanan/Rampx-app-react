@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import TokenCacheService from "@/classes/tokenCache";
 import { shouldFetchTokenList } from "@/lib/utils";
 import { useDispatch, useSelector } from "@/store";
-import { useBalance, useChainId } from "wagmi";
-// import { setChainId, setNativeBalance } from "@/store/Reducers/app";
-import { formatUnits } from "viem";
+import { useAccountEffect, useBalance, useChainId } from "wagmi";
+import { setWalletAddress } from "@/store/slices/app";
+import { fetchSwapPrice } from "@/lib/actions/price.action";
 
 const Listeners = () => {
   const dispatch = useDispatch();
@@ -34,6 +34,17 @@ const Listeners = () => {
       }
     })();
   }, [chainId]);
+
+  useAccountEffect({
+    onConnect(data) {
+      dispatch(setWalletAddress(data.address));
+      fetchSwapPrice();
+    },
+    onDisconnect() {
+      dispatch(setWalletAddress(""));
+      fetchSwapPrice();
+    },
+  });
 
   // useEffect(() => {
   //   dispatch(setChainId(chainId));
