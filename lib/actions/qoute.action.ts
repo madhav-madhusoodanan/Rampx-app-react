@@ -8,6 +8,7 @@ export async function getSwapQoute(params?: QouteApiParams) {
   const store = CachedService?.storeRef;
   try {
     if (!store) {
+      failingChore();
       return;
     }
 
@@ -15,6 +16,7 @@ export async function getSwapQoute(params?: QouteApiParams) {
     const { amountA, tokenA, tokenB, maxSlippage } = store.getState().swap;
 
     if (!tokenB) {
+      failingChore();
       return;
     }
 
@@ -46,6 +48,7 @@ export async function getSwapQoute(params?: QouteApiParams) {
     }
     const data = (await response.json()) as QouteApiResponse;
     store?.dispatch(setQouteData(data));
+    store?.dispatch(setIsQouteDataLoading(false));
   } catch (error) {
     toast({
       variant: "destructive",
@@ -53,7 +56,12 @@ export async function getSwapQoute(params?: QouteApiParams) {
       description: "Unable to fetch qoute",
     });
     console.log("fetchSwapQoute ERROR", error);
-    store?.dispatch(setQouteData(undefined));
+    failingChore();
   }
-  store?.dispatch(setIsQouteDataLoading(false));
 }
+
+const failingChore = () => {
+  const store = CachedService?.storeRef;
+  store?.dispatch(setQouteData(undefined));
+  store?.dispatch(setIsQouteDataLoading(false));
+};

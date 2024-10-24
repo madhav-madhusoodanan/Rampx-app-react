@@ -8,13 +8,15 @@ export async function fetchSwapPrice(params?: PriceApiParams) {
   const store = CachedService?.storeRef;
   try {
     if (!store) {
-      throw new Error("store not found");
+      failingChore();
+      return;
     }
     const { chainId, walletAddress } = store.getState().app;
     const { amountA, tokenA, tokenB, maxSlippage } = store.getState().swap;
 
     if (!tokenB) {
-      throw new Error("token B not found");
+      failingChore();
+      return;
     }
 
     store.dispatch(setIsSwapPriceLoading(true));
@@ -48,8 +50,8 @@ export async function fetchSwapPrice(params?: PriceApiParams) {
       throw new Error("Error fetching price");
     }
     const data = (await response.json()) as PriceApiResponse;
-    // CachedService.startQouteTimer();
     store?.dispatch(setSwapPrice(data));
+    store?.dispatch(setIsSwapPriceLoading(false));
   } catch (error) {
     toast({
       variant: "destructive",
@@ -57,7 +59,12 @@ export async function fetchSwapPrice(params?: PriceApiParams) {
       description: "Unable to fetch price",
     });
     console.log("fetchSwapPrice ERROR", error);
-    store?.dispatch(setSwapPrice(undefined));
+    failingChore();
   }
-  store?.dispatch(setIsSwapPriceLoading(false));
 }
+
+const failingChore = () => {
+  const store = CachedService?.storeRef;
+  store?.dispatch(setSwapPrice(undefined));
+  store?.dispatch(setIsSwapPriceLoading(false));
+};
