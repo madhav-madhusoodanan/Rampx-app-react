@@ -312,11 +312,11 @@ export const CHAIN_LOGOS = [
     networkName: "ETH",
     imageUrl: "/assets/icons/blockchains/ethereum.svg",
   },
-  {
-    chainId: 11155111,
-    networkName: "SEPOLIA",
-    imageUrl: "/assets/icons/blockchains/ethereum.svg",
-  },
+  // {
+  //   chainId: 11155111,
+  //   networkName: "SEPOLIA",
+  //   imageUrl: "/assets/icons/blockchains/ethereum.svg",
+  // },
   {
     chainId: 8453,
     networkName: "BASE",
@@ -330,6 +330,11 @@ export const CHAIN_LOGOS = [
   {
     chainId: 1329,
     networkName: "SEI",
+    imageUrl: "/assets/icons/blockchains/sei.svg",
+  },
+  {
+    chainId: 137,
+    networkName: "MATIC",
     imageUrl: "/assets/icons/blockchains/sei.svg",
   },
 ];

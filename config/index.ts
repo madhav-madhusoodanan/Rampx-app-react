@@ -1,7 +1,7 @@
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 
-import { cookieStorage, createStorage } from "wagmi";
-import { mainnet, sepolia, base, blast, sei } from "wagmi/chains";
+import { cookieStorage, createStorage, http } from "wagmi";
+import { mainnet, base, blast, sei, polygon, bsc } from "wagmi/chains";
 // import { type Chain } from "viem";
 
 // Get projectId at https://cloud.walletconnect.com
@@ -42,7 +42,15 @@ const metadata = {
 //   },
 // } as const satisfies Chain;
 
-const chains = [mainnet, sepolia, base, blast, sei] as const;
+const chains = [mainnet, base, blast, sei, polygon] as const;
+
+export const CHAINMAP = {
+  [mainnet.id]: mainnet,
+  [base.id]: base,
+  [polygon.id]: polygon,
+  [blast.id]: blast,
+  [sei.id]: sei,
+};
 
 // Create wagmiConfig
 export const config = defaultWagmiConfig({
@@ -53,5 +61,12 @@ export const config = defaultWagmiConfig({
   storage: createStorage({
     storage: cookieStorage,
   }),
+  transports: {
+    [mainnet.id]: http(),
+    [polygon.id]: http(),
+    [blast.id]: http(),
+    [base.id]: http(),
+    [sei.id]: http(),
+  },
   //   ...wagmiOptions // Optional - Override createConfig parameters
 });

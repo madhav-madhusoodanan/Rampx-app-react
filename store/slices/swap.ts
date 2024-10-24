@@ -5,6 +5,7 @@ import { TokenInfo } from "@/types/tokens";
 import { TokenSelection } from "@/types/enums";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { formatUnits } from "viem";
+import { WRAPPED_COINS_INFO } from "@/constants/tokens";
 
 const initialState: SwapSlice = {
   isSwapPriceLoading: false,
@@ -26,7 +27,7 @@ const swap = createSlice({
     setTokenA(state, action: PayloadAction<TokenInfo>) {
       state.tokenA = action.payload;
     },
-    setTokenB(state, action: PayloadAction<TokenInfo>) {
+    setTokenB(state, action: PayloadAction<TokenInfo | undefined>) {
       state.tokenB = action.payload;
     },
     setTokenAmountA(state, action: PayloadAction<string>) {
@@ -71,6 +72,12 @@ const swap = createSlice({
         state.amountB = tempAmount;
       }
     },
+    onChainChange(state, action: PayloadAction<number>) {
+      state.tokenA = WRAPPED_COINS_INFO[action.payload];
+      state.tokenB = undefined;
+      state.amountA = "";
+      state.amountB = "";
+    },
   },
 });
 
@@ -88,4 +95,5 @@ export const {
   exchangeTokens,
   setTokenA,
   setTokenB,
+  onChainChange,
 } = swap.actions;

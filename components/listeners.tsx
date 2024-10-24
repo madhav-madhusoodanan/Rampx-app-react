@@ -19,6 +19,7 @@ import {
 import { fetchSwapPrice } from "@/lib/actions/price.action";
 import { erc20Abi, formatUnits } from "viem";
 import { setIsBalanceLoading } from "@/store/slices/loadings";
+import { onChainChange } from "@/store/slices/swap";
 
 const Listeners = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const Listeners = () => {
         args: [walletAddress as `0x${string}`],
       },
       {
-        address: (tokenB?.address as `0x${string}`) ?? "0x",
+        address: (tokenB?.address ?? tokenA.address) as `0x${string}`,
         abi: erc20Abi,
         functionName: "balanceOf",
         chainId,
@@ -94,8 +95,6 @@ const Listeners = () => {
           erc20BalancesData[0].result,
           tokenA.decimals
         );
-      } else {
-        console.error("Error fetching ERC-20 token A balance");
       }
 
       if (tokenB && erc20BalancesData[1]?.status === "success") {
@@ -103,21 +102,15 @@ const Listeners = () => {
           erc20BalancesData[1].result,
           tokenB.decimals
         );
-      } else {
-        console.error("Error fetching ERC-20 token B balance");
       }
 
       if (tokenABalance || tokenBBalance) {
-        console.log("Dispatching token balances!");
-
         const tokenBalances = {
           [tokenA.address]: tokenABalance || "0",
         };
-
         if (tokenB) {
           tokenBalances[tokenB.address] = tokenBBalance || "0";
         }
-
         dispatch(setTokenBalances(tokenBalances));
       }
     }
@@ -150,6 +143,10 @@ const Listeners = () => {
 
   useEffect(() => {
     dispatch(setChainId(chainId));
+  }, [chainId]);
+
+  useEffect(() => {
+    dispatch(onChainChange(chainId));
   }, [chainId]);
 
   return <></>;

@@ -8,7 +8,6 @@ import { cookieToInitialState } from "wagmi";
 
 import { config } from "@/config";
 import Web3ModalProvider from "@/context";
-import { SwapProvider } from "@/context/Swap.context";
 import StoreProvider from "@/context/store";
 import Listeners from "@/components/listeners";
 import { Toaster } from "@/components/ui/toaster";
@@ -52,7 +51,7 @@ export default function RootLayout({
         <StoreProvider>
           <Web3ModalProvider initialState={initialState}>
             <Listeners />
-            <SwapProvider>{children}</SwapProvider>
+            {children}
           </Web3ModalProvider>
           <Toaster />
         </StoreProvider>
