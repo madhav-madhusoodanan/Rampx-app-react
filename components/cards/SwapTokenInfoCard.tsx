@@ -1,8 +1,14 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
 import TokenMiniChart from "../charts/TokenMiniChart";
-import { shortenAddress } from "@/lib/utils";
+import { getWeekTimestamps, shortenAddress } from "@/lib/utils";
+import {
+  useGetPriceMetaData,
+  useGetPriceRangeData,
+} from "@/hooks/useGraphQLQueries";
+import { useChainId } from "wagmi";
 
 interface Props {
   tokenLogo: string;
@@ -17,6 +23,38 @@ const SwapTokenInfoCard = ({
   tokenSymbol,
   tokenSmartContractAddress,
 }: Props) => {
+  const [chartData, setChartData] = useState([]);
+
+  const chainId = useChainId();
+  const { toTimestamp, fromTimestamp } = getWeekTimestamps();
+  const { data } = useGetPriceRangeData(
+    ["chartData"],
+    tokenSmartContractAddress,
+    chainId,
+    fromTimestamp,
+    toTimestamp
+  );
+  const { data: tokenMetaData } = useGetPriceMetaData(
+    ["tokenPriceMetaData", tokenSmartContractAddress],
+    tokenSmartContractAddress,
+    chainId
+  );
+  useEffect(() => {
+    if (data) {
+      setChartData(data);
+    }
+  }, [data]);
+
+  const changeIn24H = useMemo(() => {
+    if (tokenMetaData && tokenMetaData.length > 0) {
+      const isPositive = tokenMetaData[0].change24 >= 0;
+      const value = Number(tokenMetaData[0].change24).toFixed(2);
+      return { isPositive, value };
+    }
+
+    return { isPositive: false, value: 0 };
+  }, [tokenMetaData]);
+
   return (
     <div className="">
       <div className="flex justify-between items-center">
@@ -44,10 +82,17 @@ const SwapTokenInfoCard = ({
           <TokenMiniChart
             height={50}
             width={120}
-            data={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].chartData}
-            isPositive={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].dayPnl.isPositive}
+            data={chartData}
+            isPositive={changeIn24H.isPositive}
           />
-          <p className="text-a-pnlGreen text-xs lining-nums">+2,34%</p>
+
+          <p
+            className={`${
+              changeIn24H.isPositive ? "text-a-pnlGreen" : "text-a-pnlRed"
+            } text-xs lining-nums`}
+          >
+            {changeIn24H.value}
+          </p>
         </div>
       </div>
     </div>

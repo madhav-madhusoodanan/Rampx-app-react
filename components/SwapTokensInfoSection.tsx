@@ -18,15 +18,15 @@ const SwapTokensInfoSection = () => {
             tokenName={"USD Coin"}
             tokenSymbol={"USDC"}
             tokenSmartContractAddress={
-              "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
             }
           />
           <SwapTokenInfoCard
             tokenLogo={"/assets/icons/blockchains/sei.svg"}
-            tokenName={"SEI Coin"}
-            tokenSymbol={"SEI"}
+            tokenName={"Ethereum"}
+            tokenSymbol={"ETH"}
             tokenSmartContractAddress={
-              "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+              "0x000000000000000000000000000000000000000"
             }
           />
         </div>

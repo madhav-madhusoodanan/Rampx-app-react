@@ -5,6 +5,7 @@ import { Line, LineChart } from "recharts";
 // TODO - Replace any type once return value is more clear
 
 const TokenMiniChart = ({ data, isPositive, height, width }: any) => {
+  console.log({ data });
   return (
     <>
       <LineChart
@@ -15,7 +16,7 @@ const TokenMiniChart = ({ data, isPositive, height, width }: any) => {
       >
         <Line
           type="linear"
-          dataKey="stats"
+          dataKey="price"
           stroke={isPositive ? "#40b66b" : "#ff5f52"}
           dot={false}
         />

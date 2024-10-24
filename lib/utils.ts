@@ -83,6 +83,21 @@ export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
   );
 };
 
+export const getWeekTimestamps = () => {
+  const now = new Date();
+  const endOfRange = new Date(now);
+  endOfRange.setDate(now.getDate());
+  endOfRange.setHours(23, 59, 59, 999);
+
+  const startOfRange = new Date(endOfRange);
+  startOfRange.setDate(endOfRange.getDate() - 6);
+  startOfRange.setHours(0, 0, 0, 0);
+  const fromTimestamp = Number((startOfRange.getTime() / 1000).toFixed(0));
+  const toTimestamp = Number((endOfRange.getTime() / 1000).toFixed(0));
+
+  return { fromTimestamp, toTimestamp };
+};
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES
