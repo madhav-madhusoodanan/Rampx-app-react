@@ -15,6 +15,7 @@ import { setIsTokenModalOpen } from "@/store/slices/app";
 const TokenAInput = () => {
   const amountA = useSelector((state) => state.swap.amountA);
   const tokenA = useSelector((state) => state.swap.tokenA);
+  const tokenB = useSelector((state) => state.swap.tokenB);
   const tokenSelection = useSelector((state) => state.swap.tokenSelection);
   const dispatch = useDispatch();
 
@@ -28,8 +29,10 @@ const TokenAInput = () => {
 
   const handleAmountChange = (amount: string) => {
     dispatch(setTokenAmountA(amount));
-    dispatch(setIsSwapPriceLoading(true));
-    debounced();
+    if (tokenB) {
+      dispatch(setIsSwapPriceLoading(true));
+      debounced();
+    }
     // CachedService.stopQouteTimer();
   };
 
