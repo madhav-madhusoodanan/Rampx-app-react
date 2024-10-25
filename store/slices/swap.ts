@@ -18,6 +18,7 @@ const initialState: SwapSlice = {
   maxSlippage: undefined,
   isQouteDataLoading: false,
   tokenSelection: TokenSelection.A,
+  transactionDeadline: "30",
 };
 
 const swap = createSlice({
@@ -78,6 +79,9 @@ const swap = createSlice({
       state.amountA = "";
       state.amountB = "";
     },
+    setTransactionDeadline(state, action: PayloadAction<string>) {
+      state.transactionDeadline = action.payload;
+    },
   },
 });
 
@@ -96,4 +100,5 @@ export const {
   setTokenA,
   setTokenB,
   onChainChange,
+  setTransactionDeadline,
 } = swap.actions;
