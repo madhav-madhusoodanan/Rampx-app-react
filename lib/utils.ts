@@ -158,6 +158,12 @@ export const formatDollarAmount = (
   });
 };
 
+export const minutesToUnixTimestamp = (minutes: number) => {
+  const now = Date.now();
+  const timestamp = now + minutes * 60 * 1000;
+  return Math.floor(timestamp / 1000);
+};
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES

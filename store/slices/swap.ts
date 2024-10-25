@@ -18,7 +18,7 @@ const initialState: SwapSlice = {
   maxSlippage: undefined,
   isQouteDataLoading: false,
   tokenSelection: TokenSelection.A,
-  transactionDeadline: "30",
+  transactionDeadline: 30,
 };
 
 const swap = createSlice({
@@ -51,7 +51,7 @@ const swap = createSlice({
       }
       state.swapPrice = action.payload;
     },
-    setMaxSlippage(state, action: PayloadAction<string | undefined>) {
+    setMaxSlippage(state, action: PayloadAction<number | undefined>) {
       state.maxSlippage = action.payload;
     },
     setIsQouteDataLoading(state, action: PayloadAction<boolean>) {
@@ -79,7 +79,7 @@ const swap = createSlice({
       state.amountA = "";
       state.amountB = "";
     },
-    setTransactionDeadline(state, action: PayloadAction<string>) {
+    setTransactionDeadline(state, action: PayloadAction<number>) {
       state.transactionDeadline = action.payload;
     },
   },
