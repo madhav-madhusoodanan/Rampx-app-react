@@ -9,15 +9,15 @@ const SwapTokensInfoSection = () => {
   const tokenB = useSelector((state) => state.swap.tokenB);
   return (
     <div className="mt-6">
-      <div className="swap-tokens-info-border-container flex justify-center items-center bg-a-fluo py-[1px] relative">
+      <div className="swap-tokens-info-border-container flex justify-center items-center bg-fading-gradient relative">
         {/* 
         FADED GRADIENT BORDER TOP + BOTTOM 
         Increase/Decrease the opacity of the gradient to make it more/less visible 👇
         */}
-        <div className="h-[1px] w-full absolute top-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" />
-        <div className="h-[2px] w-full absolute bottom-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" />
+        {/* <div className="h-[1px] w-full absolute top-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" />
+        <div className="h-[2px] w-full absolute bottom-0 bg-gradient-to-r from-[#232323]/40 via-[#232323] to-[#232323]/40" /> */}
 
-        <div className="bg-[#232323] swap-tokens-info-container p-8 flex flex-col gap-4">
+        <div className="bg-[#232323] swap-tokens-info-container m-[1px] p-8 flex flex-col gap-4">
           <SwapTokenInfoCard
             tokenLogo={tokenA.logoURI}
             tokenName={tokenA.name}

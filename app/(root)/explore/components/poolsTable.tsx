@@ -46,20 +46,24 @@ const PoolsTable = () => {
               <Link href="">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
-                    <Image
-                      src={item.token0.info.imageThumbUrl}
-                      alt={item.token0.name}
-                      width={28}
-                      height={28}
-                      className="rounded-full"
-                    />
-                    <Image
-                      src={item.token1.info.imageThumbUrl}
-                      alt={item.token1.name}
-                      width={28}
-                      height={28}
-                      className="rounded-full mr-[25px]"
-                    />
+                    {item.token0.info.imageThumbUrl ? (
+                      <Image
+                        src={item.token0.info.imageThumbUrl}
+                        alt={item.token0.name}
+                        width={28}
+                        height={28}
+                        className="rounded-full"
+                      />
+                    ) : null}
+                    {item.token1.info.imageThumbUrl ? (
+                      <Image
+                        src={item.token1.info.imageThumbUrl}
+                        alt={item.token1.name}
+                        width={28}
+                        height={28}
+                        className="rounded-full mr-[25px]"
+                      />
+                    ) : null}
                   </div>
                   {/* {item.token0.name}/{item.token1.name} */}
                   <span className="text-gray-500">
