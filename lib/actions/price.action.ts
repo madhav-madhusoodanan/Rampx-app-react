@@ -35,7 +35,7 @@ export async function fetchSwapPrice(params?: PriceApiParams) {
         buyToken: tokenB.address,
         taker: walletAddress,
         sellAmount: parseUnits(amountA, tokenA.decimals).toString(),
-        slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
+        // slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
       };
     }
 

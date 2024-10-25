@@ -30,7 +30,7 @@ export async function getSwapQoute(params?: QouteApiParams) {
           sellToken: tokenA.address,
           sellAmount: parseUnits(amountA, tokenA.decimals).toString(),
           taker: walletAddress,
-          slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
+          // slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
         };
       } else {
         throw new Error("store not found");
