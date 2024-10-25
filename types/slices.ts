@@ -33,6 +33,7 @@ export type SwapSlice = {
   maxSlippage: string | undefined;
   isQouteDataLoading: boolean;
   tokenSelection: TokenSelection;
+  transactionDeadline: string;
 };
 
 export enum ExploreTabs {
