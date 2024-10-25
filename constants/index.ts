@@ -340,6 +340,7 @@ export const CHAIN_LOGOS = [
 ];
 
 export const SWAP_API_URL = "https://api.0x.org/swap/permit2";
+export const SWAP_API_URL2 = "https://api.0x.org/swap/allowance-holder";
 
 export const RAMPX_CONTRACT_ADDRESS =
   "0xFa05882860FE39E1618ae89f2E8D8e01B601Cd4a";

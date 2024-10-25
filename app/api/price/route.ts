@@ -1,4 +1,4 @@
-import { SWAP_API_URL } from "@/constants";
+import { SWAP_API_URL2 } from "@/constants";
 import { NextRequest, NextResponse } from "next/server";
 import qs from "qs";
 import { z } from "zod";
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       return NextResponse.json("invalid parameters", { status: 402 });
     }
 
-    const res = await fetch(`${SWAP_API_URL}/price?${qs.stringify(body)}`, {
+    const res = await fetch(`${SWAP_API_URL2}/price?${qs.stringify(body)}`, {
       headers: {
         "0x-api-key": process.env.ZEROX_SWAP_API_KEY as string,
         "0x-version": "v2",
