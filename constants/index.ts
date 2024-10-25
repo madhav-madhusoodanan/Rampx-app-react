@@ -341,6 +341,9 @@ export const CHAIN_LOGOS = [
 
 export const SWAP_API_URL = "https://api.0x.org/swap/permit2";
 
+export const RAMPX_CONTRACT_ADDRESS =
+  "0xFa05882860FE39E1618ae89f2E8D8e01B601Cd4a";
+
 export const WETH_TOKEN_INFO = {
   chainId: 1,
   address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
