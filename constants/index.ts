@@ -3,6 +3,7 @@ import DiscordIcon from "@/components/custom-icons/DiscordIcon";
 import TelegramIcon from "@/components/custom-icons/TelegramIcon";
 import RedditIcon from "@/components/custom-icons/RedditIcon";
 import { polygon } from "viem/chains";
+// import { maxUint256 } from "viem";
 
 export const NATIVE_TOKEN_ADDRESS =
   "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
@@ -361,8 +362,11 @@ export const includedDexes: Record<number, Record<string, string>> = {
 export const SWAP_API_URL = "https://api.0x.org/swap/permit2";
 export const SWAP_API_URL2 = "https://api.0x.org/swap/allowance-holder";
 
+// TODO - Replace with correct rampx contract address for production
 export const RAMPX_CONTRACT_ADDRESS =
-  "0xFa05882860FE39E1618ae89f2E8D8e01B601Cd4a";
+  "0x759496c6a6b576dee7b576870220cec5a0473d43";
+// export const RAMPX_CONTRACT_ADDRESS =
+//   "0xFa05882860FE39E1618ae89f2E8D8e01B601Cd4a";
 
 export const WETH_TOKEN_INFO = {
   chainId: 1,
