@@ -31,48 +31,51 @@ const PoolsTable = () => {
           <TableHead className="text-right">Vol 1d</TableHead>
           <TableHead className="text-right">Vol 7d</TableHead>
           {/* <TableHead className="text-right">Exchange</TableHead> */}
+          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((item: TopPools, index: number) => (
-          <TableRow
-            key={index}
-            className="hover:bg-white/10 transition-colors cursor-pointer"
-          >
-            <TableCell className="font-medium my-auto">
-              <Link href="">{index + 1}</Link>
-            </TableCell>
-            <TableCell className="">
-              <Link href="">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center">
-                    {item.token0.info.imageThumbUrl ? (
-                      <Image
-                        src={item.token0.info.imageThumbUrl}
-                        alt={item.token0.name}
-                        width={28}
-                        height={28}
-                        className="rounded-full"
-                      />
-                    ) : null}
-                    {item.token1.info.imageThumbUrl ? (
-                      <Image
-                        src={item.token1.info.imageThumbUrl}
-                        alt={item.token1.name}
-                        width={28}
-                        height={28}
-                        className="rounded-full mr-[25px]"
-                      />
-                    ) : null}
-                  </div>
-                  {/* {item.token0.name}/{item.token1.name} */}
-                  <span className="text-gray-500">
-                    {item.token0.symbol}/{item.token1.symbol}
-                  </span>
-                </div>
-              </Link>
-            </TableCell>
-            {/* <TableCell
+        {data && data?.length > 0 ? (
+          <>
+            {data?.map((item: TopPools, index: number) => (
+              <TableRow
+                key={index}
+                className="hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <TableCell className="font-medium my-auto">
+                  <Link href="">{index + 1}</Link>
+                </TableCell>
+                <TableCell className="">
+                  <Link href="">
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center">
+                        {item.token0.info.imageThumbUrl ? (
+                          <Image
+                            src={item.token0.info.imageThumbUrl}
+                            alt={item.token0.name}
+                            width={28}
+                            height={28}
+                            className="rounded-full"
+                          />
+                        ) : null}
+                        {item.token1.info.imageThumbUrl ? (
+                          <Image
+                            src={item.token1.info.imageThumbUrl}
+                            alt={item.token1.name}
+                            width={28}
+                            height={28}
+                            className="rounded-full mr-[25px]"
+                          />
+                        ) : null}
+                      </div>
+                      {/* {item.token0.name}/{item.token1.name} */}
+                      <span className="text-gray-500">
+                        {item.token0.symbol}/{item.token1.symbol}
+                      </span>
+                    </div>
+                  </Link>
+                </TableCell>
+                {/* <TableCell
               className="text-right"
               title={`$${item.price.toString()}`}
             >
@@ -108,21 +111,31 @@ const PoolsTable = () => {
                 </div>
               </Link>
             </TableCell>*/}
-            {/* <TableCell className="text-right">
+                {/* <TableCell className="text-right">
               <div className=" flex justify-end items-center gap-1">
                 {item.priceChange24.toFixed(2)}%
               </div>
             </TableCell> */}
-            <TableCell className="text-right">
-              <Link href="">{formatDollarAmount(Number(item.volumeUSD1))}</Link>
-            </TableCell>
-            <TableCell className="text-right">
-              <Link href="">
-                {formatDollarAmount(Number(item.volumeUSD24))}
-              </Link>
+                <TableCell className="text-right">
+                  <Link href="">
+                    {formatDollarAmount(Number(item.volumeUSD1))}
+                  </Link>
+                </TableCell>
+                <TableCell className="text-right">
+                  <Link href="">
+                    {formatDollarAmount(Number(item.volumeUSD24))}
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </>
+        ) : (
+          <TableRow className="font-semibold text-2xl text-a-fluo w-full">
+            <TableCell colSpan={6} className="text-center">
+              No Data Available
             </TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );
