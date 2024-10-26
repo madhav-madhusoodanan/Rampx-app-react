@@ -352,7 +352,7 @@ export const includedDexes: Record<number, Record<string, string>> = {
     Balancer_V2: "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
     DODO_V2: "0x9fDaaB9312084298d210B8789629D3054230e998",
     Dfyn: "0xa102072a4c07f06ec3b4900fdc4c7b80b6c57429",
-    Quickswap_V2: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
+    QuickSwap_V2: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
     SushiSwap: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
     Uniswap_V2: "0xedf6066a2b290C185783862C7F4776A2C8077AD1",
     WaultSwap: "0x3a1d87f206d12415f5b0a33e786967680aab4f6d",

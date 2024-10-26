@@ -91,7 +91,7 @@ const PriceReviewModal = ({
             title: "InCompatible Dex",
             description: "Cannot swap with incompatible dex",
           });
-          dispatch(setTxInProgress(true));
+          dispatch(setTxInProgress(false));
           return;
         }
 
@@ -154,13 +154,6 @@ const PriceReviewModal = ({
     });
 
     if (inCompatibleDexFound) {
-      dismissToast();
-      toast({
-        variant: "destructive",
-        title: "InCompatible Dex",
-        description: "Cannot swap with incompatible dex",
-      });
-      dispatch(setTxInProgress(true));
       return [];
     }
 
