@@ -50,13 +50,15 @@ const TopTokensTable = () => {
             <TableCell className="">
               <Link href={`/explore/tokens/ethereum/${item.address}`}>
                 <div className="flex items-center gap-2">
-                  <Image
-                    src={item.imageThumbUrl}
-                    alt={item.name}
-                    width={28}
-                    height={28}
-                    className="rounded-full"
-                  />
+                  {item.imageThumbUrl ? (
+                    <Image
+                      src={item.imageThumbUrl}
+                      alt={item.name}
+                      width={28}
+                      height={28}
+                      className="rounded-full"
+                    />
+                  ) : null}
                   {item.name}
                   <span className="text-gray-500">{item.symbol}</span>
                 </div>

@@ -30,10 +30,10 @@ export type SwapSlice = {
   qouteData?: QouteApiResponse;
   amountA: string;
   amountB: string;
-  maxSlippage: string | undefined;
+  maxSlippage: number | undefined;
   isQouteDataLoading: boolean;
   tokenSelection: TokenSelection;
-  transactionDeadline: string;
+  transactionDeadline: number;
 };
 
 export enum ExploreTabs {

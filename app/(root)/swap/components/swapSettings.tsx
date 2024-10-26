@@ -14,7 +14,7 @@ import { setMaxSlippage, setTransactionDeadline } from "@/store/slices/swap";
 
 const SwapSettings = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isAutoSlippage, setIsAutoSlippage] = React.useState(true);
+  const [isAutoSlippage, setIsAutoSlippage] = React.useState(false);
 
   const maxSlippage = useSelector((state) => state.swap.maxSlippage);
   const txnDeadline = useSelector((state) => state.swap.transactionDeadline);
@@ -25,20 +25,22 @@ const SwapSettings = () => {
     const { value } = e.target;
     if (Number(value) <= 100) {
       const maxSlippageInBPS = Number(value) * 100;
-      dispatch(setMaxSlippage(maxSlippageInBPS.toString()));
+      dispatch(setMaxSlippage(maxSlippageInBPS));
     }
     setIsAutoSlippage(false);
   };
 
   const handleAutoClick = () => {
     if (!isAutoSlippage) {
-      dispatch(setMaxSlippage("100"));
+      dispatch(setMaxSlippage(100));
     }
     setIsAutoSlippage(!isAutoSlippage);
   };
 
   const handleDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setTransactionDeadline(e.target.value));
+    const { value } = e.target;
+    const convertVal = isNaN(Number(value)) ? 0 : Number(value);
+    dispatch(setTransactionDeadline(convertVal));
   };
 
   return (
@@ -74,7 +76,7 @@ const SwapSettings = () => {
                 <Input
                   id="slippage"
                   type="number"
-                  value={isAutoSlippage ? "1.00" : Number(maxSlippage) / 100}
+                  value={isAutoSlippage ? "1.00" : (maxSlippage ?? 100) / 100}
                   onChange={handleSlippageChange}
                   className="w-full border-[0.5px] border-opacity-50  border-a-fluo bg-[#232418]/50 text-white pr-6"
                   disabled={isAutoSlippage}

@@ -213,9 +213,9 @@ const PriceReviewModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-zinc-900 border-zinc-800 text-white">
+      <DialogContent className="sm:max-w-md bg-a-charcoal border-a-fluo/50 text-white">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">
+          <DialogTitle className="text-xl font-semibold">
             Review Quote
           </DialogTitle>
         </DialogHeader>
@@ -261,18 +261,21 @@ const PriceReviewModal = ({
             </div>
           )}
 
-          <div className="flex justify-end w-full">
-            <Button
-              className="w-full mt-4"
-              disabled={isTxInProgress}
+          <div className="flex justify-center mt-4 w-full">
+            <button
               onClick={swapTokens}
+              disabled={isTxInProgress}
+              className="border-[0.5px] border-a-fluo/50 text-xl px-6 py-2 text-a-fluo hover:text-black hover:text-shadow-none shadow-[0_0_5px_rgba(179,207,61,1)] hover:shadow-[0_0_10px_rgba(179,207,61,1)] text-shadow-a-fluo text-opacity-30 transition-all duration-300 group relative font-medium"
             >
-              {isTxInProgress ? (
-                <SpinningLoader className="w-4 h-4 text-a-fluo" />
-              ) : (
-                "Confirm"
-              )}
-            </Button>
+              <span className="relative z-10">
+                {isTxInProgress ? (
+                  <SpinningLoader className="w-4 h-4 text-a-fluo" />
+                ) : (
+                  "Confirm"
+                )}
+              </span>
+              <div className="absolute inset-0 bg-a-fluo z-0 w-0 group-hover:w-full transition-all duration-300" />
+            </button>
           </div>
         </div>
       </DialogContent>

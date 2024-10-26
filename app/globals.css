@@ -51,6 +51,16 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
+.bg-fading-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(179, 207, 61, 0.6),
+    #232323 50%,
+    rgba(179, 207, 61, 0.6)
+  );
+  padding: 1px;
+}
+
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
