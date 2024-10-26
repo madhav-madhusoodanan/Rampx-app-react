@@ -1,4 +1,5 @@
-import { TopPools, TopTokens } from "@/types/tokens";
+import { getWeekTimestamps } from "@/lib/utils";
+import { TopPools, TopTokens, TopTokensResponse } from "@/types/tokens";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -91,30 +92,43 @@ export const useGetPriceMetaData = (
 const fetchTopTokens = async (chainId: number) => {
   const data = await fetchQuery(`
       query {
-  listTopTokens(limit: 20 networkFilter: [${chainId}]) {
-    name
-    symbol
-    address
-    imageThumbUrl
-    price
-    priceChange1
-    priceChange24
-    volume
-    liquidity
-  }
-}
-      `);
-  const toptokens = data.data.listTopTokens as TopTokens[];
-  const updatedTopTokens = toptokens.map((token) => {
-    const isPositiveHour = token.priceChange1 >= 0;
-    const isPositiveDay = token.priceChange24 >= 0;
+        listTopTokens(limit: 20 networkFilter: [${chainId}]) {
+          name
+          symbol
+          address
+          imageThumbUrl
+          price
+          priceChange1
+          priceChange24
+          volume
+          liquidity
+        }
+      }
+  `);
 
-    return {
-      ...token,
-      isPositiveHour,
-      isPositiveDay,
-    };
-  });
+  const toptokens = data.data.listTopTokens as TopTokens[];
+  const { fromTimestamp, toTimestamp } = getWeekTimestamps();
+
+  const updatedTopTokens = await Promise.all(
+    toptokens.map(async (token) => {
+      const isPositiveHour = token.priceChange1 >= 0;
+      const isPositiveDay = token.priceChange24 >= 0;
+
+      const chartData = await fetchPriceChartRange(
+        token.address,
+        chainId,
+        fromTimestamp,
+        toTimestamp
+      );
+
+      return {
+        ...token,
+        isPositiveHour,
+        isPositiveDay,
+        chartData,
+      };
+    })
+  );
 
   return updatedTopTokens;
 };

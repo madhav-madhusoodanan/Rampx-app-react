@@ -27,6 +27,7 @@ export interface TopTokens {
 export interface TopTokensResponse extends TopTokens {
   isPositiveHour: boolean;
   isPositiveDay: boolean;
+  chartData: { price: number }[];
 }
 
 export interface TopPools {

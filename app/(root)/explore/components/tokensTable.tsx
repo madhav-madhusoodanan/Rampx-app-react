@@ -1,5 +1,6 @@
 "use client";
 
+import TokenMiniChart from "@/components/charts/TokenMiniChart";
 import {
   Table,
   TableBody,
@@ -18,6 +19,7 @@ import { useChainId } from "wagmi";
 const TopTokensTable = () => {
   const chainId = useChainId();
   const { data } = useGetTopTokens(["topTokens", chainId.toString()], chainId);
+  console.log({ data });
 
   return (
     <Table className="text-base lining-nums">
@@ -66,10 +68,10 @@ const TopTokensTable = () => {
             </TableCell>
             <TableCell
               className="text-right"
-              title={`$${item.price.toString()}`}
+              title={`$${item.price?.toString()}`}
             >
               <Link href={`/explore/tokens/ethereum/${item.address}`}>
-                ${formatNumberWithCommas(item.price.toString())}
+                ${formatNumberWithCommas(item.price?.toString())}
               </Link>
             </TableCell>
             <TableCell
@@ -138,20 +140,16 @@ const TopTokensTable = () => {
                 {formatDollarAmount(Number(item.volume))}
               </Link>
             </TableCell>
-            {/* <TableCell className="text-right w-[150px] h-[60px] p-0">
-                      <Link
-                        href={`/explore/tokens/ethereum/${item.address}`}
-                      >
-                        <TokenMiniChart
-                          height={60}
-                          width={150}
-                          data={item.chartData}
-                          isPositive={
-                            item.isPositiveHour || item.isPositiveDay
-                          }
-                        />
-                      </Link>
-                    </TableCell> */}
+            <TableCell className="text-right w-[150px] h-[60px] p-0">
+              <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                <TokenMiniChart
+                  height={60}
+                  width={150}
+                  data={item.chartData}
+                  isPositive={item.isPositiveHour || item.isPositiveDay}
+                />
+              </Link>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
