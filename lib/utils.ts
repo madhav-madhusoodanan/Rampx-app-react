@@ -55,9 +55,7 @@ export const formatNumberWithCommas = (numberString: string): string => {
 
   // Check if the number is valid
   if (isNaN(number)) {
-    throw new Error(
-      "Invalid input: The provided string is not a valid number."
-    );
+    return "";
   }
 
   // Use toLocaleString to format the number with commas

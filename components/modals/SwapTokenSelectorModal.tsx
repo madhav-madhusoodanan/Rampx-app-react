@@ -370,22 +370,21 @@ const SwapTokenSelectorModal = () => {
             </div>
 
             <div className="flex flex-row flex-wrap gap-4 mt-6">
-              {MOCK_POPULAR_TOKENS.map((token, index) => (
+              {tokens.slice(0, 6).map((token, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-2 border border-[#292929] py-2 px-3 rounded-xl bg-gray-300 bg-opacity-0 hover:bg-opacity-10 transition-all duration-150 cursor-pointer"
+                  onClick={() => onSelectToken(token)}
                 >
                   <Image
-                    src={token.tokenLogo}
+                    src={token.logoURI}
                     width={20}
                     height={20}
-                    alt={token.tokenSymbol}
+                    alt={token.symbol}
                     className=""
                     unoptimized
                   />
-                  <span className="font-medium text-sm">
-                    {token.tokenSymbol}
-                  </span>
+                  <span className="font-medium text-sm">{token.symbol}</span>
                 </div>
               ))}
             </div>
