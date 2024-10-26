@@ -17,6 +17,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         className="object-fill opacity-10 z-0"
         fill
         unoptimized
+        draggable={false}
       />
       <Header />
 
