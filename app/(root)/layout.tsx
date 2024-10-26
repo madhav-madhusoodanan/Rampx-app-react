@@ -30,8 +30,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <FooterIcons />
       </div> */}
       {/* Toaster */}
-      <div className="w-full fixed right-6 bottom-4">
-        <div className="max-w-screen-2xl mx-auto flex justify-end">
+      <div className="fixed right-6 bottom-4">
+        <div className="flex justify-end">
           <XBoy />
         </div>
       </div>
