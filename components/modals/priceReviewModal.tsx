@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { concat, formatUnits, Hex, numberToHex, size } from "viem";
+import { formatUnits } from "viem";
 import Image from "next/image";
 import {
   useSendTransaction,
   useWaitForTransactionReceipt,
-  useSignTypedData,
+  useWriteContract,
 } from "wagmi";
 
 import {
@@ -19,10 +19,14 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "@/store";
 import { useToast } from "../ui/use-toast";
 import { setTokenAmountA, setTokenAmountB } from "@/store/slices/swap";
+import rampxAbi from "@/config/rampxAbi.json";
 
 import { incrementSuccessTxCount } from "@/store/slices/app";
 import { setTxInProgress } from "@/store/slices/loadings";
 import { SpinningLoader } from "../loaders/Spinner";
+import { includedDexes, RAMPX_CONTRACT_ADDRESS } from "@/constants";
+import Decimal from "decimal.js";
+import { Route } from "@/types/actions";
 
 const PriceReviewModal = ({
   isOpen,
@@ -38,7 +42,6 @@ const PriceReviewModal = ({
   };
 
   const dispatch = useDispatch();
-  const { signTypedDataAsync } = useSignTypedData();
 
   const { toast, dismiss: dismissToast } = useToast();
 
@@ -59,13 +62,19 @@ const PriceReviewModal = ({
   const tokenA = useSelector((state) => state.swap.tokenA);
   const tokenB = useSelector((state) => state.swap.tokenB);
   const qouteData = useSelector((state) => state.swap.qouteData);
-  const walletAddress = useSelector((state) => state.app.walletAddress);
+  const maxSlippage = useSelector((state) => +(state.swap.maxSlippage ?? "0"));
   const chainId = useSelector((state) => state.app.chainId);
   const isTxInProgress = useSelector((state) => state.loadings.txInProgress);
 
+  const {
+    data: txReceipt,
+    writeContractAsync: swapRampX,
+    isError: isSwapError,
+  } = useWriteContract();
+
   const swapTokens = async () => {
     try {
-      if (qouteData) {
+      if (qouteData && maxSlippage) {
         dispatch(setTxInProgress(true));
         toast({
           variant: "default",
@@ -73,60 +82,80 @@ const PriceReviewModal = ({
           description: "Please wait for the swap to be processed",
         });
 
-        let modifiedTransactionData = qouteData.transaction.data;
+        const routerAddresses = extractDexesAddresses(qouteData.route, chainId);
 
-        if (qouteData.permit2?.eip712) {
-          let signature: Hex | undefined;
-          try {
-            signature = await signTypedDataAsync(qouteData.permit2.eip712);
-            console.log("Signed permit2 message from quote response");
-          } catch (error) {
-            console.error("Error signing permit2 coupon:", error);
-          }
-
-          // (2) Append signature length and signature data to calldata
-          if (signature && qouteData?.transaction?.data) {
-            console.log("signature length creating .... ", { signature });
-            const signatureLengthInHex = numberToHex(size(signature), {
-              signed: false,
-              size: 32,
-            });
-
-            const transactionData = qouteData.transaction.data as Hex;
-            const sigLengthHex = signatureLengthInHex as Hex;
-            const sig = signature as Hex;
-
-            modifiedTransactionData = concat([
-              transactionData,
-              sigLengthHex,
-              sig,
-            ]);
-            console.log({ modifiedTransactionData });
-          } else {
-            throw new Error("Failed to obtain signature or transaction data");
-          }
+        if (routerAddresses.length === 0) {
+          dismissToast();
+          toast({
+            variant: "destructive",
+            title: "InCompatible Dex",
+            description: "Cannot swap with incompatible dex",
+          });
+          dispatch(setTxInProgress(true));
+          return;
         }
 
-        console.log("sending transaction ....");
-        sendTransaction &&
-          sendTransaction({
-            account: walletAddress as `0x${string}`,
-            gas: !!qouteData.transaction.gas
-              ? BigInt(qouteData.transaction.gas)
-              : undefined,
-            to: qouteData.transaction.to,
-            data: modifiedTransactionData, // Use the modified transaction data
-            value: qouteData.transaction.value
-              ? BigInt(qouteData.transaction.value)
-              : undefined, // value is used for native tokens
-            chainId,
-          });
-        console.log("transaction sent !!!!");
+        const functionName =
+          routerAddresses.length > 1 ? "megaSwap" : "swapOnDex";
+
+        const path = qouteData.route.tokens.map((token) => token.address);
+        const deadline = 100000;
+
+        let routerAddressesTosend, amountsIn, minAmountOut;
+        if (functionName === "megaSwap") {
+          routerAddressesTosend = routerAddresses;
+          // amountsIn = qouteData.route.fills.map((fill) => fill.amountIn);
+          // minAmountOut = qouteData.route.fills.map((fill) => fill.minAmountOut);
+        } else {
+          routerAddressesTosend = routerAddresses[0];
+          amountsIn = new Decimal(qouteData.sellAmount).toNumber();
+          minAmountOut = new Decimal(qouteData.minBuyAmount).toNumber();
+        }
+
+        await swapRampX({
+          abi: rampxAbi,
+          address: RAMPX_CONTRACT_ADDRESS,
+          functionName,
+          args: [
+            path,
+            routerAddressesTosend,
+            amountsIn,
+            minAmountOut,
+            maxSlippage,
+            deadline,
+          ],
+        });
       }
     } catch (error) {
       console.log("error in swapping ERC-20 Tokens ====", { error });
       dispatch(setTxInProgress(false));
     }
+  };
+
+  const extractDexesAddresses = (route: Route, chainId: number) => {
+    let dexes: Record<string, string> = {};
+    let inCompatibleDexFound = false;
+
+    route.fills.forEach((fill) => {
+      if (!includedDexes[chainId]?.[fill.source]) {
+        inCompatibleDexFound = true;
+      } else {
+        dexes[fill.source] = includedDexes[chainId][fill.source];
+      }
+    });
+
+    if (inCompatibleDexFound) {
+      dismissToast();
+      toast({
+        variant: "destructive",
+        title: "InCompatible Dex",
+        description: "Cannot swap with incompatible dex",
+      });
+      dispatch(setTxInProgress(true));
+      return [];
+    }
+
+    return Object.values(dexes);
   };
 
   useEffect(() => {

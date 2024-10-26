@@ -1,5 +1,6 @@
 import CachedService from "@/classes/cachedService";
 import { toast } from "@/components/ui/use-toast";
+import { excludedDexes } from "@/constants";
 import { setIsQouteDataLoading, setQouteData } from "@/store/slices/swap";
 import { QouteApiParams, QouteApiResponse } from "@/types/actions";
 import { parseUnits } from "viem";
@@ -30,6 +31,7 @@ export async function getSwapQoute(params?: QouteApiParams) {
           sellToken: tokenA.address,
           sellAmount: parseUnits(amountA, tokenA.decimals).toString(),
           taker: walletAddress,
+          excludedSources: excludedDexes[chainId],
           // slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
         };
       } else {

@@ -15,7 +15,7 @@ const initialState: SwapSlice = {
   amountB: "",
   tokenA: WETH_TOKEN_INFO,
   tokenB: undefined,
-  maxSlippage: undefined,
+  maxSlippage: "200",
   isQouteDataLoading: false,
   tokenSelection: TokenSelection.A,
   transactionDeadline: "30",

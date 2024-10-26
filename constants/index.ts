@@ -2,6 +2,7 @@ import { FooterIcon, NavLink } from "../types";
 import DiscordIcon from "@/components/custom-icons/DiscordIcon";
 import TelegramIcon from "@/components/custom-icons/TelegramIcon";
 import RedditIcon from "@/components/custom-icons/RedditIcon";
+import { polygon } from "viem/chains";
 
 export const NATIVE_TOKEN_ADDRESS =
   "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
@@ -338,6 +339,24 @@ export const CHAIN_LOGOS = [
     imageUrl: "/assets/icons/blockchains/sei.svg",
   },
 ];
+
+export const excludedDexes: Record<number, string> = {
+  [polygon.id]:
+    "0x_RFQ,Curve,QuickSwap_V3,Retro,SushiSwap_V3,Uniswap_V3,WOOFi_V2,Wrapped_USDM",
+};
+
+export const includedDexes: Record<number, Record<string, string>> = {
+  [polygon.id]: {
+    ApeSwap: "0xC0788A3aD43d79aa53B09c2EaCc313A787d1d607",
+    Balancer_V2: "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+    DODO_V2: "0x9fDaaB9312084298d210B8789629D3054230e998",
+    Dfyn: "0xa102072a4c07f06ec3b4900fdc4c7b80b6c57429",
+    Quickswap_V2: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
+    SushiSwap: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
+    Uniswap_V2: "0xedf6066a2b290C185783862C7F4776A2C8077AD1",
+    WaultSwap: "0x3a1d87f206d12415f5b0a33e786967680aab4f6d",
+  },
+};
 
 export const SWAP_API_URL = "https://api.0x.org/swap/permit2";
 export const SWAP_API_URL2 = "https://api.0x.org/swap/allowance-holder";

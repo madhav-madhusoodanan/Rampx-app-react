@@ -1,5 +1,6 @@
 import CachedService from "@/classes/cachedService";
 import { toast } from "@/components/ui/use-toast";
+import { excludedDexes } from "@/constants";
 import { setIsSwapPriceLoading, setSwapPrice } from "@/store/slices/swap";
 import { PriceApiParams, PriceApiResponse } from "@/types/actions";
 import { parseUnits } from "viem";
@@ -35,6 +36,7 @@ export async function fetchSwapPrice(params?: PriceApiParams) {
         buyToken: tokenB.address,
         taker: walletAddress,
         sellAmount: parseUnits(amountA, tokenA.decimals).toString(),
+        excludedSources: excludedDexes[chainId],
         // slippageBps: maxSlippage ? Number(maxSlippage) : undefined,
       };
     }

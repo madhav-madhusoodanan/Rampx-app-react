@@ -66,6 +66,7 @@ export type PriceApiParams = {
   gasPrice?: string;
   slippageBps?: number;
   txOrigin?: string;
+  excludedSources?: string;
 };
 
 export interface QouteApiParams {
@@ -81,7 +82,7 @@ export interface QouteApiParams {
   tradeSurplusRecipient?: string;
   gasPrice?: string;
   slippageBps?: number;
-  excludedSource?: string;
+  excludedSources?: string;
 }
 
 export interface QouteApiResponse {
@@ -131,19 +132,19 @@ interface AllowanceIssue {
   spender: string;
 }
 
-interface Fill {
+export interface Fill {
   from: string;
   to: string;
   source: string;
   proportionBps: string;
 }
 
-interface Token {
+export interface Token {
   address: string;
   symbol: string;
 }
 
-interface Route {
+export interface Route {
   fills: Fill[];
   tokens: Token[];
 }
