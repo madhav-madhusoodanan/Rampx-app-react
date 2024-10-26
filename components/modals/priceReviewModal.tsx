@@ -99,7 +99,7 @@ const PriceReviewModal = ({
           routerAddresses.length > 1 ? "megaSwap" : "swapOnDex";
 
         const path = qouteData.route.tokens.map((token) => token.address);
-        const deadline = 100000;
+        const deadline = 480;
 
         let routerAddressesTosend, amountsIn, minAmountOut;
         if (functionName === "megaSwap") {
@@ -111,6 +111,15 @@ const PriceReviewModal = ({
           amountsIn = new Decimal(qouteData.sellAmount).toNumber();
           minAmountOut = new Decimal(qouteData.minBuyAmount).toNumber();
         }
+
+        console.log([
+          path,
+          routerAddressesTosend,
+          amountsIn,
+          minAmountOut,
+          maxSlippage,
+          deadline,
+        ]);
 
         await swapRampX({
           abi: rampxAbi,
