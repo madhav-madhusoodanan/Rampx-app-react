@@ -23,8 +23,8 @@ const SwapSettings = () => {
 
   const handleSlippageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    if (Number(value) <= 100) {
-      const maxSlippageInBPS = Number(value) * 100;
+    if (Number(value) <= 50) {
+      const maxSlippageInBPS = Number(value);
       dispatch(setMaxSlippage(maxSlippageInBPS));
     }
     setIsAutoSlippage(false);
@@ -76,7 +76,7 @@ const SwapSettings = () => {
                 <Input
                   id="slippage"
                   type="number"
-                  value={isAutoSlippage ? "1.00" : (maxSlippage ?? 100) / 100}
+                  value={isAutoSlippage ? "1.00" : maxSlippage.toString()}
                   onChange={handleSlippageChange}
                   className="w-full border-[0.5px] border-opacity-50  border-a-fluo bg-[#232418]/50 text-white pr-6"
                   disabled={isAutoSlippage}

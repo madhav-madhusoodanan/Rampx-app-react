@@ -82,11 +82,11 @@ const XBoy = () => {
 
           <div className="xboy-container bg-[#232323] flex justify-center items-center">
             <Image
-              src="/assets/images/xboy-idle.gif"
+              src="/assets/images/xboy-idle-transparent.gif"
               alt="XBoy"
               width={65}
               height={65}
-              className=""
+              className="mt-1.5"
             />
           </div>
         </div>

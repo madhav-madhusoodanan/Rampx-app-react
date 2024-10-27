@@ -63,6 +63,9 @@ const PriceReviewModal = ({
   const tokenB = useSelector((state) => state.swap.tokenB);
   const qouteData = useSelector((state) => state.swap.qouteData);
   const maxSlippage = useSelector((state) => +(state.swap.maxSlippage ?? "0"));
+  const transactionDeadline = useSelector(
+    (state) => +state.swap.transactionDeadline
+  );
   const chainId = useSelector((state) => state.app.chainId);
   const isTxInProgress = useSelector((state) => state.loadings.txInProgress);
 
@@ -71,6 +74,9 @@ const PriceReviewModal = ({
     writeContractAsync: swapRampX,
     isError: isSwapError,
   } = useWriteContract();
+
+  // console.log("DEADLINE", transactionDeadline);
+  // console.log("slippage", maxSlippage);
 
   const swapTokens = async () => {
     try {
@@ -99,7 +105,9 @@ const PriceReviewModal = ({
           routerAddresses.length > 1 ? "megaSwap" : "swapOnDex";
 
         const path = qouteData.route.tokens.map((token) => token.address);
-        const deadline = 480;
+        const currentTimeStamp = Math.floor(Date.now() / 1000);
+
+        const deadline = currentTimeStamp + transactionDeadline * 60;
 
         let routerAddressesTosend, amountsIn, minAmountOut;
         if (functionName === "megaSwap") {
@@ -215,7 +223,7 @@ const PriceReviewModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-a-charcoal border-a-fluo/50 text-white">
+      <DialogContent className="sm:max-w-md bg-a-charcoal border-a-fluo/30 text-white">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Review Quote

@@ -127,7 +127,7 @@ const VolumeChart = () => {
               style={{
                 fill: "rgba(124, 124, 124)",
                 // @ts-ignore it works just fine despite it saying property does not exist
-                "font-variant-numeric": "lining-nums",
+                fontVariantNumeric: "lining-nums",
               }}
               tickFormatter={tickFormatter}
             />
@@ -148,6 +148,7 @@ const VolumeChart = () => {
             >
               {chartData.map((entry, index) => (
                 <Cell
+                  key={index}
                   fill={
                     focusBar === index || !mouseEnteredChart
                       ? "#D0F603"

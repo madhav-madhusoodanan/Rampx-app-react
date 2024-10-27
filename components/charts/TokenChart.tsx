@@ -25,7 +25,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/custom-charts/explore-token-chart";
 
-
 const monthAbbreviations = [
   "Jan",
   "Feb",
@@ -52,10 +51,12 @@ const TokenChart = ({ data }: { data: any[] }) => {
   const [mouseEnteredChart, setMouseEnteredChart] = useState<boolean>(false);
 
   // Transform the API data into the format needed for the chart
-  const transformedChartData = data.map(item => ({
-    time: item.updated_at,
-    value: item.price
-  })).reverse(); // Reverse to show oldest to newest
+  const transformedChartData = data
+    .map((item) => ({
+      time: item.updated_at,
+      value: item.price,
+    }))
+    .reverse(); // Reverse to show oldest to newest
 
   const tickFormatter = (value: string) => {
     const date = new Date(value);
@@ -135,7 +136,10 @@ const TokenChart = ({ data }: { data: any[] }) => {
           </div>
         </div>
         <CardTitle className="font-semibold text-white text-[36px] lining-nums h-[54px]">
-          {!mouseEnteredChart && `$${formatPrice(transformedChartData[transformedChartData.length - 1].value)}`}
+          {!mouseEnteredChart &&
+            `$${formatPrice(
+              transformedChartData[transformedChartData.length - 1].value
+            )}`}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
@@ -153,10 +157,10 @@ const TokenChart = ({ data }: { data: any[] }) => {
                 setMouseEnteredChart(false);
               }
             }}
-          // margin={{
-          //   left: 12,
-          //   right: 12,
-          // }}
+            // margin={{
+            //   left: 12,
+            //   right: 12,
+            // }}
           >
             <XAxis
               style={{
@@ -164,7 +168,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
                 // fontFamily: "Arial",
                 fill: "rgba(124, 124, 124)",
                 // @ts-ignore it works just fine despite it saying property does not exist
-                "font-variant-numeric": "lining-nums",
+                fontVariantNumeric: "lining-nums",
               }}
               dataKey="time"
               tickLine={false}
@@ -172,7 +176,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
               tickMargin={8}
               minTickGap={30}
               tickFormatter={tickFormatter}
-            //   tickFormatter={(value) => value.slice(0, 3)}
+              //   tickFormatter={(value) => value.slice(0, 3)}
             />
 
             <YAxis
@@ -181,7 +185,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
                 // fontFamily: "Arial",
                 fill: "rgba(124, 124, 124)",
                 // @ts-ignore it works just fine despite it saying property does not exist
-                "font-variant-numeric": "lining-nums",
+                fontVariantNumeric: "lining-nums",
               }}
               dataKey="value"
               tickLine={false}
@@ -190,7 +194,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
               //   minTickGap={10}
               //   tickFormatter={tickFormatter}
               orientation="right"
-            //   tickFormatter={(value) => value.slice(0, 3)}
+              //   tickFormatter={(value) => value.slice(0, 3)}
             />
 
             {/* <CartesianGrid

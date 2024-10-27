@@ -210,7 +210,7 @@ const TvlChart = () => {
                 // fontFamily: "Arial",
                 fill: "rgba(124, 124, 124)",
                 // @ts-ignore it works just fine despite it saying property does not exist
-                "font-variant-numeric": "lining-nums",
+                fontVariantNumeric: "lining-nums",
               }}
               dataKey="time"
               tickLine={false}
