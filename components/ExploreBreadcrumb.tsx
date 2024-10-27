@@ -15,9 +15,10 @@ import { shortenAddress } from "@/lib/utils";
 
 interface Props {
   contractAddress: string;
+  name: string;
 }
 
-const ExploreBreadcrumb = ({ contractAddress }: Props) => {
+const ExploreBreadcrumb = ({ contractAddress, name }: Props) => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const copyContractAddressToClipboard = async () => {
@@ -51,7 +52,7 @@ const ExploreBreadcrumb = ({ contractAddress }: Props) => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className="text-white">PEPE</BreadcrumbPage>
+          <BreadcrumbPage className="text-white">{name}</BreadcrumbPage>
           <div className="lining-nums flex items-center gap-2">
             {shortenAddress(contractAddress as `0x${string}`)}
             {copySuccess ? (

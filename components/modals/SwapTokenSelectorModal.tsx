@@ -345,7 +345,7 @@ const SwapTokenSelectorModal = () => {
       />
 
       {/* TOKEN SELECTOR CARD */}
-      <Card className="w-[400px] h-[600px]  bg-a-charcoal rounded-2xl border border-gray-500 border-opacity-50  z-10 text-[#ececec] overflow-hidden">
+      <Card className="w-[400px] h-[600px]  bg-a-charcoal rounded-2xl border border-gray-500 border-opacity-50  z-50 text-[#ececec] overflow-hidden">
         <CardHeader className="px-3">
           <div className="flex justify-between items-center">
             <CardTitle className="text-lg">Select a token</CardTitle>
@@ -434,7 +434,7 @@ const SwapTokenSelectorModalWrapper = () => {
     <AnimatePresence>
       {isTokenModalOpen && (
         <motion.div
-          initial="hidden"
+          initial="show"
           animate="show"
           variants={fadeIn("", "tween", 0, 0.3)}
           exit="hidden"
