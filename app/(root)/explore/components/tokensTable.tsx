@@ -53,12 +53,12 @@ const TopTokensTable = () => {
                 className="hover:bg-white/10 transition-colors cursor-pointer"
               >
                 <TableCell className="font-medium my-auto">
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     {index + 1}
                   </Link>
                 </TableCell>
                 <TableCell className="">
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     <div className="flex items-center gap-2">
                       {item.imageThumbUrl ? (
                         <Image
@@ -78,7 +78,7 @@ const TopTokensTable = () => {
                   className="text-right"
                   title={`$${item.price?.toString()}`}
                 >
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     ${formatNumberWithCommas(item.price?.toString())}
                   </Link>
                 </TableCell>
@@ -88,7 +88,7 @@ const TopTokensTable = () => {
                     item.isPositiveHour ? "text-a-pnlGreen" : "text-a-pnlRed"
                   )}
                 >
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     <div className=" flex justify-end items-center gap-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ const TopTokensTable = () => {
                     item.isPositiveDay ? "text-a-pnlGreen" : "text-a-pnlRed"
                   )}
                 >
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     <div className=" flex justify-end items-center gap-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -139,17 +139,17 @@ const TopTokensTable = () => {
                   </Link>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     {formatDollarAmount(Number(item.liquidity))}
                   </Link>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     {formatDollarAmount(Number(item.volume))}
                   </Link>
                 </TableCell>
                 <TableCell className="text-right w-[150px] h-[60px] p-0">
-                  <Link href={`/explore/tokens/ethereum/${item.address}`}>
+                  <Link href={`/explore/tokens/${chainId}/${item.address}`}>
                     <TokenMiniChart
                       height={60}
                       width={150}
