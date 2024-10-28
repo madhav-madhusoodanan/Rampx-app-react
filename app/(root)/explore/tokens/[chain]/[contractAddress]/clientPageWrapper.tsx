@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import ExploreBreadcrumb from "@/components/ExploreBreadcrumb";
 import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
@@ -21,6 +21,8 @@ import Listeners from "@/components/listeners";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
 import { useFetchTokenPrice } from "@/hooks/useGraphQLQueries";
 import { Skeleton } from "@/components/ui/skeleton";
+import TransactionTable from "./components/transactionTables";
+import TokenPoolTable from "./components/tokenPoolTable";
 // TODO - add flex-row to the stats section
 // TODO - add custom loading.tsx file for this page (it's using the parent one)
 const MOCK_NAME = "X";
@@ -162,7 +164,7 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
         FADED GRADIENT BORDER TOP + BOTTOM
         Increase/Decrease the opacity of the gradient to make it more/less visible 👇
         */}
-                <div className="bg-[#191919] explore-table-container m-[1px] pb-6">
+                <div className="bg-[#191919] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container m-[1px] pb-6">
                     {currentTable === "Transactions" && (
                         <TransactionTable address={contractAddress} />
                     )}
