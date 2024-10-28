@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import ExploreBreadcrumb from "@/components/ExploreBreadcrumb";
 import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
@@ -22,10 +22,6 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
   );
 
   const [currentTable, setCurrentTable] = useState("Transactions");
-
-  useEffect(() => {
-    console.log("chartData", chartData);
-  }, [chartData]);
 
   const marketCap = useMemo(() => {
     const lastPrice =
