@@ -8,6 +8,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import BlockExplorerIcon from "../custom-icons/BlockExplorerIcon";
 import Image from "next/image";
 import Link from "next/link";
+import rampxLogo from "@/public/assets/images/rampx-token.png";
 
 import {
   //   Card,
@@ -70,7 +71,7 @@ const TokenChart = ({
       try {
         // Use the proxy URL
         const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(
-          tokenInfo.imageLargeUrl
+          tokenInfo.imageLargeUrl || rampxLogo
         )}`;
 
         // Create image element directly
@@ -221,7 +222,7 @@ const TokenChart = ({
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3 uppercase font-medium text-a-gray text-2xl">
             <Image
-              src={tokenInfo.imageLargeUrl}
+              src={tokenInfo.imageLargeUrl || rampxLogo}
               alt={tokenInfo.symbol}
               width={36}
               height={36}
@@ -283,10 +284,10 @@ const TokenChart = ({
                   setMouseEnteredChart(false);
                 }
               }}
-              // margin={{
-              //   left: 12,
-              //   right: 12,
-              // }}
+            // margin={{
+            //   left: 12,
+            //   right: 12,
+            // }}
             >
               <XAxis
                 style={{
@@ -302,7 +303,7 @@ const TokenChart = ({
                 tickMargin={8}
                 minTickGap={30}
                 tickFormatter={tickFormatter}
-                //   tickFormatter={(value) => value.slice(0, 3)}
+              //   tickFormatter={(value) => value.slice(0, 3)}
               />
 
               <YAxis
@@ -320,7 +321,7 @@ const TokenChart = ({
                 //   minTickGap={10}
                 //   tickFormatter={tickFormatter}
                 orientation="right"
-                //   tickFormatter={(value) => value.slice(0, 3)}
+              //   tickFormatter={(value) => value.slice(0, 3)}
               />
 
               {/* <CartesianGrid
