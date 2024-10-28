@@ -3,11 +3,7 @@
 import React, { useEffect } from "react";
 import { formatUnits } from "viem";
 import Image from "next/image";
-import {
-  useSendTransaction,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 import {
   Dialog,
@@ -15,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "@/store";
 import { useToast } from "../ui/use-toast";
 import { setTokenAmountA, setTokenAmountB } from "@/store/slices/swap";
@@ -45,20 +40,6 @@ const PriceReviewModal = ({
 
   const { toast, dismiss: dismissToast } = useToast();
 
-  const {
-    data: hash,
-    error: sendTxError,
-    sendTransaction,
-  } = useSendTransaction();
-
-  const {
-    isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    isError: isConfirmError,
-  } = useWaitForTransactionReceipt({
-    hash,
-  });
-
   const tokenA = useSelector((state) => state.swap.tokenA);
   const tokenB = useSelector((state) => state.swap.tokenB);
   const qouteData = useSelector((state) => state.swap.qouteData);
@@ -70,13 +51,18 @@ const PriceReviewModal = ({
   const isTxInProgress = useSelector((state) => state.loadings.txInProgress);
 
   const {
-    data: txReceipt,
+    data: hash,
     writeContractAsync: swapRampX,
-    isError: isSwapError,
+    isError: sendTxError,
   } = useWriteContract();
 
-  // console.log("DEADLINE", transactionDeadline);
-  // console.log("slippage", maxSlippage);
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    isError: isConfirmError,
+  } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   const swapTokens = async () => {
     try {
