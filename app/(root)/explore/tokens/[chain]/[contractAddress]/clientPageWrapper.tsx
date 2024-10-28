@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import ExploreBreadcrumb from "@/components/ExploreBreadcrumb";
 import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
@@ -21,6 +21,8 @@ import Listeners from "@/components/listeners";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
 import { useFetchTokenPrice } from "@/hooks/useGraphQLQueries";
 import { Skeleton } from "@/components/ui/skeleton";
+import TransactionTable from "./components/transactionTables";
+import TokenPoolTable from "./components/tokenPoolTable";
 // TODO - add flex-row to the stats section
 // TODO - add custom loading.tsx file for this page (it's using the parent one)
 const MOCK_NAME = "X";
@@ -30,8 +32,8 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     contractAddress,
     chain
   );
-    
-    const [currentTable, setCurrentTable] = useState("Transactions");
+
+  const [currentTable, setCurrentTable] = useState("Transactions");
 
   const marketCap = useMemo(() => {
     const lastPrice =
