@@ -4,22 +4,10 @@ import ExploreBreadcrumb from "@/components/ExploreBreadcrumb";
 import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
 import { Button } from "@/components/ui/button";
-import TokenMiniChart from "@/components/charts/TokenMiniChart";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
-import { formatNumberWithCommas, cn, formatNumberToKMB } from "@/lib/utils";
-import Link from "next/link";
-import Image from "next/image";
+import { formatNumberToKMB } from "@/lib/utils";
 import Listeners from "@/components/listeners";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
-import { useFetchTokenPrice } from "@/hooks/useGraphQLQueries";
+import { useFetchTokenPrice, useGetTopPools } from "@/hooks/useGraphQLQueries";
 import { Skeleton } from "@/components/ui/skeleton";
 import TransactionTable from "./components/transactionTables";
 import TokenPoolTable from "./components/tokenPoolTable";
@@ -28,6 +16,11 @@ import TokenPoolTable from "./components/tokenPoolTable";
 const MOCK_NAME = "X";
 
 const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
+  const { data: poolsData, isLoading: poolsDataLoading } = useGetTopPools(
+    ["topPools", chain.toString()],
+    chain
+  );
+
   const { data: tokenPriceData, isLoading: priceLoading } = useFetchTokenPrice(
     contractAddress,
     chain
@@ -35,27 +28,31 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
 
   const [currentTable, setCurrentTable] = useState("Transactions");
 
+  const dailyVolume = useMemo(() => {
+    if (!poolsData) return undefined;
+    return poolsData.reduce((acc: number, pool) => {
+      return acc + parseFloat(pool.volumeUSD1);
+    }, 0);
+  }, [poolsData]);
+
   const marketCap = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
-    const marketCap = lastPrice * tokenInfo?.getTokenInfo?.circulatingSupply;
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
+    const marketCap = lastPrice * tokenInfo.getTokenInfo?.circulatingSupply;
     return marketCap;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
   const fdv = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
-    const totalSupply = tokenInfo?.getTokenInfo?.totalSupply;
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
+    const totalSupply = tokenInfo.getTokenInfo?.totalSupply;
     const fdv = lastPrice * totalSupply;
     return fdv;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
   const tokenPrice = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
     return lastPrice as number;
   }, [chartData, tokenPriceData, priceLoading]);
 
@@ -103,10 +100,6 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
 
         <div className="text-white lining-nums flex justify-between border-b border-white/5 pb-10">
           <div className="flex flex-col gap-1">
-            <h3 className="text-white/50">TVL</h3>
-            <p className="text-[28px]">$239.8M</p>
-          </div>
-          <div className="flex flex-col gap-1">
             <h3 className="text-white/50">Market cap</h3>
             <p className="text-[28px]">
               {marketCap ? (
@@ -132,7 +125,15 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="text-white/50">1 day volume</h3>
-            <p className="text-[28px]">$438.2M</p>
+            <p className="text-[28px]">
+              {poolsDataLoading ? (
+                <Skeleton className="h-[40px] w-[100px] rounded-[10px]" />
+              ) : dailyVolume ? (
+                formatNumberToKMB(dailyVolume)
+              ) : (
+                ""
+              )}
+            </p>
           </div>
         </div>
       </div>
