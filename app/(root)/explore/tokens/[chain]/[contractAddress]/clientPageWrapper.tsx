@@ -170,7 +170,12 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
         */}
         <div className="bg-[#191919] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container m-[1px] pb-6">
           {currentTable === "Transactions" && (
-            <TransactionTable address={contractAddress} />
+            <TransactionTable
+              address={contractAddress}
+              tokenSymbol={
+                tokenInfo?.getTokenInfo?.symbol?.toUpperCase() || "Token Amount"
+              }
+            />
           )}
           {currentTable === "Pools" && (
             <TokenPoolTable address={contractAddress} />

@@ -24,15 +24,15 @@ const Page = async ({ params }: any) => {
 
   console.log("TOKEN INFO", tokenInfo);
 
-  console.log("TOKEN INFO", tokenInfo.data.listPairsWithMetadataForToken);
-  const TVL = tokenInfo.data.listPairsWithMetadataForToken.results.reduce(
+  console.log("TOKEN INFO", tokenInfo?.data?.listPairsWithMetadataForToken);
+  const TVL = tokenInfo?.data?.listPairsWithMetadataForToken.results.reduce(
     (acc: number, pair: any) => acc + parseFloat(pair.liquidity),
     0
   );
   console.log("TVL", TVL);
   console.log(
     "MARKET CAP",
-    tokenInfo.data.listPairsWithMetadataForToken.results
+    tokenInfo?.data?.listPairsWithMetadataForToken.results
   );
 
   return (

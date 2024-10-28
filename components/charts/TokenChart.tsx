@@ -343,7 +343,7 @@ const TokenChart = ({
                 dataKey="value"
                 type="natural"
                 fill={dominantColor}
-                fillOpacity={0.05}
+                fillOpacity={0.25}
                 stroke={dominantColor}
                 strokeWidth={1}
               />

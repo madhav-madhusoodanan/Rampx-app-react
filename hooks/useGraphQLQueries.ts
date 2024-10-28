@@ -225,13 +225,29 @@ export const fetchTokensTxn = async (address: string, chainId: number) => {
       query: {address: "${address}", networkId:${chainId} }
     ) {
       items {
+        eventDisplayType
         timestamp
-        maker
-        eventType
-        token0SwapValueUsd
-        token1SwapValueUsd
-        token0ValueBase
-        token1ValueBase
+      quoteToken
+      token1SwapValueUsd
+      liquidityToken
+      transactionHash
+      maker
+      data {
+        ... on SwapEventData {
+          amount0In
+          amount0Out
+          amount1In
+          amount1Out
+          amount0
+          amount1
+          amountNonLiquidityToken
+          priceUsd
+          priceUsdTotal
+          priceBaseToken
+          priceBaseTokenTotal
+          type
+        }
+      }
       }
     }
   }
