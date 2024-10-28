@@ -75,7 +75,7 @@ const Page = () => {
           {/* <div className="h-[2px] w-full absolute top-0 bg-gradient-to-r from-[#232323]/50 via-[#232323] to-[#232323]/50" />
           <div className="h-[2px] w-full absolute bottom-0 bg-gradient-to-r from-[#232323]/50 via-[#232323] to-[#232323]/50" /> */}
 
-          <div className="bg-[#191919] m-[1px] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container my-[1px] pb-6">
+          <div className="bg-[#191919] m-[1px] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container my-[1px] pb-2">
             {renderTables()}
           </div>
         </div>

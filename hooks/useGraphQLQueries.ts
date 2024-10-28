@@ -218,50 +218,100 @@ export const useGetTopPools = (
   });
 };
 
-export const fetchTokensTxn = async (address: string, chainId: number) => {
+// export const fetchTokensTxn = async (address: string, chainId: number) => {
+//   const data = await fetchQuery(`
+//     query {
+//     getTokenEvents(
+//       query: {address: "${address}", networkId:${chainId} }
+//       limit: 100
+//     ) {
+//       items {
+//         eventDisplayType
+//         timestamp
+//       quoteToken
+//       token1SwapValueUsd
+//       liquidityToken
+//       transactionHash
+//       maker
+//       data {
+//         ... on SwapEventData {
+//           amount0In
+//           amount0Out
+//           amount1In
+//           amount1Out
+//           amount0
+//           amount1
+//           amountNonLiquidityToken
+//           priceUsd
+//           priceUsdTotal
+//           priceBaseToken
+//           priceBaseTokenTotal
+//           type
+//         }
+//       }
+//       }
+//     }
+//   }
+//     `);
+//   return data?.data.getTokenEvents.items;
+// };
+
+export const fetchTokensTxn = async (
+  address: string,
+  chainId: number,
+  cursor: string | null = null
+): Promise<any> => {
+  // Define the query with a cursor parameter
   const data = await fetchQuery(`
     query {
-    getTokenEvents(
-      query: {address: "${address}", networkId:${chainId} }
-    ) {
-      items {
-        eventDisplayType
-        timestamp
-      quoteToken
-      token1SwapValueUsd
-      liquidityToken
-      transactionHash
-      maker
-      data {
-        ... on SwapEventData {
-          amount0In
-          amount0Out
-          amount1In
-          amount1Out
-          amount0
-          amount1
-          amountNonLiquidityToken
-          priceUsd
-          priceUsdTotal
-          priceBaseToken
-          priceBaseTokenTotal
-          type
+      getTokenEvents(
+        query: {address:"${address}", networkId:${chainId}}
+        limit: 10
+        cursor: ${cursor ? `"${cursor}"` : null}
+      ) {
+        cursor
+        items {
+          eventDisplayType
+          timestamp
+          quoteToken
+          token1SwapValueUsd
+          liquidityToken
+          transactionHash
+          maker
+          data {
+            ... on SwapEventData {
+              amount0In
+              amount0Out
+              amount1In
+              amount1Out
+              amount0
+              amount1
+              amountNonLiquidityToken
+              priceUsd
+              priceUsdTotal
+              priceBaseToken
+              priceBaseTokenTotal
+              type
+            }
+          }
         }
       }
-      }
     }
-  }
-    `);
-  return data?.data.getTokenEvents.items;
+  `);
+  console.log({ events: data?.data?.getTokenEvents });
+
+  const { items, cursor: pageCursor } = data?.data.getTokenEvents || {};
+  return { items, pageCursor };
 };
 
 export const useGetTokensTxn = (
   queryKey: string[],
   address: string,
-  chainId: number
+  chainId: number,
+  cursor: string | null
 ) => {
   return useQuery({
     queryKey: queryKey,
-    queryFn: () => fetchTokensTxn(address, chainId),
+    queryFn: () => fetchTokensTxn(address, chainId, cursor),
   });
 };

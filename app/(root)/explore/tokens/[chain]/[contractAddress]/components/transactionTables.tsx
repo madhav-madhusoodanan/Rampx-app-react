@@ -17,6 +17,9 @@ import {
 } from "@/lib/utils";
 import Link from "next/link";
 import { chainExplorers } from "@/constants";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { SpinningLoader } from "@/components/loaders/Spinner";
 
 const TransactionTable = ({
   address,
@@ -25,12 +28,28 @@ const TransactionTable = ({
   address: string;
   tokenSymbol: string;
 }) => {
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [txns, setTxns] = useState<any[]>([]);
   const chainId = useChainId();
-  const { data, isLoading } = useGetTokensTxn(
+  const { data, isLoading, isFetching, refetch } = useGetTokensTxn(
     ["tokenTxn", address, chainId.toString()],
     address,
-    chainId
+    chainId,
+    cursor
   );
+
+  useEffect(() => {
+    if (data) {
+      setTxns([...txns, ...data.items]);
+      setCursor(data.pageCursor);
+    }
+  }, [data]);
+
+  const loadmore = () => {
+    if (cursor) {
+      refetch();
+    }
+  };
 
   if (isLoading) {
     return <TableLoading />;
@@ -55,17 +74,17 @@ const TransactionTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data && data?.length > 0 ? (
+        {txns.length > 0 ? (
           <>
-            {data?.map((item: any, index: number) => (
+            {txns.map((item: any, index: number) => (
               <TableRow
                 key={item.name}
-                className={`hover:bg-white/10 transition-colors cursor-pointer ${item.eventDisplayType === "Sell"
-                  ? "text-a-pnlGreen"
-                  : "text-a-pnlRed"
-                  }`}
+                className={`hover:bg-white/10 transition-colors cursor-pointer ${
+                  item.eventDisplayType === "Sell"
+                    ? "text-a-pnlGreen"
+                    : "text-a-pnlRed"
+                }`}
               >
-
                 <TableCell className="">
                   <div className="flex items-center gap-2">
                     {timeAgo(item.timestamp)}
@@ -125,6 +144,23 @@ const TransactionTable = ({
             </TableCell>
           </TableRow>
         )}
+        <TableRow>
+          <TableCell colSpan={8}>
+            <div className="flex justify-center w-full">
+              <Button
+                disabled={isFetching}
+                onClick={loadmore}
+                className="border border-a-fluo"
+              >
+                {isFetching ? (
+                  <SpinningLoader className="h-4 w-4 text-a-fluo" />
+                ) : (
+                  "Load more"
+                )}
+              </Button>
+            </div>
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   );
