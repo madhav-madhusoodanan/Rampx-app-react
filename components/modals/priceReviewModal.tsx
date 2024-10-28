@@ -19,9 +19,14 @@ import rampxAbi from "@/config/rampxAbi.json";
 import { incrementSuccessTxCount } from "@/store/slices/app";
 import { setTxInProgress } from "@/store/slices/loadings";
 import { SpinningLoader } from "../loaders/Spinner";
-import { includedDexes, RAMPX_CONTRACT_ADDRESS } from "@/constants";
+import {
+  includedDexes,
+  NATIVE_TOKEN_ADDRESS,
+  RAMPX_CONTRACT_ADDRESS,
+} from "@/constants";
 import Decimal from "decimal.js";
 import { Route } from "@/types/actions";
+import { matchTokenAddress } from "@/lib/utils";
 
 const PriceReviewModal = ({
   isOpen,
@@ -88,7 +93,13 @@ const PriceReviewModal = ({
         }
 
         const functionName =
-          routerAddresses.length > 1 ? "megaSwap" : "swapOnDex";
+          routerAddresses.length > 1
+            ? "megaSwap"
+            : matchTokenAddress(tokenA.address, NATIVE_TOKEN_ADDRESS)
+            ? "swapEthToTokenOnDex"
+            : matchTokenAddress(`${tokenB?.address}`, NATIVE_TOKEN_ADDRESS)
+            ? "swapTokenToEthOnDex"
+            : "swapOnDex";
 
         const path = qouteData.route.tokens.map((token) => token.address);
         const currentTimeStamp = Math.floor(Date.now() / 1000);
@@ -115,18 +126,24 @@ const PriceReviewModal = ({
           deadline,
         ]);
 
+        const args = [
+          path,
+          routerAddressesTosend,
+          functionName === "swapEthToTokenOnDex" ? undefined : amountsIn,
+          minAmountOut,
+          maxSlippage,
+          deadline,
+        ].filter((arg) => arg !== undefined);
+
         await swapRampX({
           abi: rampxAbi,
           address: RAMPX_CONTRACT_ADDRESS,
           functionName,
-          args: [
-            path,
-            routerAddressesTosend,
-            amountsIn,
-            minAmountOut,
-            maxSlippage,
-            deadline,
-          ],
+          args,
+          value:
+            functionName === "swapEthToTokenOnDex"
+              ? BigInt(amountsIn ?? 0)
+              : undefined,
         });
       }
     } catch (error) {
