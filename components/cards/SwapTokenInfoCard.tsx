@@ -28,7 +28,7 @@ const SwapTokenInfoCard = ({
   const chainId = useChainId();
   const { toTimestamp, fromTimestamp } = getWeekTimestamps();
   const { data } = useGetPriceRangeData(
-    ["chartData"],
+    ["chartData", tokenSmartContractAddress],
     tokenSmartContractAddress,
     chainId,
     fromTimestamp,

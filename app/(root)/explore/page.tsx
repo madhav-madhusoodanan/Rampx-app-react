@@ -28,7 +28,7 @@ import { useSelector } from "@/store";
 import { ExploreTabs } from "@/types/slices";
 import TableTabs from "./components/tabs";
 import PoolsTable from "./components/poolsTable";
-import TransactionTable from "./components/transactionTables";
+import ChainPoolTable from "./components/chainPoolsTable";
 // import ExploreTvlChart from "@/components/charts/lightweight-charts/ExploreTvlChart";
 // import ExploreVolumeChart from "@/components/charts/lightweight-charts/ExploreVolumeChart";
 
@@ -47,11 +47,9 @@ const Page = () => {
     if (currentTab === ExploreTabs.TOKENS) {
       return <TopTokensTable />;
     } else if (currentTab === ExploreTabs.POOLS) {
-      return <PoolsTable />;
-    } else if (currentTab === ExploreTabs.TRANSACTIONS) {
-      return <TransactionTable />;
+      return <ChainPoolTable />;
     } else {
-      return <div className="h-[400px]">NO Data</div>;
+      return <div className="h-[400px]">No Data</div>;
     }
   }, [currentTab]);
   return (
