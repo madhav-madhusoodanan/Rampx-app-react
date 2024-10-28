@@ -63,11 +63,10 @@ const SwapSettings = () => {
             <div className="flex items-center space-x-2">
               <Button
                 variant={isAutoSlippage ? "secondary" : "outline"}
-                className={`px-3 py-1 text-sm transition-all duration-200 ${
-                  isAutoSlippage
-                    ? "bg-a-fluo hover:bg-a-fluo/50"
-                    : "border-a-fluo hover:bg-a-fluo"
-                }`}
+                className={`px-3 py-1 text-sm transition-all duration-200 ${isAutoSlippage
+                  ? "bg-a-fluo hover:bg-a-fluo/50"
+                  : "border-a-fluo hover:bg-a-fluo"
+                  }`}
                 onClick={handleAutoClick}
               >
                 Auto
@@ -76,7 +75,7 @@ const SwapSettings = () => {
                 <Input
                   id="slippage"
                   type="number"
-                  value={isAutoSlippage ? "1.00" : maxSlippage.toString()}
+                  value={isAutoSlippage ? "1.00" : maxSlippage?.toString()}
                   onChange={handleSlippageChange}
                   className="w-full border-[0.5px] border-opacity-50  border-a-fluo bg-[#232418]/50 text-white pr-6"
                   disabled={isAutoSlippage}
