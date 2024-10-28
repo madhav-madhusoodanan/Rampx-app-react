@@ -5,6 +5,7 @@ import SwapWidget from "@/components/SwapWidget";
 import { Button } from "@/components/ui/button";
 import TokenMiniChart from "@/components/charts/TokenMiniChart";
 import { fetchChartData } from "@/lib/actions/charts.action";
+import { fetchTokenInfo } from "@/lib/actions/token-info.action";
 import {
   Table,
   TableHeader,
@@ -44,11 +45,17 @@ const Page = async ({ params }: any) => {
   const startTime = Math.floor(Date.now() / 1000) - 7889231;
   const endTime = Math.floor(Date.now() / 1000);
   const data = await fetchChartData(chain?.chainId || 1, params.contractAddress, startTime, endTime);
+  const tokenInfo = await fetchTokenInfo(chain?.chainId || 1, params.contractAddress);
+
+  console.log("TOKEN INFO", tokenInfo.data.listPairsWithMetadataForToken);
+  const TVL = tokenInfo.data.listPairsWithMetadataForToken.results.reduce((acc: number, pair: any) => acc + parseFloat(pair.liquidity), 0);
+  console.log("TVL", TVL);
+  console.log("MARKET CAP", tokenInfo.data.listPairsWithMetadataForToken.results);
 
 
 
   return (
-    <ClientPageWrapper data={data} contractAddress={params.contractAddress} chain={chain} />
+    <ClientPageWrapper data={data} contractAddress={params.contractAddress} chain={chain} tokenInfo={tokenInfo.data} />
     // <div className="my-10">
     //   <ExploreBreadcrumb
     //     contractAddress={params.contractAddress}

@@ -49,6 +49,14 @@ export const filterUniqueContracts = (data: ApiResponse): UniqueContract[] => {
   return Object.values(uniqueContracts);
 };
 
+export const formatNumberToKMB = (number: number): string => {
+  return numbro(number).format({
+    average: true,
+    output: "currency",
+    mantissa: 2,
+  });
+};
+
 export const formatNumberWithCommas = (numberString: string): string => {
   // Convert the string to a number
   const number = parseFloat(numberString);

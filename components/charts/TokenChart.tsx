@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
 import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
@@ -25,6 +25,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/custom-charts/explore-token-chart";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 const monthAbbreviations = [
   "Jan",
   "Feb",
@@ -47,8 +49,116 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TokenChart = ({ data }: { data: any[] }) => {
+const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
   const [mouseEnteredChart, setMouseEnteredChart] = useState<boolean>(false);
+  const [dominantColor, setDominantColor] = useState<string>("#D0F603");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const extractColor = async () => {
+      setIsLoading(true);
+      try {
+        // Use the proxy URL
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(tokenInfo.imageLargeUrl)}`;
+
+        // Create image element directly
+        const img = document.createElement('img');
+        img.crossOrigin = "anonymous";
+
+        // Create a promise to handle the image loading
+        const imageLoadPromise = new Promise((resolve, reject) => {
+          img.onload = () => {
+            console.log("Image loaded successfully");
+            resolve(img);
+          };
+
+          img.onerror = (e) => {
+            console.error('Error loading image:', e);
+            reject(e);
+          };
+        });
+
+        // Set the source to use our proxy
+        img.src = proxyUrl;
+
+        // Wait for image to load
+        await imageLoadPromise;
+
+        // Process the image
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+          throw new Error('Could not get canvas context');
+        }
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+        let r = 0, g = 0, b = 0;
+        let count = 0;
+
+        for (let i = 0; i < imageData.length; i += 4) {
+          r += imageData[i];
+          g += imageData[i + 1];
+          b += imageData[i + 2];
+          count++;
+        }
+
+        r = Math.round(r / count);
+        g = Math.round(g / count);
+        b = Math.round(b / count);
+
+        const color = `rgb(${r}, ${g}, ${b})`;
+        console.log("Extracted color:", color);
+        setDominantColor(color);
+
+      } catch (error) {
+        console.error('Error in color extraction:', error);
+        setDominantColor("#D0F603");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    extractColor();
+  }, [tokenInfo.imageLargeUrl]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[304px] mt-12 pb-10">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 200 100"
+          preserveAspectRatio="none"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className=""
+        >
+          <path
+            className="animate-pulse bg-slate-50/10 w-full"
+            d="M0 50 Q 25 0, 50 50 T 100 50 T 150 50 T 200 50"
+            stroke="rgba(248, 250, 252, 0.2)"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+        <div className="flex items-center gap-10 pt-14">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="h-[8px] w-[50px] rounded-[10px]"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // Transform the API data into the format needed for the chart
   const transformedChartData = data
@@ -96,19 +206,19 @@ const TokenChart = ({ data }: { data: any[] }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3 uppercase font-medium text-a-gray text-2xl">
             <Image
-              src={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenLogo}
-              alt={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenSymbol}
-              width={32}
-              height={32}
-              className=""
+              src={tokenInfo.imageLargeUrl}
+              alt={tokenInfo.symbol}
+              width={36}
+              height={36}
+              className="rounded-full"
             />
 
             <p className="text-white">
               {" "}
-              {MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenName}
+              {tokenInfo.name}
             </p>
             <p className="text-a-gray">
-              {MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenSymbol}
+              {tokenInfo.symbol}
             </p>
           </div>
           <div className="flex items-center gap-2 pr-6">
@@ -157,10 +267,10 @@ const TokenChart = ({ data }: { data: any[] }) => {
                 setMouseEnteredChart(false);
               }
             }}
-            // margin={{
-            //   left: 12,
-            //   right: 12,
-            // }}
+          // margin={{
+          //   left: 12,
+          //   right: 12,
+          // }}
           >
             <XAxis
               style={{
@@ -176,7 +286,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
               tickMargin={8}
               minTickGap={30}
               tickFormatter={tickFormatter}
-              //   tickFormatter={(value) => value.slice(0, 3)}
+            //   tickFormatter={(value) => value.slice(0, 3)}
             />
 
             <YAxis
@@ -194,7 +304,7 @@ const TokenChart = ({ data }: { data: any[] }) => {
               //   minTickGap={10}
               //   tickFormatter={tickFormatter}
               orientation="right"
-              //   tickFormatter={(value) => value.slice(0, 3)}
+            //   tickFormatter={(value) => value.slice(0, 3)}
             />
 
             {/* <CartesianGrid
@@ -216,9 +326,9 @@ const TokenChart = ({ data }: { data: any[] }) => {
             <Area
               dataKey="value"
               type="natural"
-              fill="#D0F603"
+              fill={dominantColor}
               fillOpacity={0.05}
-              stroke="#D0F603"
+              stroke={dominantColor}
               strokeWidth={1}
             />
             {/* <Legend
