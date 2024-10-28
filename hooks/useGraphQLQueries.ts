@@ -18,6 +18,34 @@ const fetchQuery = async (query: string) => {
   );
   return response.data;
 };
+
+export const useFetchTokenPrice = (token: string, chain: number) => {
+  return useQuery({
+    queryKey: ["tokenPrice"],
+    queryFn: () =>
+      fetchQuery(`
+        query {
+          getTokenPrices(
+            inputs: [
+              { address: "${token}", networkId: ${chain} }
+            ]
+          ) {
+            address
+            networkId
+            priceUsd
+          }
+        }
+      `),
+
+    select(data) {
+      if (data?.data?.getTokenPrices) {
+        return data.data.getTokenPrices[0]?.priceUsd ?? 0;
+      }
+      return undefined;
+    },
+  });
+};
+
 const fetchPriceChartRange = async (
   address: string,
   chainId: number,

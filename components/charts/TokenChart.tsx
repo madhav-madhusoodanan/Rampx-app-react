@@ -49,7 +49,17 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
+const TokenChart = ({
+  data,
+  tokenInfo,
+  tokenPrice,
+  priceLoading,
+}: {
+  data: any[];
+  tokenInfo: any;
+  tokenPrice: number;
+  priceLoading: boolean;
+}) => {
   const [mouseEnteredChart, setMouseEnteredChart] = useState<boolean>(false);
   const [dominantColor, setDominantColor] = useState<string>("#D0F603");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -59,10 +69,12 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
       setIsLoading(true);
       try {
         // Use the proxy URL
-        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(tokenInfo.imageLargeUrl)}`;
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(
+          tokenInfo.imageLargeUrl
+        )}`;
 
         // Create image element directly
-        const img = document.createElement('img');
+        const img = document.createElement("img");
         img.crossOrigin = "anonymous";
 
         // Create a promise to handle the image loading
@@ -73,7 +85,7 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
           };
 
           img.onerror = (e) => {
-            console.error('Error loading image:', e);
+            console.error("Error loading image:", e);
             reject(e);
           };
         });
@@ -85,20 +97,27 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
         await imageLoadPromise;
 
         // Process the image
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
         if (!ctx) {
-          throw new Error('Could not get canvas context');
+          throw new Error("Could not get canvas context");
         }
 
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        const imageData = ctx.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        ).data;
 
-        let r = 0, g = 0, b = 0;
+        let r = 0,
+          g = 0,
+          b = 0;
         let count = 0;
 
         for (let i = 0; i < imageData.length; i += 4) {
@@ -115,9 +134,8 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
         const color = `rgb(${r}, ${g}, ${b})`;
         console.log("Extracted color:", color);
         setDominantColor(color);
-
       } catch (error) {
-        console.error('Error in color extraction:', error);
+        console.error("Error in color extraction:", error);
         setDominantColor("#D0F603");
       } finally {
         setIsLoading(false);
@@ -150,10 +168,7 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
         </svg>
         <div className="flex items-center gap-10 pt-14">
           {Array.from({ length: 5 }).map((_, index) => (
-            <Skeleton
-              key={index}
-              className="h-[8px] w-[50px] rounded-[10px]"
-            />
+            <Skeleton key={index} className="h-[8px] w-[50px] rounded-[10px]" />
           ))}
         </div>
       </div>
@@ -213,13 +228,8 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
               className="rounded-full"
             />
 
-            <p className="text-white">
-              {" "}
-              {tokenInfo.name}
-            </p>
-            <p className="text-a-gray">
-              {tokenInfo.symbol}
-            </p>
+            <p className="text-white"> {tokenInfo.name}</p>
+            <p className="text-a-gray">{tokenInfo.symbol}</p>
           </div>
           <div className="flex items-center gap-2 pr-6">
             <Link
@@ -246,97 +256,104 @@ const TokenChart = ({ data, tokenInfo }: { data: any[], tokenInfo: any }) => {
           </div>
         </div>
         <CardTitle className="font-semibold text-white text-[36px] lining-nums h-[54px]">
-          {!mouseEnteredChart &&
-            `$${formatPrice(
-              transformedChartData[transformedChartData.length - 1].value
-            )}`}
+          {!mouseEnteredChart ? (
+            tokenPrice ? (
+              `$${formatPrice(tokenPrice ?? 0)}`
+            ) : priceLoading ? (
+              <Skeleton className="h-[40px] w-[100px] rounded-[10px]" />
+            ) : (
+              `$${formatPrice(tokenPrice ?? 0)}`
+            )
+          ) : null}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <ChartContainer
-          config={chartConfig}
-          onMouseLeave={() => setMouseEnteredChart(false)}
-        >
-          <AreaChart
-            accessibilityLayer
-            data={transformedChartData}
-            onMouseMove={(state) => {
-              if (state.isTooltipActive) {
-                setMouseEnteredChart(true);
-              } else {
-                setMouseEnteredChart(false);
-              }
-            }}
-          // margin={{
-          //   left: 12,
-          //   right: 12,
-          // }}
+        {transformedChartData.length > 0 && (
+          <ChartContainer
+            config={chartConfig}
+            onMouseLeave={() => setMouseEnteredChart(false)}
           >
-            <XAxis
-              style={{
-                // fontSize: "0.8rem",
-                // fontFamily: "Arial",
-                fill: "rgba(124, 124, 124)",
-                // @ts-ignore it works just fine despite it saying property does not exist
-                fontVariantNumeric: "lining-nums",
+            <AreaChart
+              accessibilityLayer
+              data={transformedChartData}
+              onMouseMove={(state) => {
+                if (state.isTooltipActive) {
+                  setMouseEnteredChart(true);
+                } else {
+                  setMouseEnteredChart(false);
+                }
               }}
-              dataKey="time"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={30}
-              tickFormatter={tickFormatter}
-            //   tickFormatter={(value) => value.slice(0, 3)}
-            />
+              // margin={{
+              //   left: 12,
+              //   right: 12,
+              // }}
+            >
+              <XAxis
+                style={{
+                  // fontSize: "0.8rem",
+                  // fontFamily: "Arial",
+                  fill: "rgba(124, 124, 124)",
+                  // @ts-ignore it works just fine despite it saying property does not exist
+                  fontVariantNumeric: "lining-nums",
+                }}
+                dataKey="time"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={30}
+                tickFormatter={tickFormatter}
+                //   tickFormatter={(value) => value.slice(0, 3)}
+              />
 
-            <YAxis
-              style={{
-                // fontSize: "0.8rem",
-                // fontFamily: "Arial",
-                fill: "rgba(124, 124, 124)",
-                // @ts-ignore it works just fine despite it saying property does not exist
-                fontVariantNumeric: "lining-nums",
-              }}
-              dataKey="value"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              //   minTickGap={10}
-              //   tickFormatter={tickFormatter}
-              orientation="right"
-            //   tickFormatter={(value) => value.slice(0, 3)}
-            />
+              <YAxis
+                style={{
+                  // fontSize: "0.8rem",
+                  // fontFamily: "Arial",
+                  fill: "rgba(124, 124, 124)",
+                  // @ts-ignore it works just fine despite it saying property does not exist
+                  fontVariantNumeric: "lining-nums",
+                }}
+                dataKey="value"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                //   minTickGap={10}
+                //   tickFormatter={tickFormatter}
+                orientation="right"
+                //   tickFormatter={(value) => value.slice(0, 3)}
+              />
 
-            {/* <CartesianGrid
+              {/* <CartesianGrid
               strokeDasharray="3 3"
               //   fill="#FFFFFF"
               stroke="#FFFFFF"
               // vertical={false}
             /> */}
 
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  indicator="line"
-                  className="bg-a-charcoal"
-                />
-              }
-            />
-            <Area
-              dataKey="value"
-              type="natural"
-              fill={dominantColor}
-              fillOpacity={0.05}
-              stroke={dominantColor}
-              strokeWidth={1}
-            />
-            {/* <Legend
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    indicator="line"
+                    className="bg-a-charcoal"
+                  />
+                }
+              />
+              <Area
+                dataKey="value"
+                type="natural"
+                fill={dominantColor}
+                fillOpacity={0.05}
+                stroke={dominantColor}
+                strokeWidth={1}
+              />
+              {/* <Legend
               content={<RenderLegend   />}
               verticalAlign="top"
             /> */}
-          </AreaChart>
-        </ChartContainer>
+            </AreaChart>
+          </ChartContainer>
+        )}
       </CardContent>
       {/* <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
