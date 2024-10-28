@@ -337,7 +337,7 @@ export const CHAIN_LOGOS = [
   {
     chainId: 137,
     networkName: "MATIC",
-    imageUrl: "/assets/icons/blockchains/sei.svg",
+    imageUrl: "/assets/icons/blockchains/matic.svg",
   },
 ];
 
@@ -364,7 +364,7 @@ export const SWAP_API_URL2 = "https://api.0x.org/swap/allowance-holder";
 
 // TODO - Replace with correct rampx contract address for production
 export const RAMPX_CONTRACT_ADDRESS =
-  "0x759496c6a6b576dee7b576870220cec5a0473d43";
+  "0xFdD08ef06B9B9C05C87Bff9586ac1a70490C9813";
 // export const RAMPX_CONTRACT_ADDRESS =
 //   "0xFa05882860FE39E1618ae89f2E8D8e01B601Cd4a";
 
