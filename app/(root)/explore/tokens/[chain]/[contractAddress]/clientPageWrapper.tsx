@@ -1,22 +1,10 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ExploreBreadcrumb from "@/components/ExploreBreadcrumb";
 import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
 import { Button } from "@/components/ui/button";
-import TokenMiniChart from "@/components/charts/TokenMiniChart";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
-import { formatNumberWithCommas, cn, formatNumberToKMB } from "@/lib/utils";
-import Link from "next/link";
-import Image from "next/image";
+import { formatNumberToKMB } from "@/lib/utils";
 import Listeners from "@/components/listeners";
 import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
 import { useFetchTokenPrice } from "@/hooks/useGraphQLQueries";
@@ -35,18 +23,20 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
 
   const [currentTable, setCurrentTable] = useState("Transactions");
 
+  useEffect(() => {
+    console.log("chartData", chartData);
+  }, [chartData]);
+
   const marketCap = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
     const marketCap = lastPrice * tokenInfo.getTokenInfo?.circulatingSupply;
     return marketCap;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
   const fdv = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
     const totalSupply = tokenInfo.getTokenInfo?.totalSupply;
     const fdv = lastPrice * totalSupply;
     return fdv;
@@ -54,8 +44,7 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
 
   const tokenPrice = useMemo(() => {
     const lastPrice =
-      chartData[chartData.length - 1]?.price ??
-      (!priceLoading ? tokenPriceData : 0);
+      chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
     return lastPrice as number;
   }, [chartData, tokenPriceData, priceLoading]);
 
