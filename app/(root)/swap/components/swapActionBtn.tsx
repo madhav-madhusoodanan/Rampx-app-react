@@ -159,6 +159,7 @@ const SwapActionBtn = () => {
 
   const isDisabled = useMemo(
     () =>
+      Boolean(wrapUnwrapIntent) ||
       isAllowanceLoading ||
       !tokenB ||
       isPriceApiError ||
@@ -176,6 +177,7 @@ const SwapActionBtn = () => {
       isPriceApiError,
       tokenB,
       isAllowanceLoading,
+      wrapUnwrapIntent,
     ]
   );
 
@@ -265,32 +267,32 @@ const SwapActionBtn = () => {
     }
   }, [isApproveConfirmError]);
 
-  const {
-    data: txReceipt,
-    writeContractAsync: setRoutersContract,
-    isError: reouterError,
-  } = useWriteContract();
+  // const {
+  //   data: txReceipt,
+  //   writeContractAsync: setRoutersContract,
+  //   isError: reouterError,
+  // } = useWriteContract();
 
-  const setRouters = async () => {
-    await setRoutersContract({
-      abi: rampxAbi,
-      address: RAMPX_CONTRACT_ADDRESS as `0x${string}`,
-      functionName: "setRouters",
-      args: [
-        [
-          "0xC0788A3aD43d79aa53B09c2EaCc313A787d1d607",
-          "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
-          "0x9fDaaB9312084298d210B8789629D3054230e998",
-          "0xa102072a4c07f06ec3b4900fdc4c7b80b6c57429",
-          "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
-          "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
-          "0xedf6066a2b290C185783862C7F4776A2C8077AD1",
-          "0x3a1d87f206d12415f5b0a33e786967680aab4f6d",
-        ],
-        true,
-      ],
-    });
-  };
+  // const setRouters = async () => {
+  //   await setRoutersContract({
+  //     abi: rampxAbi,
+  //     address: RAMPX_CONTRACT_ADDRESS as `0x${string}`,
+  //     functionName: "setRouters",
+  //     args: [
+  //       [
+  //         "0xC0788A3aD43d79aa53B09c2EaCc313A787d1d607",
+  //         "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+  //         "0x9fDaaB9312084298d210B8789629D3054230e998",
+  //         "0xa102072a4c07f06ec3b4900fdc4c7b80b6c57429",
+  //         "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
+  //         "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
+  //         "0xedf6066a2b290C185783862C7F4776A2C8077AD1",
+  //         "0x3a1d87f206d12415f5b0a33e786967680aab4f6d",
+  //       ],
+  //       true,
+  //     ],
+  //   });
+  // };
 
   return (
     <>
