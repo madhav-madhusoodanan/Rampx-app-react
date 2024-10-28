@@ -40,7 +40,6 @@ const TransactionTable = ({
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
       <TableHeader>
         <TableRow className="bg-[#232418]/50 text-white/50 text-opacity-50 border-b border-white/10 h-[60px]">
-          <TableHead className="w-[20px] ">#</TableHead>
           <TableHead>Time</TableHead>
           <TableHead className="text-right">Price</TableHead>
           <TableHead className="text-right">USD</TableHead>
@@ -61,15 +60,12 @@ const TransactionTable = ({
             {data?.map((item: any, index: number) => (
               <TableRow
                 key={item.name}
-                className={`hover:bg-white/10 transition-colors cursor-pointer ${
-                  item.eventDisplayType === "Sell"
-                    ? "text-a-pnlGreen"
-                    : "text-a-pnlRed"
-                }`}
+                className={`hover:bg-white/10 transition-colors cursor-pointer ${item.eventDisplayType === "Sell"
+                  ? "text-a-pnlGreen"
+                  : "text-a-pnlRed"
+                  }`}
               >
-                <TableCell className="font-medium my-auto">
-                  {index + 1}
-                </TableCell>
+
                 <TableCell className="">
                   <div className="flex items-center gap-2">
                     {timeAgo(item.timestamp)}
