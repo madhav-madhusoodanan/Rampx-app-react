@@ -268,7 +268,7 @@ const TokenChart = ({
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {transformedChartData.length > 0 && (
+        {transformedChartData.length > 0 ? (
           <ChartContainer
             config={chartConfig}
             onMouseLeave={() => setMouseEnteredChart(false)}
@@ -353,6 +353,8 @@ const TokenChart = ({
             /> */}
             </AreaChart>
           </ChartContainer>
+        ) : (
+          <div className="w-full mt-[25%] text-center">No chart data</div>
         )}
       </CardContent>
       {/* <CardFooter>

@@ -38,14 +38,15 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
   const marketCap = useMemo(() => {
     const lastPrice =
       chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
-    const marketCap = lastPrice * tokenInfo.getTokenInfo?.circulatingSupply;
+    const marketCap =
+      lastPrice * (tokenInfo?.getTokenInfo?.circulatingSupply ?? 0);
     return marketCap;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
   const fdv = useMemo(() => {
     const lastPrice =
       chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
-    const totalSupply = tokenInfo.getTokenInfo?.totalSupply;
+    const totalSupply = tokenInfo?.getTokenInfo?.totalSupply ?? 0;
     const fdv = lastPrice * totalSupply;
     return fdv;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
@@ -60,13 +61,13 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     <div className="my-10">
       <ExploreBreadcrumb
         contractAddress={contractAddress}
-        name={(tokenInfo.getTokenInfo?.symbol).toUpperCase() || MOCK_NAME}
+        name={(tokenInfo?.getTokenInfo?.symbol).toUpperCase() || ""}
       />
 
       <div className="flex justify-between items-start gap-4 ">
         <TokenChart
           data={chartData}
-          tokenInfo={tokenInfo.getTokenInfo}
+          tokenInfo={tokenInfo?.getTokenInfo}
           tokenPrice={tokenPrice}
           priceLoading={priceLoading}
         />
