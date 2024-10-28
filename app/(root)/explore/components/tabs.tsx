@@ -31,7 +31,7 @@ const TableTabs = () => {
       >
         Pools
       </Button>
-      <Button
+      {/* <Button
         className={`transition-all duration-200 text-[28px] ${
           currentTab === ExploreTabs.TRANSACTIONS
             ? "text-white hover:opacity-50"
@@ -40,7 +40,7 @@ const TableTabs = () => {
         onClick={() => handleClick(ExploreTabs.TRANSACTIONS)}
       >
         Transactions
-      </Button>
+      </Button> */}
     </div>
   );
 };

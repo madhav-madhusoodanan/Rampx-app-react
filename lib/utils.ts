@@ -101,7 +101,7 @@ export const getWeekTimestamps = () => {
   endOfRange.setHours(23, 59, 59, 999);
 
   const startOfRange = new Date(endOfRange);
-  startOfRange.setDate(endOfRange.getDate() - 6);
+  startOfRange.setDate(endOfRange.getDate() - 30);
   startOfRange.setHours(0, 0, 0, 0);
   const fromTimestamp = Number((startOfRange.getTime() / 1000).toFixed(0));
   const toTimestamp = Number((endOfRange.getTime() / 1000).toFixed(0));

@@ -92,7 +92,7 @@ export const useGetPriceMetaData = (
 const fetchTopTokens = async (chainId: number) => {
   const data = await fetchQuery(`
       query {
-        listTopTokens(limit: 20 networkFilter: [${chainId}]) {
+        listTopTokens(limit: 50 networkFilter: [${chainId}]) {
           name
           symbol
           address
@@ -146,7 +146,7 @@ const fetchTopPools = async (chainId: number, address?: string) => {
   filterPairs(
     ${address ? `phrase: "${address}"` : ""}
     rankings: { attribute: buyCount24, direction: DESC }
-    limit: 40
+    limit: 50
     filters: {network:${chainId}}
   ) {
     results {
