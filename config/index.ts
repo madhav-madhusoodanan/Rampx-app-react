@@ -42,14 +42,14 @@ const metadata = {
 //   },
 // } as const satisfies Chain;
 
-const chains = [mainnet, base, blast, sei, polygon] as const;
+const chains = [mainnet, base, blast, polygon] as const;
 
 export const CHAINMAP = {
   [mainnet.id]: mainnet,
   [base.id]: base,
   [polygon.id]: polygon,
   [blast.id]: blast,
-  [sei.id]: sei,
+  // [sei.id]: sei,
 };
 
 // Create wagmiConfig
@@ -66,7 +66,7 @@ export const config = defaultWagmiConfig({
     [polygon.id]: http(),
     [blast.id]: http(),
     [base.id]: http(),
-    [sei.id]: http(),
+    // [sei.id]: http(),
   },
   //   ...wagmiOptions // Optional - Override createConfig parameters
 });
