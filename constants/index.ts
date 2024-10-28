@@ -382,3 +382,11 @@ export const AMOUNT_INPUT_REGEX = /^((\d+[.]?\d*)|(\.\d+))$/;
 
 export const MAX_ALLOWANCE =
   115792089237316195423570985008687907853269984665640564039457584007913129639935n;
+
+export const chainExplorers: { [key: number]: string } = {
+  1: "https://etherscan.io",
+  137: "https://polygonscan.com",
+  8453: "https://basescan.org",
+  81457: "https://blastscan.io/",
+  531: "https://www.seiscan.app/pacific-1",
+};

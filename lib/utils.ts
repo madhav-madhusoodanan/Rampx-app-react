@@ -170,6 +170,27 @@ export const minutesToUnixTimestamp = (minutes: number) => {
   return Math.floor(timestamp / 1000);
 };
 
+export const timeAgo = (timestamp: number) => {
+  const seconds = Math.floor((Date.now() - timestamp * 1000) / 1000);
+
+  if (seconds < 60) return `${seconds} sec ago`;
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hrs ago`;
+
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days} days ago`;
+
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months} months ago`;
+
+  const years = Math.floor(months / 12);
+  return `${years} years ago`;
+};
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES

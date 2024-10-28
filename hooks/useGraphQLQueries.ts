@@ -140,12 +140,13 @@ export const useGetTopTokens = (queryKey: string[], chainId: number) => {
   });
 };
 
-const fetchTopPools = async (chainId: number) => {
+const fetchTopPools = async (chainId: number, address?: string) => {
   const data = await fetchQuery(`
         query {
   filterPairs(
+    ${address ? `phrase: "${address}"` : ""}
     rankings: { attribute: buyCount24, direction: DESC }
-    limit: 15
+    limit: 40
     filters: {network:${chainId}}
   ) {
     results {
@@ -178,9 +179,45 @@ const fetchTopPools = async (chainId: number) => {
   return data.data.filterPairs.results as TopPools[];
 };
 
-export const useGetTopPools = (queryKey: string[], chainId: number) => {
+export const useGetTopPools = (
+  queryKey: string[],
+  chainId: number,
+  address?: string
+) => {
   return useQuery({
     queryKey: queryKey,
-    queryFn: () => fetchTopPools(chainId),
+    queryFn: () => fetchTopPools(chainId, address),
+  });
+};
+
+export const fetchTokensTxn = async (address: string, chainId: number) => {
+  const data = await fetchQuery(`
+    query {
+    getTokenEvents(
+      query: {address: "${address}", networkId:${chainId} }
+    ) {
+      items {
+        timestamp
+        maker
+        eventType
+        token0SwapValueUsd
+        token1SwapValueUsd
+        token0ValueBase
+        token1ValueBase
+      }
+    }
+  }
+    `);
+  return data?.data.getTokenEvents.items;
+};
+
+export const useGetTokensTxn = (
+  queryKey: string[],
+  address: string,
+  chainId: number
+) => {
+  return useQuery({
+    queryKey: queryKey,
+    queryFn: () => fetchTokensTxn(address, chainId),
   });
 };

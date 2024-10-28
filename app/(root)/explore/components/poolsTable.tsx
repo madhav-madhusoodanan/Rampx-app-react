@@ -15,10 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useChainId } from "wagmi";
 
-const PoolsTable = () => {
-  const chainId = useChainId();
-  const { data } = useGetTopPools(["topPools", chainId.toString()], chainId);
-
+const PoolsTable = ({ data }: { data: TopPools[] | undefined }) => {
   return (
     <Table className="text-base lining-nums ">
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
