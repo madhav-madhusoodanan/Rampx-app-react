@@ -39,7 +39,7 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     const lastPrice =
       chartData[chartData.length - 1]?.price ??
       (!priceLoading ? tokenPriceData : 0);
-    const marketCap = lastPrice * tokenInfo.getTokenInfo?.circulatingSupply;
+    const marketCap = lastPrice * tokenInfo?.getTokenInfo?.circulatingSupply;
     return marketCap;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
@@ -47,7 +47,7 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     const lastPrice =
       chartData[chartData.length - 1]?.price ??
       (!priceLoading ? tokenPriceData : 0);
-    const totalSupply = tokenInfo.getTokenInfo?.totalSupply;
+    const totalSupply = tokenInfo?.getTokenInfo?.totalSupply;
     const fdv = lastPrice * totalSupply;
     return fdv;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
@@ -63,13 +63,13 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     <div className="my-10">
       <ExploreBreadcrumb
         contractAddress={contractAddress}
-        name={(tokenInfo.getTokenInfo?.symbol).toUpperCase() || MOCK_NAME}
+        name={(tokenInfo?.getTokenInfo?.symbol).toUpperCase() || MOCK_NAME}
       />
 
       <div className="flex justify-between items-start gap-4 ">
         <TokenChart
           data={chartData}
-          tokenInfo={tokenInfo.getTokenInfo}
+          tokenInfo={tokenInfo?.getTokenInfo}
           tokenPrice={tokenPrice}
           priceLoading={priceLoading}
         />
@@ -168,7 +168,12 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
         */}
         <div className="bg-[#191919] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container m-[1px] pb-6">
           {currentTable === "Transactions" && (
-            <TransactionTable address={contractAddress} />
+            <TransactionTable
+              address={contractAddress}
+              tokenSymbol={
+                tokenInfo?.getTokenInfo?.symbol?.toUpperCase() || "Token Amount"
+              }
+            />
           )}
           {currentTable === "Pools" && (
             <TokenPoolTable address={contractAddress} />
