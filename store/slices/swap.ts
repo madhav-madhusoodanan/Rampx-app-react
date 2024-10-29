@@ -82,6 +82,11 @@ const swap = createSlice({
     setTransactionDeadline(state, action: PayloadAction<number>) {
       state.transactionDeadline = action.payload;
     },
+    postSwapChores(state) {
+      state.amountA = "";
+      state.amountB = "";
+      state.qouteData = undefined;
+    },
   },
 });
 
@@ -101,4 +106,5 @@ export const {
   setTokenB,
   onChainChange,
   setTransactionDeadline,
+  postSwapChores,
 } = swap.actions;

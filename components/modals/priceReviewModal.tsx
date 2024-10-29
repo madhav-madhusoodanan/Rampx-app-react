@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { useDispatch, useSelector } from "@/store";
 import { useToast } from "../ui/use-toast";
-import { setTokenAmountA, setTokenAmountB } from "@/store/slices/swap";
+import { postSwapChores } from "@/store/slices/swap";
 import rampxAbi from "@/config/rampxAbi.json";
 
 import { incrementSuccessTxCount } from "@/store/slices/app";
@@ -188,8 +188,7 @@ const PriceReviewModal = ({
       dispatch(setTxInProgress(false));
       dismissToast();
       setIsOpen(false);
-      dispatch(setTokenAmountA(""));
-      dispatch(setTokenAmountB(""));
+      dispatch(postSwapChores());
       toast({
         variant: "default",
         title: "Swap Confirmed",
