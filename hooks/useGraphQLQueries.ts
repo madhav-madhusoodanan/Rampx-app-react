@@ -45,6 +45,7 @@ export const useGetPriceRangeData = (
   return useQuery({
     queryKey: queryKey,
     queryFn: () => fetchPriceChartRange(address, chainId, from, to),
+    staleTime: 600000,
   });
 };
 
@@ -56,6 +57,7 @@ export const useGetPriceMetaData = (
   return useQuery({
     queryKey: queryKey,
     queryFn: () => fetchTokenMetadata(address, chainId),
+    staleTime: 600000,
   });
 };
 
@@ -63,6 +65,7 @@ export const useGetTopTokens = (queryKey: string[], chainId: number) => {
   return useQuery({
     queryKey: queryKey,
     queryFn: () => fetchTopTokens(chainId),
+    staleTime: 600000,
   });
 };
 
@@ -74,6 +77,7 @@ export const useGetTopPools = (
   return useQuery({
     queryKey: queryKey,
     queryFn: () => fetchTopPools(chainId, address),
+    staleTime: 600000,
   });
 };
 

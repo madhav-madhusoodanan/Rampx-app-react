@@ -34,21 +34,21 @@ const ExploreBreadcrumb = ({ contractAddress, name }: Props) => {
     <Breadcrumb>
       <BreadcrumbList className="text-base text-a-gray ">
         <BreadcrumbItem>
-          <BreadcrumbLink
+          <Link
             href="/explore"
             className="hover:text-white transition-all duration-300"
           >
             Explore
-          </BreadcrumbLink>
+          </Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink
+          <Link
             href="/explore"
             className="hover:text-white transition-all duration-300"
           >
             Tokens
-          </BreadcrumbLink>
+          </Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
