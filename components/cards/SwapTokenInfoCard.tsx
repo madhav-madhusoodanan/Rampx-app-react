@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import TokenMiniChart from "../charts/TokenMiniChart";
-import { getWeekTimestamps, shortenAddress } from "@/lib/utils";
+import { checkNativeAddress, getTimestamps, shortenAddress } from "@/lib/utils";
 import {
   useGetPriceMetaData,
   useGetPriceRangeData,
@@ -26,7 +26,7 @@ const SwapTokenInfoCard = ({
   const [chartData, setChartData] = useState([]);
 
   const chainId = useChainId();
-  const { toTimestamp, fromTimestamp } = getWeekTimestamps();
+  const { toTimestamp, fromTimestamp } = getTimestamps();
   const { data } = useGetPriceRangeData(
     ["chartData", tokenSmartContractAddress],
     tokenSmartContractAddress,
@@ -70,9 +70,11 @@ const SwapTokenInfoCard = ({
           <div className="leading-tight">
             <div className="flex items-center gap-1">
               <p className="text-xl font-semibold">{tokenSymbol}</p>
-              <div className="px-1 bg-a-fluo lining-nums text-black flex justify-center items-center h-[16px] text-xs uppercase">
-                {shortenAddress(tokenSmartContractAddress)}
-              </div>
+              {!checkNativeAddress(tokenSmartContractAddress) && (
+                <div className="px-1 bg-a-fluo lining-nums text-black flex justify-center items-center h-[16px] text-xs uppercase">
+                  {shortenAddress(tokenSmartContractAddress)}
+                </div>
+              )}
             </div>
             <p className="text-xs font-light">{tokenName}</p>
           </div>

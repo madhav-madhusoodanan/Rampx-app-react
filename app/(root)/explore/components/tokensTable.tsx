@@ -11,11 +11,13 @@ import {
 } from "@/components/ui/table";
 import { useGetTopTokens } from "@/hooks/useGraphQLQueries";
 import { cn, formatDollarAmount, formatNumberWithCommas } from "@/lib/utils";
-import { TopTokensResponse } from "@/types/tokens";
+import { TokenInfo, TopTokensResponse } from "@/types/tokens";
 import Image from "next/image";
 import Link from "next/link";
 import { useChainId } from "wagmi";
 import TableLoading from "../tableLoading";
+import { useDispatch } from "@/store";
+import { setTokenA, setTokenB } from "@/store/slices/swap";
 
 const TopTokensTable = () => {
   const chainId = useChainId();
@@ -23,6 +25,19 @@ const TopTokensTable = () => {
     ["topTokens", chainId.toString()],
     chainId
   );
+
+  const dispatch = useDispatch();
+  const handleRowClick = (token: TopTokensResponse) => {
+    const tokenUpdated: TokenInfo = {
+      address: token.address,
+      chainId: token.networkId,
+      name: token.name,
+      decimals: token.decimals,
+      logoURI: token.imageThumbUrl,
+      symbol: token.symbol,
+    };
+    dispatch(setTokenB(tokenUpdated));
+  };
 
   if (isLoading) {
     return <TableLoading />;
@@ -51,6 +66,7 @@ const TopTokensTable = () => {
               <TableRow
                 key={item.name}
                 className="hover:bg-white/10 transition-colors cursor-pointer"
+                onClick={() => handleRowClick(item)}
               >
                 <TableCell className="font-medium my-auto">
                   <Link href={`/explore/tokens/${chainId}/${item.address}`}>

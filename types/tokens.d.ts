@@ -17,6 +17,8 @@ export interface TopTokens {
   symbol: string;
   address: string;
   imageThumbUrl: string;
+  networkId: number;
+  decimals: number;
   price: number;
   priceChange1: number;
   priceChange24: number;

@@ -29,6 +29,7 @@ const Listeners = () => {
   const tokenB = useSelector((state) => state.swap.tokenB);
   const walletAddress = useSelector((state) => state.app.walletAddress);
   const successTxCount = useSelector((state) => state.app.successTxCount);
+  const currentChainId = useSelector((state) => state.app.chainId);
 
   const { data: nativeBalanceData, refetch: refetchNativeBalance } = useBalance(
     {
@@ -146,8 +147,10 @@ const Listeners = () => {
   }, [chainId]);
 
   useEffect(() => {
-    dispatch(onChainChange(chainId));
-  }, [chainId]);
+    if (currentChainId !== chainId) {
+      dispatch(onChainChange(chainId));
+    }
+  }, [chainId, currentChainId]);
 
   return <></>;
 };

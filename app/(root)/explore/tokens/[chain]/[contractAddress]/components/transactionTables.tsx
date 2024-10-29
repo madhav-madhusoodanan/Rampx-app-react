@@ -90,7 +90,7 @@ const TransactionTable = ({
                     {timeAgo(item.timestamp)}
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right" title={item.data.priceUsd}>
                   ${Number(item.data.priceUsd ?? 0).toFixed(2)}
                 </TableCell>
                 <TableCell className="text-right">
@@ -144,23 +144,25 @@ const TransactionTable = ({
             </TableCell>
           </TableRow>
         )}
-        <TableRow>
-          <TableCell colSpan={8}>
-            <div className="flex justify-center w-full">
-              <Button
-                disabled={isFetching}
-                onClick={loadmore}
-                className="border border-a-fluo"
-              >
-                {isFetching ? (
-                  <SpinningLoader className="h-4 w-4 text-a-fluo" />
-                ) : (
-                  "Load more"
-                )}
-              </Button>
-            </div>
-          </TableCell>
-        </TableRow>
+        {txns.length > 0 && (
+          <TableRow>
+            <TableCell colSpan={8}>
+              <div className="flex justify-center w-full">
+                <Button
+                  disabled={isFetching}
+                  onClick={loadmore}
+                  className="border border-a-fluo"
+                >
+                  {isFetching ? (
+                    <SpinningLoader className="h-4 w-4 text-a-fluo" />
+                  ) : (
+                    "Load more"
+                  )}
+                </Button>
+              </div>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   );

@@ -94,7 +94,7 @@ export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
   );
 };
 
-export const getWeekTimestamps = () => {
+export const getTimestamps = () => {
   const now = new Date();
   const endOfRange = new Date(now);
   endOfRange.setDate(now.getDate());
@@ -189,6 +189,13 @@ export const timeAgo = (timestamp: number) => {
 
   const years = Math.floor(months / 12);
   return `${years} years ago`;
+};
+
+export const checkNativeAddress = (address: `0x${string}`) => {
+  if (address === NATIVE_TOKEN_ADDRESS) {
+    return true;
+  }
+  return false;
 };
 
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
