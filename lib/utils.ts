@@ -191,6 +191,13 @@ export const timeAgo = (timestamp: number) => {
   return `${years} years ago`;
 };
 
+export const checkNativeAddress = (address: `0x${string}`) => {
+  if (address === NATIVE_TOKEN_ADDRESS) {
+    return true;
+  }
+  return false;
+};
+
 //* THIS CODE WAS CLUTTERING THE SWAPTOKENSELECTORMODAL FILE SO I MOVED IT HERE INCASE WE NEED IT AGAIN
 
 // THIS FUNCTION WORKS FOR DECODING HEXED BALANCES
