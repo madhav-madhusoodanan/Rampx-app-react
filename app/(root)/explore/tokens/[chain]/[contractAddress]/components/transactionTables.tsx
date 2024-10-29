@@ -90,7 +90,7 @@ const TransactionTable = ({
                     {timeAgo(item.timestamp)}
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right" title={item.data.priceUsd}>
                   ${Number(item.data.priceUsd ?? 0).toFixed(2)}
                 </TableCell>
                 <TableCell className="text-right">
