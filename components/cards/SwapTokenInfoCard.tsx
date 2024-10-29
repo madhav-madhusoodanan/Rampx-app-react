@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import TokenMiniChart from "../charts/TokenMiniChart";
-import { getWeekTimestamps, shortenAddress } from "@/lib/utils";
+import { getTimestamps, shortenAddress } from "@/lib/utils";
 import {
   useGetPriceMetaData,
   useGetPriceRangeData,
@@ -26,7 +26,7 @@ const SwapTokenInfoCard = ({
   const [chartData, setChartData] = useState([]);
 
   const chainId = useChainId();
-  const { toTimestamp, fromTimestamp } = getWeekTimestamps();
+  const { toTimestamp, fromTimestamp } = getTimestamps();
   const { data } = useGetPriceRangeData(
     ["chartData", tokenSmartContractAddress],
     tokenSmartContractAddress,

@@ -94,7 +94,7 @@ export const shouldFetchTokenList = async (lastTokensUpdated: number) => {
   );
 };
 
-export const getWeekTimestamps = () => {
+export const getTimestamps = () => {
   const now = new Date();
   const endOfRange = new Date(now);
   endOfRange.setDate(now.getDate());
