@@ -77,6 +77,8 @@ export const fetchTopTokens = async (chainId: number) => {
             symbol
             address
             imageThumbUrl
+            networkId
+            decimals
             price
             priceChange1
             priceChange24
