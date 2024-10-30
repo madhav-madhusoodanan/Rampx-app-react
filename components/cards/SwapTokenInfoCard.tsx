@@ -82,7 +82,7 @@ const SwapTokenInfoCard = ({
 
         <div className="flex items-center ">
           <TokenMiniChart
-            height={50}
+            height={70}
             width={120}
             data={chartData}
             isPositive={changeIn24H.isPositive}
@@ -93,7 +93,7 @@ const SwapTokenInfoCard = ({
               changeIn24H.isPositive ? "text-a-pnlGreen" : "text-a-pnlRed"
             } text-xs lining-nums`}
           >
-            {changeIn24H.value}
+            {changeIn24H.value}%
           </p>
         </div>
       </div>

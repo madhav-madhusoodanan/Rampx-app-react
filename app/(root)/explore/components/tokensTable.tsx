@@ -171,6 +171,7 @@ const TopTokensTable = () => {
                       width={150}
                       data={item.chartData}
                       isPositive={item.isPositiveHour || item.isPositiveDay}
+                      dataKey="value"
                     />
                   </Link>
                 </TableCell>

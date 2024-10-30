@@ -34,7 +34,7 @@ export const fetchPriceChartRange = async (
             symbol: "${address}:${chainId}"
             from: ${from}
             to: ${to}
-            resolution: "720"
+            resolution: "60"
           ) {
             c
           }
@@ -70,49 +70,56 @@ export const fetchTokenMetadata = async (address: string, chainId: number) => {
 };
 
 export const fetchTopTokens = async (chainId: number) => {
-  const data = await fetchQuery(`
-        query {
-          listTopTokens(limit: 50 networkFilter: [${chainId}]) {
-            name
-            symbol
-            address
-            imageThumbUrl
-            networkId
-            decimals
-            price
-            priceChange1
-            priceChange24
-            volume
-            liquidity
+  try {
+    const data = await fetchQuery(`
+          query {
+            listTopTokens(limit: 50 networkFilter: [${chainId}]) {
+              name
+              symbol
+              address
+              imageThumbUrl
+              networkId
+              decimals
+              price
+              priceChange1
+              priceChange24
+              volume
+              liquidity
+            }
           }
-        }
-    `);
+      `);
 
-  const toptokens = data.data.listTopTokens as TopTokens[];
-  const { fromTimestamp, toTimestamp } = getTimestamps();
+    const toptokens = data.data.listTopTokens as TopTokens[];
+    const ids = toptokens.map(
+      (token) => `"${token.address}:${token.networkId}"`
+    );
+    const tokensChartData = await fetchTokensChartBulk(ids);
 
-  const updatedTopTokens = await Promise.all(
-    toptokens.map(async (token) => {
-      const isPositiveHour = token.priceChange1 >= 0;
-      const isPositiveDay = token.priceChange24 >= 0;
+    const updatedTopTokens = await Promise.all(
+      toptokens.map(async (token) => {
+        const isPositiveHour = token.priceChange1 >= 0;
+        const isPositiveDay = token.priceChange24 >= 0;
+        const chartData =
+          tokensChartData?.tokenSparklines?.find(
+            (chart: any) =>
+              chart.id?.toLowerCase() ===
+              `${token.address.toLowerCase()}:${token.networkId}`
+          )?.sparkline || [];
 
-      const chartData = await fetchPriceChartRange(
-        token.address,
-        chainId,
-        fromTimestamp,
-        toTimestamp
-      );
+        return {
+          ...token,
+          isPositiveHour,
+          isPositiveDay,
+          chartData,
+        };
+      })
+    );
 
-      return {
-        ...token,
-        isPositiveHour,
-        isPositiveDay,
-        chartData,
-      };
-    })
-  );
-
-  return updatedTopTokens;
+    return updatedTopTokens;
+  } catch (error) {
+    console.log("error in fetching top tokens ====", error);
+    return [];
+  }
 };
 
 export const fetchTopPools = async (chainId: number, address?: string) => {
@@ -198,4 +205,18 @@ export const fetchTokensTxn = async (
 
   const { items, cursor: pageCursor } = data?.data.getTokenEvents || {};
   return { items, pageCursor };
+};
+
+export const fetchTokensChartBulk = async (ids: string[]) => {
+  const query = `query {
+  tokenSparklines(input: { ids: [${ids}] }) {
+    attribute
+    id
+    sparkline {
+      value
+    }
+  }
+}`;
+  const data = await fetchQuery(query);
+  return data.data;
 };
