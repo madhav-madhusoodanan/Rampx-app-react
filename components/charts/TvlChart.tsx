@@ -175,11 +175,11 @@ const TvlChart = () => {
         <CardDescription className="font-medium text-a-gray text-base">
           RampX TVL
         </CardDescription>
-        <CardTitle className="font-semibold text-white text-[36px] lining-nums h-[54px]">
+        <CardTitle className="font-semibold text-white text-2xl md:text-4xl lining-nums h-[54px]">
           {!mouseEnteredChart && `$${chartData[chartData.length - 1].value}M`}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="p-0 hidden md:block">
         <ChartContainer
           config={chartConfig}
           // onMouseEnter={() => {

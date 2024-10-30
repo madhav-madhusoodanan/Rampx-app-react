@@ -33,7 +33,7 @@ const ChainSelector = () => {
       <PopoverTrigger
         asChild
         className={cn(
-          "w-[150px] transition-all duration-150 cursor-pointer group",
+          "w-[75px] md:w-[200px] transition-all duration-150 cursor-pointer group",
           open
             ? "border-a-fluo border-[0.5px]"
             : "hover:shadow-[0_0_8px_rgba(179,207,61,1)]"
@@ -52,7 +52,7 @@ const ChainSelector = () => {
               unoptimized
               className="rounded-full"
             />
-            <p>
+            <p className="hidden md:block">
               {
                 CHAIN_LOGOS.filter((item) => item.chainId === currentChainId)[0]
                   .networkName
