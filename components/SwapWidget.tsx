@@ -10,7 +10,7 @@ import SwapActionBtn from "@/app/(root)/swap/components/swapActionBtn";
 
 const SwapWidget = () => {
   return (
-    <div>
+    <div className=" max-w-[450px] w-full">
       <div
         className="swap-border-container flex justify-center items-center
         bg-fading-gradient relative"
