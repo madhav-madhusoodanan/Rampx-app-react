@@ -10,10 +10,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const shortenAddress = (address: `0x${string}` | undefined) => {
+export const shortenAddress = (
+  address: `0x${string}` | undefined,
+  start = 6,
+  end = 4
+) => {
   if (!address) return "";
 
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  return `${address.slice(0, start)}...${address.slice(-end)}`;
 };
 
 export const blockInvalidCharDecimalsAllowed = (e: any) =>

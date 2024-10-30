@@ -4,19 +4,18 @@ import { Line, LineChart } from "recharts";
 
 // TODO - Replace any type once return value is more clear
 
-const TokenMiniChart = ({ data, isPositive, height, width }: any) => {
-  console.log({ data });
+const TokenMiniChart = ({ data, isPositive, height, width, dataKey }: any) => {
   return (
     <>
       <LineChart
         width={width}
         height={height}
         data={data}
-        margin={{ top: 10, right: 16, left: 16, bottom: 22 }}
+        margin={{ top: 30, right: 16, left: 16, bottom: 22 }}
       >
         <Line
           type="linear"
-          dataKey="price"
+          dataKey={dataKey ?? "price"}
           stroke={isPositive ? "#40b66b" : "#ff5f52"}
           dot={false}
         />

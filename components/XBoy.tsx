@@ -11,7 +11,7 @@ const XBoy = () => {
   const [isXBoyOpen, setIsXBoyOpen] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col md:flex-row items-end md:items-center gap-2">
       <motion.div
         initial="hidden"
         animate={isXBoyOpen ? "show" : "hidden"}
@@ -70,7 +70,7 @@ const XBoy = () => {
       <button
         type="button"
         onClick={() => setIsXBoyOpen((prev) => !prev)}
-        className="w-[105px] h-[105px] flex justify-center items-center"
+        className="w-[60px] md:w-[105px] h-[60px] md:h-[105px] flex justify-center items-center"
       >
         <div className="xboy-border-container flex justify-center items-center bg-a-fluo relative">
           {/* 
@@ -84,9 +84,9 @@ const XBoy = () => {
             <Image
               src="/assets/images/xboy-idle-transparent.gif"
               alt="XBoy"
-              width={65}
-              height={65}
-              className="mt-1.5"
+              width={0}
+              height={0}
+              className="mt-1.5 w-[40px] md:w-[65px] h-[40px] md:h-[65px]"
             />
           </div>
         </div>
