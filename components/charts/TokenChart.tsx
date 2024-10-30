@@ -148,7 +148,7 @@ const TokenChart = ({
 
   if (isLoading) {
     return (
-      <div className="w-full h-[304px] mt-12 pb-10">
+      <div className="w-full h-[304px] pb-10">
         <svg
           width="100%"
           height="100%"
@@ -200,27 +200,10 @@ const TokenChart = ({
   };
 
   return (
-    <div className="mt-4 w-[60%]">
-      {/* <div className="pt-4 flex items-center gap-3 uppercase font-medium text-2xl">
-        <Image
-          src={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenLogo}
-          alt={MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenSymbol}
-          width={32}
-          height={32}
-          className=""
-        />
-
-        <p className="text-white">
-          {" "}
-          {MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenName}
-        </p>
-        <p className="text-a-gray">
-          {MOCK_TOKEN_EXPLORE_PAGE_STATS[0].tokenSymbol}
-        </p>
-      </div> */}
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3 uppercase font-medium text-a-gray text-2xl">
+    <div className="h-full">
+      <CardHeader className="pt-0">
+        <div className="flex justify-between items-center flex-wrap">
+          <div className="flex items-center gap-3 uppercase font-medium text-a-gray text-2xl flex-wrap">
             <Image
               src={tokenInfo.imageLargeUrl || rampxLogo}
               alt={tokenInfo.symbol}
@@ -228,11 +211,10 @@ const TokenChart = ({
               height={36}
               className="rounded-full"
             />
-
             <p className="text-white"> {tokenInfo.name}</p>
             <p className="text-a-gray">{tokenInfo.symbol}</p>
           </div>
-          <div className="flex items-center gap-2 pr-6">
+          <div className="flex items-center gap-2 pr-6 ">
             <Link
               href="https://etherscan.io"
               target="_blank"
@@ -268,7 +250,7 @@ const TokenChart = ({
           ) : null}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="p-0 ">
         {transformedChartData.length > 0 ? (
           <ChartContainer
             config={chartConfig}
@@ -284,10 +266,6 @@ const TokenChart = ({
                   setMouseEnteredChart(false);
                 }
               }}
-            // margin={{
-            //   left: 12,
-            //   right: 12,
-            // }}
             >
               <XAxis
                 style={{
@@ -303,7 +281,6 @@ const TokenChart = ({
                 tickMargin={8}
                 minTickGap={30}
                 tickFormatter={tickFormatter}
-              //   tickFormatter={(value) => value.slice(0, 3)}
               />
 
               <YAxis
@@ -321,15 +298,7 @@ const TokenChart = ({
                 //   minTickGap={10}
                 //   tickFormatter={tickFormatter}
                 orientation="right"
-              //   tickFormatter={(value) => value.slice(0, 3)}
               />
-
-              {/* <CartesianGrid
-              strokeDasharray="3 3"
-              //   fill="#FFFFFF"
-              stroke="#FFFFFF"
-              // vertical={false}
-            /> */}
 
               <ChartTooltip
                 cursor={false}
@@ -348,28 +317,12 @@ const TokenChart = ({
                 stroke={dominantColor}
                 strokeWidth={1}
               />
-              {/* <Legend
-              content={<RenderLegend   />}
-              verticalAlign="top"
-            /> */}
             </AreaChart>
           </ChartContainer>
         ) : (
           <div className="w-full mt-[25%] text-center">No chart data</div>
         )}
       </CardContent>
-      {/* <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div>
-        </div>
-      </CardFooter> */}
     </div>
   );
 };

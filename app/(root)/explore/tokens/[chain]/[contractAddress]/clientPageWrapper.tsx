@@ -5,8 +5,6 @@ import TokenChart from "@/components/charts/TokenChart";
 import SwapWidget from "@/components/SwapWidget";
 import { Button } from "@/components/ui/button";
 import { formatNumberToKMB } from "@/lib/utils";
-import Listeners from "@/components/listeners";
-import { SwapTokenSelectorModalWrapper } from "@/components/modals/SwapTokenSelectorModal";
 import { useFetchTokenPrice, useGetTopPools } from "@/hooks/useGraphQLQueries";
 import { Skeleton } from "@/components/ui/skeleton";
 import TransactionTable from "./components/transactionTables";
@@ -58,44 +56,26 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
   }, [chartData, tokenPriceData, priceLoading]);
 
   return (
-    <div className="my-10">
+    <div className="my-10 ">
       <ExploreBreadcrumb
         contractAddress={contractAddress}
-        name={(tokenInfo?.getTokenInfo?.symbol).toUpperCase() || ""}
+        name={tokenInfo?.getTokenInfo?.symbol?.toUpperCase() || ""}
       />
 
-      <div className="flex justify-between items-start gap-4 ">
-        <TokenChart
-          data={chartData}
-          tokenInfo={tokenInfo?.getTokenInfo}
-          tokenPrice={tokenPrice}
-          priceLoading={priceLoading}
-        />
-        <div className="mt-10">
-          <div className="flex flex-col gap-4 z-90">
-            <SwapTokenSelectorModalWrapper />
-          </div>
+      <div className="grid grid-cols-12 pt-10 gap-2">
+        <div className="col-span-12 lg:col-span-7 ">
+          <TokenChart
+            data={chartData}
+            tokenInfo={tokenInfo?.getTokenInfo}
+            tokenPrice={tokenPrice}
+            priceLoading={priceLoading}
+          />
+        </div>
+        <div className="col-span-12 lg:col-span-5 flex flex-col items-center lg:items-end">
           <SwapWidget />
-          <Listeners />
         </div>
       </div>
-      {/* <div className="flex gap-2 mt-4 bg-[#191919] p-2 rounded-lg w-fit">
-                {TIME_RANGES.map((range) => (
-                    <button
-                        key={range.label}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            updateChartData(range.label);
-                        }}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedRange === range.label
-                            ? 'bg-[#232323] text-white'
-                            : 'text-white/50 hover:text-white'
-                            }`}
-                    >
-                        {range.label}
-                    </button>
-                ))}
-            </div> */}
+
       <div className="mt-10 flex flex-col gap-6 ">
         <h2 className="text-[28px] font-semibold">Stats</h2>
 
