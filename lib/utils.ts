@@ -53,7 +53,15 @@ export const filterUniqueContracts = (data: ApiResponse): UniqueContract[] => {
   return Object.values(uniqueContracts);
 };
 
-export const formatNumberToKMB = (number: number): string => {
+export const formatNumberToKMB = (number: number, digits = 2): string => {
+  if (number === 0) return "$0.00";
+  if (!number) return "-";
+  if (number < 0.001 && digits <= 3) {
+    return "<$0.001";
+  }
+  if (number < 0.01 && digits <= 2) {
+    return "<$0.01";
+  }
   return numbro(number).format({
     average: true,
     output: "currency",

@@ -8,9 +8,9 @@ import SwapActionBtn from "@/app/(root)/swap/components/swapActionBtn";
 // TODO - check to set either fixed or dynamic widths
 // TODO - check to make the middle darker section of gradient wider
 
-const SwapWidget = () => {
+const SwapWidget = ({ className = "" }: { className?: string }) => {
   return (
-    <div className=" max-w-[450px] w-full">
+    <div className={"max-w-[450px] w-full ".concat(className)}>
       <div
         className="swap-border-container flex justify-center items-center
         bg-fading-gradient relative"
