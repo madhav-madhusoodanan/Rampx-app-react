@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "@/components/shared/navigation/Header";
 import XBoy from "@/components/XBoy";
 import backgroundImage from "../../public/assets/images/codebgstatic.png";
+import GlobalModals from "@/components/modals/globalModals";
 // import FooterIcons f../listenersonents/shared/FooterIcons";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -36,6 +37,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <XBoy />
         </div>
       </div>
+      <GlobalModals />
     </main>
   );
 };
