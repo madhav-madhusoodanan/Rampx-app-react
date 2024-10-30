@@ -1,8 +1,5 @@
 "use client";
 import React from "react";
-
-import { cn } from "@/lib/utils";
-// import EncryptAnimateButton from "./ui/encryptButton";
 import dynamic from "next/dynamic";
 const EncryptAnimateButton = dynamic(() => import("./ui/encryptButton"), {
   ssr: false,
@@ -21,7 +18,10 @@ const SwapAndRampSwitch = () => {
           swap
         </button>
         <button className="w-[155px] px-4 flex justify-center items-center border-[0.5px] border-a-fluo text-a-fluo bg-[#232418]/50 opacity-80 hover:shadow-[0_0_6px_rgba(179,207,61,1)] hover:opacity-100 transition-all duration-300 uppercase">
-          <EncryptAnimateButton buttonText="Coming Soon" />
+          <EncryptAnimateButton
+            buttonText="on/off ramp"
+            targetText="coming soon"
+          />
         </button>
       </div>
     </div>

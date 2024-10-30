@@ -3,15 +3,21 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-const EncryptAnimateButton = ({ buttonText }: { buttonText: string }) => {
-  const TARGET_TEXT = buttonText;
+const EncryptAnimateButton = ({
+  buttonText,
+  targetText,
+}: {
+  buttonText: string;
+  targetText: string;
+}) => {
+  const TARGET_TEXT = targetText;
   const CYCLES_PER_LETTER = 2;
   const SHUFFLE_TIME = 50;
 
   const CHARS = "!@#$%^&*():{};|,.<>/?";
   const intervalRef = useRef<any>(null);
 
-  const [text, setText] = useState(TARGET_TEXT);
+  const [text, setText] = useState(buttonText);
 
   const scramble = () => {
     let pos = 0;
@@ -32,10 +38,6 @@ const EncryptAnimateButton = ({ buttonText }: { buttonText: string }) => {
 
       setText(scrambled);
       pos++;
-
-      if (pos >= TARGET_TEXT.length * CYCLES_PER_LETTER) {
-        stopScramble();
-      }
     }, SHUFFLE_TIME);
   };
 
@@ -45,7 +47,7 @@ const EncryptAnimateButton = ({ buttonText }: { buttonText: string }) => {
       intervalRef.current = null;
     }
 
-    setText(TARGET_TEXT);
+    setText(buttonText);
   };
 
   return (
