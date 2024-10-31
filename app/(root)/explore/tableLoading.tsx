@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const TableLoading = () => {
   return (
-    <div>
+    <div className="bg-[#191919] w-full">
       <Skeleton className="h-16 w-full" />
       {Array.from({ length: 6 }).map((_, index: number) => (
         <div key={index} className="flex items-center justify-between my-4">

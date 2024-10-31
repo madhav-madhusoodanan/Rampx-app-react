@@ -18,6 +18,7 @@ import { useChainId } from "wagmi";
 import TableLoading from "../tableLoading";
 import { useDispatch } from "@/store";
 import { setTokenA, setTokenB } from "@/store/slices/swap";
+import { TwBreakPoints, useTwBreakpoints } from "@/hooks/useTwBreakPoints";
 
 const TopTokensTable = () => {
   const chainId = useChainId();
@@ -25,6 +26,7 @@ const TopTokensTable = () => {
     ["topTokens", chainId.toString()],
     chainId
   );
+  const breakpoint = useTwBreakpoints();
 
   const dispatch = useDispatch();
   const handleRowClick = (token: TopTokensResponse) => {
@@ -179,8 +181,11 @@ const TopTokensTable = () => {
             ))}
           </>
         ) : (
-          <TableRow className="font-semibold text-2xl text-a-fluo w-full">
-            <TableCell colSpan={8} className="text-center">
+          <TableRow className="font-semibold text-base md:text-2xl text-a-fluo w-full">
+            <TableCell
+              colSpan={breakpoint === TwBreakPoints.xs ? 5 : 8}
+              className="text-center"
+            >
               No Data Available
             </TableCell>
           </TableRow>

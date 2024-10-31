@@ -22,7 +22,7 @@ const MobileNav = () => {
       </PopoverTrigger>
       <PopoverContent
         align="center"
-        className="border-a-fluo border-[0.5px] bg-[#3F412B] flex flex-col gap-y-3 p-1 w-[150px]"
+        className="border-a-fluo border-[0.5px] bg-[#3F412B] flex flex-col gap-y-3 p-1 w-[150px] mt-3"
       >
         {NAV_LINKS.map(({ label, path }) => (
           <Link
