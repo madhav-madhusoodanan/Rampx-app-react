@@ -87,6 +87,22 @@ const swap = createSlice({
       state.amountB = "";
       state.qouteData = undefined;
     },
+    prepareTokensSelectionForDirectBuySell(
+      state,
+      action: PayloadAction<{
+        isBuy: boolean;
+        tokenInfo: TokenInfo;
+        chain: number;
+      }>
+    ) {
+      if (action.payload.isBuy) {
+        state.tokenA = WRAPPED_COINS_INFO[action.payload.chain];
+        state.tokenB = action.payload.tokenInfo;
+      } else {
+        state.tokenA = action.payload.tokenInfo;
+        state.tokenB = undefined;
+      }
+    },
   },
 });
 
@@ -107,4 +123,5 @@ export const {
   onChainChange,
   setTransactionDeadline,
   postSwapChores,
+  prepareTokensSelectionForDirectBuySell,
 } = swap.actions;

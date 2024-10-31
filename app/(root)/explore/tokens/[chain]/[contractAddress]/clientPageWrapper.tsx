@@ -10,11 +10,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import TransactionTable from "./components/transactionTables";
 import TokenPoolTable from "./components/tokenPoolTable";
 import TokenInfoTIle from "./components/tokenInfoTIle";
+import { TokenInfo } from "@/types/tokens";
+import { useDispatch } from "@/store";
+import { prepareTokensSelectionForDirectBuySell } from "@/store/slices/swap";
+import { useRouter } from "next/navigation";
 // TODO - add flex-row to the stats section
 // TODO - add custom loading.tsx file for this page (it's using the parent one)
-const MOCK_NAME = "X";
 
 const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const { data: poolsData, isLoading: poolsDataLoading } = useGetTopPools(
     ["topPools", chain.toString()],
     chain
@@ -56,6 +61,30 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     return lastPrice as number;
   }, [chartData, tokenPriceData, priceLoading]);
 
+  const redirectToSwap = (isBuy: boolean) => {
+    if (tokenInfo?.token && tokenInfo?.token?.info) {
+      const tokeninfoFormat: TokenInfo = {
+        address: contractAddress,
+        chainId: tokenInfo.token.networkId,
+        decimals: tokenInfo.token.decimals,
+        name: tokenInfo.token.name,
+        symbol: tokenInfo.token.symbol,
+        logoURI:
+          tokenInfo.token.info?.imageLargeUrl ||
+          tokenInfo.token.info?.imageThumbUrl ||
+          tokenInfo.token.info?.imageSmallUrl,
+      };
+      dispatch(
+        prepareTokensSelectionForDirectBuySell({
+          isBuy,
+          tokenInfo: tokeninfoFormat,
+          chain,
+        })
+      );
+      router.push("/swap");
+    }
+  };
+
   return (
     <div className="my-10 ">
       <ExploreBreadcrumb
@@ -73,7 +102,21 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
           />
         </div>
         <div className="col-span-12 lg:col-span-5 flex flex-col items-center lg:items-end">
-          <SwapWidget />
+          <div className="flex lg:hidden w-full items-center justify-evenly">
+            <div
+              onClick={() => redirectToSwap(true)}
+              className="border border-a-green text-a-green bg-a-green/10 max-w-[200px] w-full text-center py-3 font-semibold text-xl cursor-pointer"
+            >
+              BUY
+            </div>
+            <div
+              onClick={() => redirectToSwap(false)}
+              className="border border-a-pnlRed text-a-pnlRed bg-a-pnlRed/10 max-w-[200px] w-full text-center py-3 font-semibold text-xl cursor-pointer"
+            >
+              SELL
+            </div>
+          </div>
+          <SwapWidget className="hidden lg:block" />
         </div>
       </div>
 
