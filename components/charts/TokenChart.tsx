@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
-import { MOCK_TOKEN_EXPLORE_PAGE_STATS } from "@/constants";
 import { CgWebsite } from "react-icons/cg";
 import { FaXTwitter } from "react-icons/fa6";
 import BlockExplorerIcon from "../custom-icons/BlockExplorerIcon";
@@ -10,14 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import rampxLogo from "@/public/assets/images/rampx-token.png";
 
-import {
-  //   Card,
-  //   CardDescription,
-  //   CardFooter,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   ChartConfig,
@@ -27,6 +19,7 @@ import {
 } from "@/components/ui/custom-charts/explore-token-chart";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTwBreakpoints } from "@/hooks/useTwBreakPoints";
 
 const monthAbbreviations = [
   "Jan",
@@ -61,6 +54,7 @@ const TokenChart = ({
   tokenPrice: number;
   priceLoading: boolean;
 }) => {
+  const breakpoint = useTwBreakpoints();
   const [mouseEnteredChart, setMouseEnteredChart] = useState<boolean>(false);
   const [dominantColor, setDominantColor] = useState<string>("#D0F603");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -283,22 +277,19 @@ const TokenChart = ({
                 tickFormatter={tickFormatter}
               />
 
-              <YAxis
-                style={{
-                  // fontSize: "0.8rem",
-                  // fontFamily: "Arial",
-                  fill: "rgba(124, 124, 124)",
-                  // @ts-ignore it works just fine despite it saying property does not exist
-                  fontVariantNumeric: "lining-nums",
-                }}
-                dataKey="value"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                //   minTickGap={10}
-                //   tickFormatter={tickFormatter}
-                orientation="right"
-              />
+              {breakpoint === "xl" ? (
+                <YAxis
+                  style={{
+                    fill: "rgba(124, 124, 124)",
+                    fontVariantNumeric: "lining-nums",
+                  }}
+                  dataKey="value"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  orientation="right"
+                />
+              ) : null}
 
               <ChartTooltip
                 cursor={false}
