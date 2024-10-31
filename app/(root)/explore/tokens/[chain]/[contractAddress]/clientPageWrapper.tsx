@@ -9,6 +9,7 @@ import { useFetchTokenPrice, useGetTopPools } from "@/hooks/useGraphQLQueries";
 import { Skeleton } from "@/components/ui/skeleton";
 import TransactionTable from "./components/transactionTables";
 import TokenPoolTable from "./components/tokenPoolTable";
+import TokenInfoTIle from "./components/tokenInfoTIle";
 // TODO - add flex-row to the stats section
 // TODO - add custom loading.tsx file for this page (it's using the parent one)
 const MOCK_NAME = "X";
@@ -79,43 +80,43 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
       <div className="mt-10 flex flex-col gap-6 ">
         <h2 className="text-[28px] font-semibold">Stats</h2>
 
-        <div className="text-white lining-nums flex justify-between border-b border-white/5 pb-10">
-          <div className="flex flex-col gap-1">
-            <h3 className="text-white/50">Market cap</h3>
-            <p className="text-[28px]">
-              {marketCap ? (
+        <div className="text-white lining-nums flex flex-col sm:flex-row gap-3 justify-between border-b border-white/5 pb-10">
+          <TokenInfoTIle
+            title="Market cap"
+            content={
+              marketCap ? (
                 formatNumberToKMB(marketCap)
               ) : priceLoading ? (
                 <Skeleton className="h-[40px] w-[100px] rounded-[10px]" />
               ) : (
                 formatNumberToKMB(marketCap)
-              )}
-            </p>
-          </div>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-white/50">FDV</h3>
-            <p className="text-[28px]">
-              {fdv ? (
+              )
+            }
+          />
+          <TokenInfoTIle
+            title="FDV"
+            content={
+              fdv ? (
                 formatNumberToKMB(fdv)
               ) : priceLoading ? (
                 <Skeleton className="h-[40px] w-[100px] rounded-[10px]" />
               ) : (
                 formatNumberToKMB(fdv)
-              )}
-            </p>
-          </div>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-white/50">1 day volume</h3>
-            <p className="text-[28px]">
-              {poolsDataLoading ? (
+              )
+            }
+          />
+          <TokenInfoTIle
+            title="1 day volume"
+            content={
+              poolsDataLoading ? (
                 <Skeleton className="h-[40px] w-[100px] rounded-[10px]" />
               ) : dailyVolume ? (
                 formatNumberToKMB(dailyVolume)
               ) : (
                 ""
-              )}
-            </p>
-          </div>
+              )
+            }
+          />
         </div>
       </div>
 
