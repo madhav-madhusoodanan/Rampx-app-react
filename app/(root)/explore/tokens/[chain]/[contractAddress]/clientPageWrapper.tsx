@@ -192,19 +192,19 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
         FADED GRADIENT BORDER TOP + BOTTOM
         Increase/Decrease the opacity of the gradient to make it more/less visible 👇
         */}
-        <div className="bg-[#191919] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container m-[1px] pb-2">
-          {currentTable === "Transactions" && (
-            <TransactionTable
-              address={contractAddress}
-              tokenSymbol={
-                tokenInfo?.token?.symbol?.toUpperCase() || "Token Amount"
-              }
-            />
-          )}
-          {currentTable === "Pools" && (
+        {currentTable === "Transactions" && (
+          <TransactionTable
+            address={contractAddress}
+            tokenSymbol={
+              tokenInfo?.token?.symbol?.toUpperCase() || "Token Amount"
+            }
+          />
+        )}
+        {currentTable === "Pools" && (
+          <div className="bg-[#191919] h-[400px] custom-scrollbar overflow-y-scroll explore-table-container m-[1px] pb-2">
             <TokenPoolTable address={contractAddress} />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

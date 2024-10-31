@@ -65,14 +65,9 @@ const Header = () => {
               className="object-contain block md:hidden"
             />
           </Link>
-
-          {/* Mobile */}
-          <div className="md:hidden">
-            <MobileNav />
-          </div>
         </div>
 
-        <div className="flex items-center gap-10  font-medium">
+        <div className="flex items-center gap-3 md:gap-10 font-medium">
           {NAV_LINKS.map(({ label, path }) => (
             <Link
               key={label}
@@ -135,6 +130,10 @@ const Header = () => {
                 </div>
               )}
             </button>
+          </div>
+          {/* Mobile */}
+          <div className="md:hidden">
+            <MobileNav />
           </div>
         </div>
       </div>
