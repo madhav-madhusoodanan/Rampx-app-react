@@ -65,7 +65,7 @@ const TokenChart = ({
       try {
         // Use the proxy URL
         const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(
-          tokenInfo.imageLargeUrl || rampxLogo
+          tokenInfo?.info?.imageLargeUrl || rampxLogo
         )}`;
 
         // Create image element directly
@@ -138,7 +138,7 @@ const TokenChart = ({
     };
 
     extractColor();
-  }, [tokenInfo.imageLargeUrl]);
+  }, [tokenInfo?.info?.imageLargeUrl]);
 
   if (isLoading) {
     return (
@@ -199,14 +199,14 @@ const TokenChart = ({
         <div className="flex justify-between items-center flex-wrap">
           <div className="flex items-center gap-3 uppercase font-medium text-a-gray text-2xl flex-wrap">
             <Image
-              src={tokenInfo.imageLargeUrl || rampxLogo}
-              alt={tokenInfo.symbol}
+              src={tokenInfo?.info?.imageLargeUrl || rampxLogo}
+              alt={tokenInfo?.symbol}
               width={36}
               height={36}
               className="rounded-full"
             />
-            <p className="text-white"> {tokenInfo.name}</p>
-            <p className="text-a-gray">{tokenInfo.symbol}</p>
+            <p className="text-white"> {tokenInfo?.name}</p>
+            <p className="text-a-gray">{tokenInfo?.symbol}</p>
           </div>
           <div className="flex items-center gap-2 pr-6 ">
             <Link

@@ -38,14 +38,14 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     const lastPrice =
       chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
     const marketCap =
-      lastPrice * (tokenInfo?.getTokenInfo?.circulatingSupply ?? 0);
+      lastPrice * (tokenInfo?.token?.info?.circulatingSupply ?? 0);
     return marketCap;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
 
   const fdv = useMemo(() => {
     const lastPrice =
       chartData[0]?.price ?? (!priceLoading ? tokenPriceData : 0);
-    const totalSupply = tokenInfo?.getTokenInfo?.totalSupply ?? 0;
+    const totalSupply = tokenInfo?.token?.info?.totalSupply ?? 0;
     const fdv = lastPrice * totalSupply;
     return fdv;
   }, [chartData, tokenPriceData, priceLoading, tokenInfo]);
@@ -60,14 +60,14 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
     <div className="my-10 ">
       <ExploreBreadcrumb
         contractAddress={contractAddress}
-        name={tokenInfo?.getTokenInfo?.symbol?.toUpperCase() || ""}
+        name={tokenInfo?.token?.symbol?.toUpperCase() || ""}
       />
 
       <div className="grid grid-cols-12 pt-10 gap-2">
         <div className="col-span-12 lg:col-span-7 ">
           <TokenChart
             data={chartData}
-            tokenInfo={tokenInfo?.getTokenInfo}
+            tokenInfo={tokenInfo?.token}
             tokenPrice={tokenPrice}
             priceLoading={priceLoading}
           />
@@ -154,7 +154,7 @@ const Page = ({ contractAddress, chartData, tokenInfo, chain }: any) => {
             <TransactionTable
               address={contractAddress}
               tokenSymbol={
-                tokenInfo?.getTokenInfo?.symbol?.toUpperCase() || "Token Amount"
+                tokenInfo?.token?.symbol?.toUpperCase() || "Token Amount"
               }
             />
           )}
