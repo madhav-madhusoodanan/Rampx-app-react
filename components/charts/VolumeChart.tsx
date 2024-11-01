@@ -89,12 +89,15 @@ const VolumeChart = () => {
   };
 
   return (
-    <div>
-      <CardHeader className="">
+    <>
+      <CardHeader
+        className="bg-[#232418]/70 md:bg-transparent pl-5"
+        style={{ borderRadius: 10 }}
+      >
         <CardDescription className="font-medium text-a-gray text-base">
           RampX Volume
         </CardDescription>
-        <CardTitle className="font-semibold text-white text-2xl md:text-4xl lining-nums h-[54px]">
+        <CardTitle className="font-semibold text-white text-2xl md:text-4xl lining-nums md:h-[54px]">
           {!mouseEnteredChart && `$${chartData[chartData.length - 1].value}M`}
         </CardTitle>
       </CardHeader>
@@ -136,7 +139,7 @@ const VolumeChart = () => {
               content={
                 <ChartTooltipContent
                   indicator="line"
-                  className="bg-a-charcoal"
+                  className="bg-transparent pl-5 -top-5"
                 />
               }
             />
@@ -160,7 +163,7 @@ const VolumeChart = () => {
           </BarChart>
         </ChartContainer>
       </CardContent>
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
 
-import { Area, AreaChart, CartesianGrid, XAxis, Legend } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 import {
-  Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -17,7 +15,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/custom-charts/explore-main-chart";
-import { Skeleton } from "../ui/skeleton";
 
 const chartData = [
   { time: "2018-12-22", value: 3.51 },
@@ -170,12 +167,18 @@ const TvlChart = () => {
   };
 
   return (
-    <div className="">
-      <CardHeader className="">
+    <>
+      <CardHeader
+        className="bg-[#232418]/70 md:bg-transparent pl-5"
+        style={{ borderRadius: 10 }}
+      >
         <CardDescription className="font-medium text-a-gray text-base">
-          RampX TVL
+          {"RampX TVL"}
         </CardDescription>
-        <CardTitle className="font-semibold text-white text-2xl md:text-4xl lining-nums h-[54px]">
+        <CardTitle
+          className="font-semibold text-white text-2xl md:text-4xl lining-nums md:h-[54px]"
+          style={{ marginTop: 5 }}
+        >
           {!mouseEnteredChart && `$${chartData[chartData.length - 1].value}M`}
         </CardTitle>
       </CardHeader>
@@ -225,7 +228,7 @@ const TvlChart = () => {
               content={
                 <ChartTooltipContent
                   indicator="line"
-                  className="bg-a-charcoal"
+                  className="bg-transparent pl-5"
                 />
               }
             />
@@ -256,7 +259,7 @@ const TvlChart = () => {
           </div>
         </div>
       </CardFooter> */}
-    </div>
+    </>
   );
 };
 export default TvlChart;

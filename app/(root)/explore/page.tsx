@@ -53,19 +53,18 @@ const Page = () => {
     }
   }, [currentTab]);
   return (
-    <div className="my-10 z-20">
-      <div className="flex justiyfy-between gap-10 ">
+    <div className="mt-10 z-20">
+      <div className="flex justiyfy-between gap-3">
         {/* <ExploreTokenChart /> */}
-        <div className="w-full">
-          {" "}
+        <div className="w-full ">
           <TvlChart />
         </div>
 
-        <div className="w-full">
+        <div className="w-full ">
           <VolumeChart />
         </div>
       </div>
-      <div className=" w-full mt-20">
+      <div className=" w-full mt-5 md:mt-20">
         <TableTabs />
         <div className="explore-table-border-container flex justify-center items-center bg-fading-gradient relative">
           {/* 
